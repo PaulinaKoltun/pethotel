@@ -5,8 +5,6 @@ package org.pethotel.HeavenForPets.domein;
  */
 public class Pet {
     private String name;
-    private String firstName;
-    private String lastName;
 
     public String getName() {
         return name;
@@ -16,26 +14,8 @@ public class Pet {
         this.name = name;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public Pet(String name, String firstName, String lastName) {
+    public Pet(String name) {
         this.name = name;
-        this.firstName = firstName;
-        this.lastName = lastName;
     }
 
     @Override
@@ -45,25 +25,18 @@ public class Pet {
 
         Pet pet = (Pet) o;
 
-        if (name != null ? !name.equals(pet.name) : pet.name != null) return false;
-        if (firstName != null ? !firstName.equals(pet.firstName) : pet.firstName != null) return false;
-        return lastName != null ? lastName.equals(pet.lastName) : pet.lastName == null;
+        return name != null ? name.equals(pet.name) : pet.name == null;
     }
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        return result;
+        return name != null ? name.hashCode() : 0;
     }
 
     @Override
     public String toString() {
         return "Pet{" +
                 "name='" + name + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
                 '}';
     }
 }
