@@ -1,13 +1,14 @@
 package org.pethotel.HeavenForPets.domein;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Paulina on 2017-09-30.
  */
-public class Owner {
+public class Owner implements Serializable {
     private String firstName;
     private String lastName;
     private List<Pet> petList = new ArrayList<>();
@@ -46,6 +47,10 @@ public class Owner {
         result = 31 * result + (numberofFlat != null ? numberofFlat.hashCode() : 0);
         result = 31 * result + (zipCode != null ? zipCode.hashCode() : 0);
         return result;
+    }
+
+    public Owner(){
+
     }
 
     public Owner(String firstName, String lastName, String city, String street, String numberofHouse, String numberofFlat, String zipCode) {
@@ -133,8 +138,8 @@ public class Owner {
         return petList;
     }
 
-    public void setPetList(Pet pet) {
-        this.petList.add(pet);
+    public void setPetList(List<Pet> petList) {
+        this.petList = petList;
     }
 
     public Owner(String firstName, String lastName) {
