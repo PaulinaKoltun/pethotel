@@ -1,5 +1,7 @@
 package org.pethotel.HeavenForPets.domein;
 
+import org.pethotel.HeavenForPets.enums.PetType;
+
 import java.io.Serializable;
 
 /**
@@ -8,10 +10,12 @@ import java.io.Serializable;
 public class Pet implements Serializable {
     private String name;
     private String comment;
+    private PetType petType;
 
-    public Pet(String name, String comment) {
+    public Pet(String name, String comment, PetType petType) {
         this.name = name;
         this.comment = comment;
+        this.petType = petType;
     }
 
     public Pet(){}
@@ -32,11 +36,20 @@ public class Pet implements Serializable {
         this.comment = comment;
     }
 
+    public PetType getPetType() {
+        return petType;
+    }
+
+    public void setPetType(PetType petType) {
+        this.petType = petType;
+    }
+
     @Override
     public String toString() {
         return "Pet{" +
                 "name='" + name + '\'' +
                 ", comment='" + comment + '\'' +
+                ", petType=" + petType +
                 '}';
     }
 
@@ -48,14 +61,15 @@ public class Pet implements Serializable {
         Pet pet = (Pet) o;
 
         if (name != null ? !name.equals(pet.name) : pet.name != null) return false;
-        return comment != null ? comment.equals(pet.comment) : pet.comment == null;
+        if (comment != null ? !comment.equals(pet.comment) : pet.comment != null) return false;
+        return petType == pet.petType;
     }
 
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (comment != null ? comment.hashCode() : 0);
+        result = 31 * result + (petType != null ? petType.hashCode() : 0);
         return result;
     }
-
 }

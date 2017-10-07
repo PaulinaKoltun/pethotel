@@ -26,6 +26,7 @@ public class OwnerMapImpl implements OwnerMap {
         ownerEntity.setNumberofHouse(owner.getNumberofHouse());
         ownerEntity.setNumberofFlat(owner.getNumberofFlat());
         ownerEntity.setZipCode(owner.getZipCode());
+        ownerEntity.setOwnerCategory(owner.getOwnerCategory());
 
         List<PetEntity> petEntitys = new ArrayList<>();
         List<Pet> pets = owner.getPetList();
@@ -34,6 +35,7 @@ public class OwnerMapImpl implements OwnerMap {
             PetEntity petEntity = new PetEntity();
             petEntity.setName(pet.getName());
             petEntity.setComment(pet.getComment());
+            petEntity.setPetType(pet.getPetType());
             petEntitys.add(petEntity);
         }
 
