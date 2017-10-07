@@ -1,5 +1,7 @@
 package org.pethotel.HeavenForPets.entity;
 
+import org.pethotel.HeavenForPets.enums.OwnerCategory;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,8 @@ public class OwnerEntity {
     private int id;
     private String firstName;
     private String lastName;
+    @Enumerated(EnumType.STRING)
+    private OwnerCategory ownerCategory;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Column(name = "pet")
     private List<PetEntity> petList = new ArrayList<>();
@@ -29,9 +33,9 @@ public class OwnerEntity {
     @Override
     public String toString() {
         return "OwnerEntity{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
+                "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", ownerCategory=" + ownerCategory +
                 ", petList=" + petList +
                 ", city='" + city + '\'' +
                 ", street='" + street + '\'' +
@@ -50,6 +54,8 @@ public class OwnerEntity {
 
         if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
         if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
+        if (ownerCategory != that.ownerCategory) return false;
+        if (petList != null ? !petList.equals(that.petList) : that.petList != null) return false;
         if (city != null ? !city.equals(that.city) : that.city != null) return false;
         if (street != null ? !street.equals(that.street) : that.street != null) return false;
         if (numberofHouse != null ? !numberofHouse.equals(that.numberofHouse) : that.numberofHouse != null)
@@ -60,15 +66,24 @@ public class OwnerEntity {
 
     @Override
     public int hashCode() {
-        int result = 1;
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        int result = firstName != null ? firstName.hashCode() : 0;
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (ownerCategory != null ? ownerCategory.hashCode() : 0);
+        result = 31 * result + (petList != null ? petList.hashCode() : 0);
         result = 31 * result + (city != null ? city.hashCode() : 0);
         result = 31 * result + (street != null ? street.hashCode() : 0);
         result = 31 * result + (numberofHouse != null ? numberofHouse.hashCode() : 0);
         result = 31 * result + (numberofFlat != null ? numberofFlat.hashCode() : 0);
         result = 31 * result + (zipCode != null ? zipCode.hashCode() : 0);
         return result;
+    }
+
+    public OwnerCategory getOwnerCategory() {
+        return ownerCategory;
+    }
+
+    public void setOwnerCategory(OwnerCategory ownerCategory) {
+        this.ownerCategory = ownerCategory;
     }
 
     public String getFirstName() {

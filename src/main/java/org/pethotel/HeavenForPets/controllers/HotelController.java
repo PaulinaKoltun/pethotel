@@ -27,6 +27,7 @@ public class HotelController implements ErrorController{
     @PostMapping
     public void addPets(@RequestBody Owner owner){
         ownerService.saveOwner(owner);
+        System.out.println(owner);
     }
 
     @GetMapping
