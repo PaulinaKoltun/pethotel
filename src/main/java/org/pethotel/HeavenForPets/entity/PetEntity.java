@@ -1,9 +1,8 @@
 package org.pethotel.HeavenForPets.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.pethotel.HeavenForPets.enums.PetType;
+
+import javax.persistence.*;
 
 /**
  * Created by Paulina on 2017-09-30.
@@ -15,6 +14,8 @@ public class PetEntity {
     private int id;
     private String name;
     private String comment;
+    @Enumerated(EnumType.STRING)
+    private PetType petType;
 
     public PetEntity() {
     }
@@ -27,13 +28,15 @@ public class PetEntity {
         PetEntity petEntity = (PetEntity) o;
 
         if (name != null ? !name.equals(petEntity.name) : petEntity.name != null) return false;
-        return comment != null ? comment.equals(petEntity.comment) : petEntity.comment == null;
+        if (comment != null ? !comment.equals(petEntity.comment) : petEntity.comment != null) return false;
+        return petType == petEntity.petType;
     }
 
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (comment != null ? comment.hashCode() : 0);
+        result = 31 * result + (petType != null ? petType.hashCode() : 0);
         return result;
     }
 
@@ -46,11 +49,20 @@ public class PetEntity {
         this.comment = comment;
     }
 
+    public PetType getPetType() {
+        return petType;
+    }
+
+    public void setPetType(PetType petType) {
+        this.petType = petType;
+    }
+
     @Override
     public String toString() {
         return "PetEntity{" +
                 "name='" + name + '\'' +
                 ", comment='" + comment + '\'' +
+                ", petType=" + petType +
                 '}';
     }
 

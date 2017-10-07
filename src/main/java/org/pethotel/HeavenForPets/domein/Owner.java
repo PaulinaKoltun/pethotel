@@ -1,6 +1,8 @@
 package org.pethotel.HeavenForPets.domein;
 
 
+import org.pethotel.HeavenForPets.enums.OwnerCategory;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.List;
 public class Owner implements Serializable {
     private String firstName;
     private String lastName;
+    private OwnerCategory ownerCategory;
     private List<Pet> petList = new ArrayList<>();
     private String city;
     private String street;
@@ -27,6 +30,7 @@ public class Owner implements Serializable {
 
         if (firstName != null ? !firstName.equals(owner.firstName) : owner.firstName != null) return false;
         if (lastName != null ? !lastName.equals(owner.lastName) : owner.lastName != null) return false;
+        if (ownerCategory != owner.ownerCategory) return false;
         if (petList != null ? !petList.equals(owner.petList) : owner.petList != null) return false;
         if (city != null ? !city.equals(owner.city) : owner.city != null) return false;
         if (street != null ? !street.equals(owner.street) : owner.street != null) return false;
@@ -40,6 +44,7 @@ public class Owner implements Serializable {
     public int hashCode() {
         int result = firstName != null ? firstName.hashCode() : 0;
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (ownerCategory != null ? ownerCategory.hashCode() : 0);
         result = 31 * result + (petList != null ? petList.hashCode() : 0);
         result = 31 * result + (city != null ? city.hashCode() : 0);
         result = 31 * result + (street != null ? street.hashCode() : 0);
@@ -53,7 +58,7 @@ public class Owner implements Serializable {
 
     }
 
-    public Owner(String firstName, String lastName, String city, String street, String numberofHouse, String numberofFlat, String zipCode) {
+    public Owner(String firstName, String lastName, String city, String street, String numberofHouse, String numberofFlat, String zipCode, OwnerCategory ownerCategory) {
 
         this.firstName = firstName;
         this.lastName = lastName;
@@ -62,6 +67,7 @@ public class Owner implements Serializable {
         this.numberofHouse = numberofHouse;
         this.numberofFlat = numberofFlat;
         this.zipCode = zipCode;
+        this.ownerCategory = ownerCategory;
     }
 
     @Override
@@ -69,6 +75,7 @@ public class Owner implements Serializable {
         return "Owner{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", ownerCategory=" + ownerCategory +
                 ", petList=" + petList +
                 ", city='" + city + '\'' +
                 ", street='" + street + '\'' +
@@ -140,6 +147,14 @@ public class Owner implements Serializable {
 
     public void setPetList(List<Pet> petList) {
         this.petList = petList;
+    }
+
+    public OwnerCategory getOwnerCategory() {
+        return ownerCategory;
+    }
+
+    public void setOwnerCategory(OwnerCategory ownerCategory) {
+        this.ownerCategory = ownerCategory;
     }
 
     public Owner(String firstName, String lastName) {
