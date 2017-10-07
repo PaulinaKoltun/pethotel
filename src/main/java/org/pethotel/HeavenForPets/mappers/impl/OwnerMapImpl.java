@@ -26,7 +26,6 @@ public class OwnerMapImpl implements OwnerMap {
         ownerEntity.setNumberofHouse(owner.getNumberofHouse());
         ownerEntity.setNumberofFlat(owner.getNumberofFlat());
         ownerEntity.setZipCode(owner.getZipCode());
-
         List<PetEntity> petEntitys = new ArrayList<>();
         List<Pet> pets = owner.getPetList();
 
