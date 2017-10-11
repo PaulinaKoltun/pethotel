@@ -11,14 +11,24 @@ public class Pet implements Serializable {
     private String name;
     private String comment;
     private PetType petType;
+    private int roomNumber;
 
-    public Pet(String name, String comment, PetType petType) {
+    public Pet(String name, String comment, PetType petType, int roomNumber) {
         this.name = name;
         this.comment = comment;
         this.petType = petType;
+        this.roomNumber = roomNumber;
     }
 
     public Pet(){}
+
+    public int getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(int roomNumber) {
+        this.roomNumber = roomNumber;
+    }
 
     public String getName() {
         return name;
@@ -50,6 +60,7 @@ public class Pet implements Serializable {
                 "name='" + name + '\'' +
                 ", comment='" + comment + '\'' +
                 ", petType=" + petType +
+                ", roomNumber=" + roomNumber +
                 '}';
     }
 
@@ -60,6 +71,7 @@ public class Pet implements Serializable {
 
         Pet pet = (Pet) o;
 
+        if (roomNumber != pet.roomNumber) return false;
         if (name != null ? !name.equals(pet.name) : pet.name != null) return false;
         if (comment != null ? !comment.equals(pet.comment) : pet.comment != null) return false;
         return petType == pet.petType;
@@ -70,6 +82,7 @@ public class Pet implements Serializable {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (comment != null ? comment.hashCode() : 0);
         result = 31 * result + (petType != null ? petType.hashCode() : 0);
+        result = 31 * result + roomNumber;
         return result;
     }
 }
