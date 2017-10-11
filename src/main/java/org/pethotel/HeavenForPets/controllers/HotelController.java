@@ -2,8 +2,10 @@ package org.pethotel.HeavenForPets.controllers;
 
 import org.pethotel.HeavenForPets.domein.Owner;
 import org.pethotel.HeavenForPets.domein.Pet;
+import org.pethotel.HeavenForPets.domein.Room;
 import org.pethotel.HeavenForPets.service.OwnerService;
 import org.pethotel.HeavenForPets.service.PetService;
+import org.pethotel.HeavenForPets.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,7 @@ import java.util.List;
  * Created by Paulina on 2017-09-27.
  */
 @RestController
+@RequestMapping("/hotel")
 public class HotelController implements ErrorController{
     private static final String PATH = "/error";
 
@@ -24,13 +27,13 @@ public class HotelController implements ErrorController{
     @Autowired
     private PetService petService;
 
-    @PostMapping
+    @PostMapping("/add")
     public void addPets(@RequestBody Owner owner){
         ownerService.saveOwner(owner);
         System.out.println(owner);
     }
 
-    @GetMapping
+    @GetMapping("/get")
     public List<Pet> getPets(){
         return petService.getPets();
     }
