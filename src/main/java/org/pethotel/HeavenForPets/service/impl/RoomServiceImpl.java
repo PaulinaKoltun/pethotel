@@ -2,6 +2,7 @@ package org.pethotel.HeavenForPets.service.impl;
 
 import org.pethotel.HeavenForPets.domein.Room;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
+import org.pethotel.HeavenForPets.enums.PetType;
 import org.pethotel.HeavenForPets.repository.RoomRepository;
 import org.pethotel.HeavenForPets.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,53 @@ public class RoomServiceImpl implements RoomService {
             }
         }
         return allRooms;
+    }
+
+    @Override
+    public List<Room> getAllRooms() {
+        List<RoomEntity> roomEntityList = (List<RoomEntity>) roomRepository.findAll();
+        List<Room> rooms = new ArrayList<>();
+        for (RoomEntity roomEntity : roomEntityList) {
+            Room room = new Room();
+            room.setFreePlaces(roomEntity.getFreePlaces());
+            room.setNumberOfPlaces(roomEntity.getNumberOfPlaces());
+            room.setPetType(roomEntity.getPetType());
+            room.setRoomNumber(roomEntity.getRoomNumber());
+            rooms.add(room);
+        }
+        return rooms;
+    }
+
+    @Override
+    public RoomEntity findByRoomNumber(int roomNumber) {
+        List<RoomEntity> roomEntityList = (List<RoomEntity>) roomRepository.findAll();
+        RoomEntity theOne = new RoomEntity();
+        for (RoomEntity roomEntity : roomEntityList) {
+            if (roomEntity.getRoomNumber() == roomNumber) {
+                theOne = roomEntity;
+            }
+        }
+        return theOne;
+    }
+
+    @Override
+    public void deleteRoom(int roomNumber) {
+        List<RoomEntity> roomEntityList = (List<RoomEntity>) roomRepository.findAll();
+        RoomEntity theOne = findByRoomNumber(roomNumber);
+        roomEntityList.remove(theOne);
+        roomRepository.delete(theOne);
+    }
+
+    @Override
+    public void updateRoom(Room room){
+        List<RoomEntity> roomEntityList = (List<RoomEntity>) roomRepository.findAll();
+        for (RoomEntity entity : roomEntityList) {
+            if (entity.getRoomNumber() == room.getRoomNumber()){
+                entity.setFreePlaces(room.getFreePlaces());
+                entity.setPetType(room.getPetType());
+                entity.setNumberOfPlaces(room.getNumberOfPlaces());
+                roomRepository.save(entity);
+            }
+        }
     }
 }
