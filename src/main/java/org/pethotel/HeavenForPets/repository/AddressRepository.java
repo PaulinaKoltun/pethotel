@@ -1,12 +1,10 @@
 package org.pethotel.HeavenForPets.repository;
 
 import org.pethotel.HeavenForPets.entity.AddressEntity;
-import org.pethotel.HeavenForPets.entity.OwnerEntity;
 import org.springframework.data.repository.CrudRepository;
 
 /**
- * Created by Paulina on 2017-09-30.
+ * Created by Paulina on 2017-10-13.
  */
-public interface OwnerRepository extends CrudRepository<OwnerEntity, Long> {
-
+public interface AddressRepository extends CrudRepository<AddressEntity, Long> {
 }

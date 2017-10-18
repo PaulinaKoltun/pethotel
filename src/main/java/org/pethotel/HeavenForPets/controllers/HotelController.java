@@ -16,6 +16,7 @@ import java.util.List;
 /**
  * Created by Paulina on 2017-09-27.
  */
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/hotel")
 public class HotelController implements ErrorController{
@@ -31,6 +32,7 @@ public class HotelController implements ErrorController{
     public void addPets(@RequestBody Owner owner){
         ownerService.saveOwner(owner);
         System.out.println(owner);
+        System.out.println(owner.getAddress());
     }
 
     @GetMapping("/get")

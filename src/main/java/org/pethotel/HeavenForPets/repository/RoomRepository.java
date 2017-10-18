@@ -10,5 +10,5 @@ import org.springframework.data.repository.query.Param;
  */
 public interface RoomRepository extends CrudRepository<RoomEntity, Long>{
     @Query(value = "SELECT * FROM Room e WHERE e.room_number = :number", nativeQuery = true)
-    RoomEntity getRoomByNumber(@Param("number") String roomNumber);
+    RoomEntity getRoomByNumber(@Param("number") int roomNumber);
 }

@@ -58,34 +58,24 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public RoomEntity findByRoomNumber(int roomNumber) {
-        List<RoomEntity> roomEntityList = (List<RoomEntity>) roomRepository.findAll();
-        RoomEntity theOne = new RoomEntity();
-        for (RoomEntity roomEntity : roomEntityList) {
-            if (roomEntity.getRoomNumber() == roomNumber) {
-                theOne = roomEntity;
-            }
-        }
-        return theOne;
+        return roomRepository.getRoomByNumber(roomNumber);
+
     }
 
     @Override
     public void deleteRoom(int roomNumber) {
-        List<RoomEntity> roomEntityList = (List<RoomEntity>) roomRepository.findAll();
-        RoomEntity theOne = findByRoomNumber(roomNumber);
-        roomEntityList.remove(theOne);
-        roomRepository.delete(theOne);
+        RoomEntity roomEntity = roomRepository.getRoomByNumber(roomNumber);
+        roomRepository.delete(roomEntity);
     }
 
     @Override
     public void updateRoom(Room room){
-        List<RoomEntity> roomEntityList = (List<RoomEntity>) roomRepository.findAll();
-        for (RoomEntity entity : roomEntityList) {
-            if (entity.getRoomNumber() == room.getRoomNumber()){
-                entity.setFreePlaces(room.getFreePlaces());
-                entity.setPetType(room.getPetType());
-                entity.setNumberOfPlaces(room.getNumberOfPlaces());
-                roomRepository.save(entity);
-            }
-        }
+        RoomEntity entity = roomRepository.getRoomByNumber(room.getRoomNumber());
+
+        entity.setFreePlaces(room.getFreePlaces());
+        entity.setPetType(room.getPetType());
+        entity.setNumberOfPlaces(room.getNumberOfPlaces());
+
+        roomRepository.save(entity);
     }
 }

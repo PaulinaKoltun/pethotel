@@ -38,10 +38,15 @@ public enum PetType {
     @JsonCreator
     public static PetType create (String value) {
         for(PetType v : values()) {
-            if(value.toLowerCase().equals(v.getShortType())) {
+            if (isThisPet(v, value)) {
                 return v;
             }
         }
         return PetType.MAMMAL;
+    }
+
+    private static boolean isThisPet(PetType v, String value) {
+        return value.toUpperCase().equals(v.name())
+                || value.toLowerCase().equals(v.getShortType());
     }
 }

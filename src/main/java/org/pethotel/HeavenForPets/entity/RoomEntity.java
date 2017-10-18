@@ -8,7 +8,8 @@ import org.pethotel.HeavenForPets.enums.PetType;
 
 import javax.persistence.*;
 
-@Entity(name="room")
+@Entity
+@Table(name = "room")
 public class RoomEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
