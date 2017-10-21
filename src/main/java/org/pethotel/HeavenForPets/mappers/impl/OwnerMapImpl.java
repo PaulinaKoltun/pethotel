@@ -48,7 +48,7 @@ public class OwnerMapImpl implements OwnerMap {
             petEntity.setName(pet.getName());
             petEntity.setComment(pet.getComment());
             PetType petType = pet.getPetType();
-            RoomEntity roomByNumber = roomRepository.getRoomByNumber(pet.getRoomNumber());
+            RoomEntity roomByNumber = roomRepository.getRoomByNumber(pet.getRoom().getRoomNumber());
             if (petType != roomByNumber.getPetType()) {
                 throw new InvalidPetTypeException();
             }
