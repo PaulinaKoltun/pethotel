@@ -1,6 +1,9 @@
 package org.pethotel.HeavenForPets.service;
 
+import org.pethotel.HeavenForPets.domein.Client;
 import org.pethotel.HeavenForPets.domein.Owner;
+import org.pethotel.HeavenForPets.domein.Pet;
+import org.pethotel.HeavenForPets.entity.PetEntity;
 
 import java.util.List;
 
@@ -9,5 +12,7 @@ import java.util.List;
  */
 public interface OwnerService {
     void saveOwner(Owner owner);
-    List<String> getAllClients();
+    List<Client> getAllClients();
+    List<Pet> showAllPets(int id);
+    void deleteAllPets(int id);
 }

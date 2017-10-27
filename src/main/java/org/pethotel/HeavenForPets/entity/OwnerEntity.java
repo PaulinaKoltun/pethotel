@@ -1,6 +1,5 @@
 package org.pethotel.HeavenForPets.entity;
 
-import org.pethotel.HeavenForPets.domein.Address;
 import org.pethotel.HeavenForPets.enums.OwnerCategory;
 
 import javax.persistence.*;
@@ -14,7 +13,7 @@ import java.util.List;
 public class OwnerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
     private String firstName;
     private String lastName;
     @Enumerated(EnumType.STRING)
@@ -26,6 +25,10 @@ public class OwnerEntity {
     private AddressEntity addressEntity;
 
     public OwnerEntity() {
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getFirstName() {

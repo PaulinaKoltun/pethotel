@@ -10,7 +10,7 @@ public enum OwnerCategory {
     GOLD(2,"G"),
     SILVER(3,"S"),
     NORMAL(4,"N"),
-    NO_SERVICE(5,"N"),
+    NO_SERVICE(5,"NS"),
     ;
 
     private final int numberCategory;

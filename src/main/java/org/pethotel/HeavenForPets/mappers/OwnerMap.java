@@ -9,4 +9,5 @@ import org.pethotel.HeavenForPets.exceptions.InvalidPetTypeException;
  */
 public interface OwnerMap {
     OwnerEntity map(Owner owner) throws InvalidPetTypeException;
+    Owner map(OwnerEntity ownerEntity);
 }

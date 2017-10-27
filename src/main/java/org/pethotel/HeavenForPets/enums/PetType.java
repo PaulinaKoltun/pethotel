@@ -41,6 +41,9 @@ public enum PetType {
             if (isThisPet(v, value)) {
                 return v;
             }
+            if (value.equals(v.getNumberType())){
+                return v;
+            }
         }
         return PetType.MAMMAL;
     }

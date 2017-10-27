@@ -5,10 +5,12 @@ import org.pethotel.HeavenForPets.entity.AddressEntity;
 import org.pethotel.HeavenForPets.mappers.AddressMap;
 import org.pethotel.HeavenForPets.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by Paulina on 2017-10-13.
  */
+@Service
 public class AddressMapImpl implements AddressMap {
     @Autowired
     AddressRepository addressRepository;

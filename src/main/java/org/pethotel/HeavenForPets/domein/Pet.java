@@ -13,13 +13,6 @@ public class Pet implements Serializable {
     private PetType petType;
     private int roomNumber;
 
-    public Pet(String name, String comment, PetType petType, int roomNumber) {
-        this.name = name;
-        this.comment = comment;
-        this.petType = petType;
-        this.roomNumber = roomNumber;
-    }
-
     public Pet(){}
 
     public int getRoomNumber() {

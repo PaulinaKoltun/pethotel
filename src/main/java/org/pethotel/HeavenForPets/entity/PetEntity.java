@@ -1,5 +1,6 @@
 package org.pethotel.HeavenForPets.entity;
 
+import com.sun.istack.internal.NotNull;
 import org.pethotel.HeavenForPets.enums.PetType;
 
 import javax.persistence.*;
@@ -16,7 +17,7 @@ public class PetEntity {
     private String comment;
     @Enumerated(EnumType.STRING)
     private PetType petType;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     private RoomEntity roomEntity;
 
     public PetEntity() {
