@@ -2,10 +2,14 @@ package org.pethotel.HeavenForPets.service.impl;
 
 import org.pethotel.HeavenForPets.domein.Room;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
+import org.pethotel.HeavenForPets.enums.PetType;
 import org.pethotel.HeavenForPets.repository.RoomRepository;
 import org.pethotel.HeavenForPets.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Paulina on 2017-10-07.
@@ -23,5 +27,55 @@ public class RoomServiceImpl implements RoomService {
         roomEntity.setNumberOfPlaces(room.getNumberOfPlaces());
         roomEntity.setPetType(room.getPetType());
         roomRepository.save(roomEntity);
+    }
+
+    @Override
+    public List<Integer> getAllNumbers() {
+        List<Integer> allRooms = new ArrayList<>();
+        Iterable<RoomEntity> rooms = roomRepository.findAll();
+        for (RoomEntity room : rooms) {
+            if (room.getFreePlaces()>0) {
+                allRooms.add(room.getRoomNumber());
+            }
+        }
+        return allRooms;
+    }
+
+    @Override
+    public List<Room> getAllRooms() {
+        List<RoomEntity> roomEntityList = (List<RoomEntity>) roomRepository.findAll();
+        List<Room> rooms = new ArrayList<>();
+        for (RoomEntity roomEntity : roomEntityList) {
+            Room room = new Room();
+            room.setFreePlaces(roomEntity.getFreePlaces());
+            room.setNumberOfPlaces(roomEntity.getNumberOfPlaces());
+            room.setPetType(roomEntity.getPetType());
+            room.setRoomNumber(roomEntity.getRoomNumber());
+            rooms.add(room);
+        }
+        return rooms;
+    }
+
+    @Override
+    public RoomEntity findByRoomNumber(int roomNumber) {
+        return roomRepository.getRoomByNumber(roomNumber);
+
+    }
+
+    @Override
+    public void deleteRoom(int roomNumber) {
+        RoomEntity roomEntity = roomRepository.getRoomByNumber(roomNumber);
+        roomRepository.delete(roomEntity);
+    }
+
+    @Override
+    public void updateRoom(Room room){
+        RoomEntity entity = roomRepository.getRoomByNumber(room.getRoomNumber());
+
+        entity.setFreePlaces(room.getFreePlaces());
+        entity.setPetType(room.getPetType());
+        entity.setNumberOfPlaces(room.getNumberOfPlaces());
+
+        roomRepository.save(entity);
     }
 }

@@ -1,5 +1,6 @@
 package org.pethotel.HeavenForPets.entity;
 
+import com.sun.istack.internal.NotNull;
 import org.pethotel.HeavenForPets.enums.PetType;
 
 import javax.persistence.*;
@@ -16,6 +17,8 @@ public class PetEntity {
     private String comment;
     @Enumerated(EnumType.STRING)
     private PetType petType;
+    @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    private RoomEntity roomEntity;
 
     public PetEntity() {
     }
@@ -29,7 +32,8 @@ public class PetEntity {
 
         if (name != null ? !name.equals(petEntity.name) : petEntity.name != null) return false;
         if (comment != null ? !comment.equals(petEntity.comment) : petEntity.comment != null) return false;
-        return petType == petEntity.petType;
+        if (petType != petEntity.petType) return false;
+        return roomEntity != null ? roomEntity.equals(petEntity.roomEntity) : petEntity.roomEntity == null;
     }
 
     @Override
@@ -37,6 +41,7 @@ public class PetEntity {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (comment != null ? comment.hashCode() : 0);
         result = 31 * result + (petType != null ? petType.hashCode() : 0);
+        result = 31 * result + (roomEntity != null ? roomEntity.hashCode() : 0);
         return result;
     }
 
@@ -47,6 +52,14 @@ public class PetEntity {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public RoomEntity getRoomEntity() {
+        return roomEntity;
+    }
+
+    public void setRoomEntity(RoomEntity roomEntity) {
+        this.roomEntity = roomEntity;
     }
 
     public PetType getPetType() {
@@ -63,6 +76,7 @@ public class PetEntity {
                 "name='" + name + '\'' +
                 ", comment='" + comment + '\'' +
                 ", petType=" + petType +
+                ", roomEntity=" + roomEntity +
                 '}';
     }
 

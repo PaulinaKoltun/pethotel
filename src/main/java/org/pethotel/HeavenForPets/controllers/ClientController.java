@@ -1,40 +1,40 @@
 package org.pethotel.HeavenForPets.controllers;
 
-import org.pethotel.HeavenForPets.domein.Owner;
+import org.pethotel.HeavenForPets.domein.Client;
 import org.pethotel.HeavenForPets.domein.Pet;
 import org.pethotel.HeavenForPets.service.OwnerService;
-import org.pethotel.HeavenForPets.service.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 /**
- * Created by Paulina on 2017-09-27.
+ * Created by Paulina on 2017-10-19.
  */
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/hotel")
-public class HotelController implements ErrorController{
+@RequestMapping("/clients")
+public class ClientController implements ErrorController {
     private static final String PATH = "/error";
 
     @Autowired
-    private OwnerService ownerService;
+    OwnerService ownerService;
 
-    @Autowired
-    private PetService petService;
-
-    @PostMapping("/add")
-    public void addPets(@RequestBody Owner owner){
-        ownerService.saveOwner(owner);
-        System.out.println(owner);
-        System.out.println(owner.getAddress());
+    @GetMapping("/getAllClients")
+    public List<Client> getAllClients(){
+        return ownerService.getAllClients();
     }
 
-    @GetMapping("/get")
-    public List<Pet> getPets(){
-        return petService.getPets();
+    @GetMapping("/showAllPets/{id}")
+    public List<Pet> showAllPets(@PathVariable int id){
+        return ownerService.showAllPets(id);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteAllPets(@PathVariable int id){
+        ownerService.deleteAllPets(id);
     }
 
     @RequestMapping(value = PATH)
@@ -47,4 +47,3 @@ public class HotelController implements ErrorController{
         return PATH;
     }
 }
-
