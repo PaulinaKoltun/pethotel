@@ -9,7 +9,8 @@ import java.util.List;
 /**
  * Created by Paulina on 2017-09-30.
  */
-@Entity(name = "owner")
+@Entity
+@Table(name = "owner")
 public class OwnerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

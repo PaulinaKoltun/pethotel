@@ -46,10 +46,7 @@ public class OwnerMapImplTest {
     public void shouldThrowExceptionWhenThePetTypeInRoomIsDifferentThanReal() throws InvalidPetTypeException {
         Owner owner = new Owner();
         Pet pet = new Pet();
-        pet.setRoomNumber(1);
-        pet.setPetType(PetType.BIRD);
-        pet.setName("Ara");
-        pet.setComment("nn");
+        preparePet(pet, "Ara", PetType.BIRD);
         owner.setPetList(Arrays.asList(pet));
 
         PetEntity petEntity = new PetEntity();
@@ -71,42 +68,82 @@ public class OwnerMapImplTest {
     public void shouldCheckAddressMapper() throws InvalidPetTypeException{
         Owner owner = new Owner();
         Address address = new Address();
-        address.setCity("Wroclaw");
+        String city = "Wroclaw";
+        address.setCity(city);
         owner.setAddress(address);
 
         AddressEntity addressEntity = new AddressEntity();
-        addressEntity.setCity("Wroclaw");
+        addressEntity.setCity(city);
         Mockito.when(addressMap.mapAddress(address)).thenReturn(addressEntity);
 
         OwnerEntity ownerEntity = ownerMap.map(owner);
 
         assertEquals(owner.getAddress().getCity(),ownerEntity.getAddressEntity().getCity());
     }
+    @Test
+    public void shouldCheckPetMapper() throws InvalidPetTypeException{
+        Pet pet = new Pet();
+
+        preparePet(pet, "Ara", PetType.BIRD);
+
+        PetEntity petEntity = new PetEntity();
+        preparePetEntity(petEntity, "Ara", PetType.BIRD);
+
+        Mockito.when(petMap.map(pet)).thenReturn(petEntity);
+
+        assertEquals(pet.getName(), petEntity.getName());
+    }
+
+    private void preparePetEntity(final PetEntity petEntity, String name, PetType petType) {;
+        petEntity.setPetType(petType);
+        petEntity.setName(name);
+        petEntity.setComment("komentarz");
+    }
 
     @Test
     public void shouldCheckPetsCounter() throws InvalidPetTypeException{
         Owner owner = new Owner();
         Pet pet = new Pet();
-        pet.setRoomNumber(1);
-        pet.setPetType(PetType.BIRD);
-        pet.setName("Ara");
-        pet.setComment("Komentarz");
+        Pet pet1 = pet;
+        preparePet(pet, "Ara", PetType.BIRD);
+
+        pet = new Pet();
+
+        pet1.setName("AAAAAA");
+        pet.setName("bbbbbbbb");
+
+        System.out.println(pet1);
 
         owner.setPetList(Arrays.asList(pet));
 
         PetEntity petEntity = new PetEntity();
         petEntity.setPetType(PetType.BIRD);
 
-        RoomEntity roomEntity = new RoomEntity();
-        roomEntity.setPetType(PetType.BIRD);
-        roomEntity.setFreePlaces(5);
+        RoomEntity roomEntity = prepareRoom(PetType.BIRD, 5);
+        RoomEntity roomEntity1 = prepareRoom(PetType.MAMMAL, 2);
 
         Mockito.when(petMap.map(pet)).thenReturn(petEntity);
-        Mockito.when(roomRepository.getRoomByNumber(Mockito.anyInt()))
+        Mockito.when(roomRepository.getRoomByNumber(pet.getRoomNumber()))
                 .thenReturn(roomEntity);
+        Mockito.when(roomRepository.getRoomByNumber(pet1.getRoomNumber()))
+                .thenReturn(roomEntity1);
 
         OwnerEntity ownerEntity = ownerMap.map(owner);
 
         assertEquals(roomEntity.getFreePlaces(), 4);
+    }
+
+    private RoomEntity prepareRoom(PetType petType, int freePlaces) {
+        RoomEntity roomEntity = new RoomEntity();
+        roomEntity.setPetType(petType);
+        roomEntity.setFreePlaces(freePlaces);
+        return roomEntity;
+    }
+
+    private void preparePet(final Pet pet, String name, PetType petType) {
+        pet.setRoomNumber(1);
+        pet.setPetType(petType);
+        pet.setName(name);
+        pet.setComment("komentarz");
     }
 }

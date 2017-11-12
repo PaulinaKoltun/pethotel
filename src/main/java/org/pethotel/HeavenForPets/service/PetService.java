@@ -1,6 +1,7 @@
 package org.pethotel.HeavenForPets.service;
 
 import org.pethotel.HeavenForPets.domein.Pet;
+import org.pethotel.HeavenForPets.domein.Room;
 
 import java.util.List;
 
@@ -9,4 +10,5 @@ import java.util.List;
  */
 public interface PetService {
     List<Pet> getPets();
+
 }

@@ -12,8 +12,17 @@ public class Room implements Serializable {
     private int numberOfPlaces;
     private int freePlaces;
     private PetType petType;
+    private int price;
 
     public Room() {
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public int getRoomNumber() {
@@ -58,6 +67,7 @@ public class Room implements Serializable {
         if (roomNumber != room.roomNumber) return false;
         if (numberOfPlaces != room.numberOfPlaces) return false;
         if (freePlaces != room.freePlaces) return false;
+        if (price != room.price) return false;
         return petType == room.petType;
     }
 
@@ -67,6 +77,7 @@ public class Room implements Serializable {
         result = 31 * result + numberOfPlaces;
         result = 31 * result + freePlaces;
         result = 31 * result + (petType != null ? petType.hashCode() : 0);
+        result = 31 * result + price;
         return result;
     }
 
@@ -77,6 +88,7 @@ public class Room implements Serializable {
                 ", numberOfPlaces=" + numberOfPlaces +
                 ", freePlaces=" + freePlaces +
                 ", petType=" + petType +
+                ", price=" + price +
                 '}';
     }
 }

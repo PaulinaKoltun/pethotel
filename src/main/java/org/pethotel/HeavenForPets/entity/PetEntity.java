@@ -8,7 +8,8 @@ import javax.persistence.*;
 /**
  * Created by Paulina on 2017-09-30.
  */
-@Entity(name = "pet")
+@Entity
+@Table(name = "pet")
 public class PetEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

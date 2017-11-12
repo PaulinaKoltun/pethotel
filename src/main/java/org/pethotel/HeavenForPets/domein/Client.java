@@ -8,8 +8,17 @@ public class Client {
     private String firstName;
     private String lastName;
     private int petNumbers;
+    private int wholePrice;
 
     public Client() {
+    }
+
+    public int getWholePrice() {
+        return wholePrice;
+    }
+
+    public void setWholePrice(int wholePrice) {
+        this.wholePrice = wholePrice;
     }
 
     public Long getId() {
@@ -52,6 +61,7 @@ public class Client {
         Client client = (Client) o;
 
         if (petNumbers != client.petNumbers) return false;
+        if (wholePrice != client.wholePrice) return false;
         if (firstName != null ? !firstName.equals(client.firstName) : client.firstName != null) return false;
         return lastName != null ? lastName.equals(client.lastName) : client.lastName == null;
     }
@@ -61,6 +71,7 @@ public class Client {
         int result = firstName != null ? firstName.hashCode() : 0;
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + petNumbers;
+        result = 31 * result + wholePrice;
         return result;
     }
 
@@ -70,6 +81,7 @@ public class Client {
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", petNumbers=" + petNumbers +
+                ", wholePrice=" + wholePrice +
                 '}';
     }
 }

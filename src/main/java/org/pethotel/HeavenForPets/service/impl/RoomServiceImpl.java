@@ -3,6 +3,7 @@ package org.pethotel.HeavenForPets.service.impl;
 import org.pethotel.HeavenForPets.domein.Room;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.pethotel.HeavenForPets.enums.PetType;
+import org.pethotel.HeavenForPets.mappers.RoomMap;
 import org.pethotel.HeavenForPets.repository.RoomRepository;
 import org.pethotel.HeavenForPets.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class RoomServiceImpl implements RoomService {
     @Autowired
     RoomRepository roomRepository;
 
+    @Autowired
+    RoomMap roomMap;
+
     @Override
     public void saveRoom(Room room) {
         RoomEntity roomEntity = new RoomEntity();
@@ -26,6 +30,7 @@ public class RoomServiceImpl implements RoomService {
         roomEntity.setFreePlaces(room.getFreePlaces());
         roomEntity.setNumberOfPlaces(room.getNumberOfPlaces());
         roomEntity.setPetType(room.getPetType());
+        roomEntity.setPrice(room.getPrice());
         roomRepository.save(roomEntity);
     }
 
@@ -46,11 +51,7 @@ public class RoomServiceImpl implements RoomService {
         List<RoomEntity> roomEntityList = (List<RoomEntity>) roomRepository.findAll();
         List<Room> rooms = new ArrayList<>();
         for (RoomEntity roomEntity : roomEntityList) {
-            Room room = new Room();
-            room.setFreePlaces(roomEntity.getFreePlaces());
-            room.setNumberOfPlaces(roomEntity.getNumberOfPlaces());
-            room.setPetType(roomEntity.getPetType());
-            room.setRoomNumber(roomEntity.getRoomNumber());
+            Room room = roomMap.map(roomEntity);
             rooms.add(room);
         }
         return rooms;
@@ -75,7 +76,27 @@ public class RoomServiceImpl implements RoomService {
         entity.setFreePlaces(room.getFreePlaces());
         entity.setPetType(room.getPetType());
         entity.setNumberOfPlaces(room.getNumberOfPlaces());
+        entity.setPrice(room.getPrice());
 
         roomRepository.save(entity);
+    }
+
+    @Override
+    public List<Room> getAllRoomsByType(String petType) {
+        List<RoomEntity> roomEntityList = (List<RoomEntity>) roomRepository.findAll();
+        List<Room> rooms = new ArrayList<>();
+        for (RoomEntity roomEntity : roomEntityList) {
+            if (isProperRoomType(petType, roomEntity)) {
+                Room room = roomMap.map(roomEntity);
+                rooms.add(room);
+            }
+        }
+        return rooms;
+    }
+
+    private boolean isProperRoomType(String petType, RoomEntity roomEntity) {
+        return roomEntity.getPetType().getShortType().equals(petType)
+                || roomEntity.getPetType().name().equals(petType)
+                || roomEntity.getPetType().getNumberType() == Integer.valueOf(petType);
     }
 }

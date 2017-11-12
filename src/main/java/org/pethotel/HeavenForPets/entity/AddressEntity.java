@@ -1,14 +1,12 @@
 package org.pethotel.HeavenForPets.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by Paulina on 2017-10-13.
  */
-@Entity(name="address")
+@Entity
+@Table(name = "address")
 public class AddressEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
