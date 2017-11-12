@@ -21,8 +21,17 @@ public class RoomEntity {
     private int freePlaces;
     @Enumerated(EnumType.STRING)
     private PetType petType;
+    private int price;
 
     public RoomEntity() {
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public int getRoomNumber() {
@@ -67,6 +76,7 @@ public class RoomEntity {
         if (roomNumber != that.roomNumber) return false;
         if (numberOfPlaces != that.numberOfPlaces) return false;
         if (freePlaces != that.freePlaces) return false;
+        if (price != that.price) return false;
         return petType == that.petType;
     }
 
@@ -76,6 +86,7 @@ public class RoomEntity {
         result = 31 * result + numberOfPlaces;
         result = 31 * result + freePlaces;
         result = 31 * result + (petType != null ? petType.hashCode() : 0);
+        result = 31 * result + price;
         return result;
     }
 
@@ -86,6 +97,7 @@ public class RoomEntity {
                 ", numberOfPlaces=" + numberOfPlaces +
                 ", freePlaces=" + freePlaces +
                 ", petType=" + petType +
+                ", price=" + price +
                 '}';
     }
 }

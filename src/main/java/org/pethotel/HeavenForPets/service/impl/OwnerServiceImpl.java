@@ -54,9 +54,19 @@ public class OwnerServiceImpl implements OwnerService {
             client.setFirstName(ownerEntity.getFirstName());
             client.setLastName(ownerEntity.getLastName());
             client.setPetNumbers(ownerEntity.getPetList().size());
+            client.setWholePrice(countWholePrice(ownerEntity.getPetList()));
             clients.add(client);
         }
         return clients;
+    }
+
+    private int countWholePrice(List<PetEntity> petList) {
+        int wholePrice = 0;
+        for (PetEntity petEntity : petList) {
+            wholePrice = wholePrice + petEntity.getRoomEntity().getPrice();
+
+        }
+        return wholePrice;
     }
 
     @Override

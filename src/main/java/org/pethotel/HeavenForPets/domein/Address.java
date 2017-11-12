@@ -15,14 +15,6 @@ public class Address implements Serializable{
     public Address() {
     }
 
-    public Address(String city, String street, String numberofHouse, String numberofFlat, String zipCode) {
-        this.city = city;
-        this.street = street;
-        this.numberofHouse = numberofHouse;
-        this.numberofFlat = numberofFlat;
-        this.zipCode = zipCode;
-    }
-
     public String getCity() {
         return city;
     }

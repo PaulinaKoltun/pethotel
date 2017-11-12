@@ -16,4 +16,6 @@ public interface RoomService {
     RoomEntity findByRoomNumber(int roomNumber);
     void deleteRoom(int roomNumber);
     void updateRoom(Room room);
+
+    List<Room> getAllRoomsByType(String petType);
 }
