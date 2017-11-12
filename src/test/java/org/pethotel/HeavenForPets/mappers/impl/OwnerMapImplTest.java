@@ -36,8 +36,6 @@ public class OwnerMapImplTest {
     private AddressMap addressMap;
     @Mock
     private RoomRepository roomRepository;
-    @Mock
-    private AddressRepository addressRepository;
 
     @InjectMocks
     private OwnerMapImpl ownerMap;

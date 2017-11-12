@@ -4,10 +4,10 @@ package org.pethotel.HeavenForPets.entity;
  * Created by Paulina on 2017-10-07.
  */
 
-import com.sun.istack.internal.NotNull;
 import org.pethotel.HeavenForPets.enums.PetType;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "room")
