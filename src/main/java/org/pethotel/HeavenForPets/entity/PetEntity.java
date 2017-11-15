@@ -1,6 +1,5 @@
 package org.pethotel.HeavenForPets.entity;
 
-import com.sun.istack.internal.NotNull;
 import org.pethotel.HeavenForPets.enums.PetType;
 
 import javax.persistence.*;

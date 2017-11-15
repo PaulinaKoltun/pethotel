@@ -19,6 +19,7 @@ public class OwnerEntity {
     private String lastName;
     @Enumerated(EnumType.STRING)
     private OwnerCategory ownerCategory;
+    private int discount;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Column(name = "pet")
     private List<PetEntity> petList = new ArrayList<>();
@@ -72,6 +73,14 @@ public class OwnerEntity {
         this.addressEntity = addressEntity;
     }
 
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -79,6 +88,7 @@ public class OwnerEntity {
 
         OwnerEntity that = (OwnerEntity) o;
 
+        if (discount != that.discount) return false;
         if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
         if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
         if (ownerCategory != that.ownerCategory) return false;
@@ -91,6 +101,7 @@ public class OwnerEntity {
         int result = firstName != null ? firstName.hashCode() : 0;
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (ownerCategory != null ? ownerCategory.hashCode() : 0);
+        result = 31 * result + discount;
         result = 31 * result + (petList != null ? petList.hashCode() : 0);
         result = 31 * result + (addressEntity != null ? addressEntity.hashCode() : 0);
         return result;
@@ -102,6 +113,7 @@ public class OwnerEntity {
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", ownerCategory=" + ownerCategory +
+                ", discount=" + discount +
                 ", petList=" + petList +
                 ", addressEntity=" + addressEntity +
                 '}';

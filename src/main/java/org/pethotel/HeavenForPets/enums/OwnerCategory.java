@@ -6,20 +6,23 @@ import com.fasterxml.jackson.annotation.JsonCreator;
  * Created by Paulina on 2017-10-07.
  */
 public enum OwnerCategory {
-    VIP(1,"V"),
-    GOLD(2,"G"),
-    SILVER(3,"S"),
-    NORMAL(4,"N"),
-    NO_SERVICE(5,"NS"),
+    VIP(1,"V", 20),
+    GOLD(2,"G", 15),
+    SILVER(3,"S", 10),
+    NORMAL(4,"N", 0),
+    NO_SERVICE(5,"NS", 0),
     ;
 
     private final int numberCategory;
     private final String shortCategory;
+    private final int discount;
 
-    OwnerCategory(int numberCategory, String shortCategory) {
+    OwnerCategory(int numberCategory, String shortCategory, int discount) {
         this.numberCategory = numberCategory;
         this.shortCategory = shortCategory;
+        this.discount = discount;
     }
+
 
     public int getNumberCategory() {
         return numberCategory;
@@ -29,11 +32,16 @@ public enum OwnerCategory {
         return shortCategory;
     }
 
+    public int getDiscount() {
+        return discount;
+    }
+
     @Override
     public String toString() {
         return "OwnerCategory{" +
                 "numberCategory=" + numberCategory +
                 ", shortCategory='" + shortCategory + '\'' +
+                ", discount=" + discount +
                 '}';
     }
 

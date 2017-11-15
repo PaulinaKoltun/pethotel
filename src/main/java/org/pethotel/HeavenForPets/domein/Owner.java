@@ -14,6 +14,7 @@ public class Owner implements Serializable {
     private String firstName;
     private String lastName;
     private OwnerCategory ownerCategory;
+    private int discount;
     private List<Pet> petList = new ArrayList<>();
     private Address address;
 
@@ -26,6 +27,7 @@ public class Owner implements Serializable {
         this.lastName = lastName;
         this.ownerCategory = ownerCategory;
         this.petList = petList;
+        this.discount =ownerCategory.getDiscount();
         this.address = address;
     }
 
@@ -74,6 +76,14 @@ public class Owner implements Serializable {
         this.address = address;
     }
 
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -81,6 +91,7 @@ public class Owner implements Serializable {
 
         Owner owner = (Owner) o;
 
+        if (discount != owner.discount) return false;
         if (firstName != null ? !firstName.equals(owner.firstName) : owner.firstName != null) return false;
         if (lastName != null ? !lastName.equals(owner.lastName) : owner.lastName != null) return false;
         if (ownerCategory != owner.ownerCategory) return false;
@@ -94,6 +105,7 @@ public class Owner implements Serializable {
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (ownerCategory != null ? ownerCategory.hashCode() : 0);
         result = 31 * result + (petList != null ? petList.hashCode() : 0);
+        result = 31 * result + discount;
         result = 31 * result + (address != null ? address.hashCode() : 0);
         return result;
     }
@@ -105,6 +117,7 @@ public class Owner implements Serializable {
                 ", lastName='" + lastName + '\'' +
                 ", ownerCategory=" + ownerCategory +
                 ", petList=" + petList +
+                ", discount=" + discount +
                 ", address=" + address +
                 '}';
     }

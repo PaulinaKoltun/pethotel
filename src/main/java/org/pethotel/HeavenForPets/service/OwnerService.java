@@ -15,4 +15,5 @@ public interface OwnerService {
     List<Client> getAllClients();
     List<Pet> showAllPets(int id);
     void deleteAllPets(int id);
+    void updateDiscountAtOwner(String lastName, int newDiscount);
 }

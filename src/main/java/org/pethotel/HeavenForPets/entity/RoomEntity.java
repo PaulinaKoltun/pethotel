@@ -4,7 +4,6 @@ package org.pethotel.HeavenForPets.entity;
  * Created by Paulina on 2017-10-07.
  */
 
-import com.sun.istack.internal.NotNull;
 import org.pethotel.HeavenForPets.enums.PetType;
 
 import javax.persistence.*;
@@ -15,7 +14,6 @@ public class RoomEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @NotNull
     private int roomNumber;
     private int numberOfPlaces;
     private int freePlaces;

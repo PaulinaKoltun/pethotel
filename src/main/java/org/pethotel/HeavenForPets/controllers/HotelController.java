@@ -38,6 +38,12 @@ public class HotelController implements ErrorController{
         System.out.println(owner.getAddress());
     }
 
+    @PutMapping("/updateDiscountAtOwner/{lastName}/{newDiscount}")
+    public void updateDiscountAtOwner(@PathVariable String lastName, @PathVariable int newDiscount) {
+        ownerService.updateDiscountAtOwner(lastName, newDiscount);
+    }
+
+
     @GetMapping("/getAllRoomsByType/{petType}")
     public List<Room> getAllRoomsByType(@PathVariable String petType){
         return roomService.getAllRoomsByType(petType);
