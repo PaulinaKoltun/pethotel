@@ -10,7 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "room")
+@Table(name = "ROOM")
 public class RoomEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

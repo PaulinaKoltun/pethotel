@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <changeSet id="121120172000" author="robertszczygielski">
+        <createTable tableName="ROOM">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="room_number" type="integer"/>
+            <column name="number_of_places" type="integer"/>
+            <column name="free_places" type="integer"/>
+            <column name="pet_type" type="varchar(20)"/>
+            <column name="price" type="integer"/>
+        </createTable>
+        <createTable tableName="PET">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(31)"/>
+            <column name="comment" type="varchar(255)"/>
+            <column name="pet_type" type="varchar(20)"/>
+            <column name="room_entity" type="int"/>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="FK_ROOM_TO_PET"
+                                 baseTableName="PET" baseColumnNames="room_entity"
+                                 referencedTableName="ROOM" referencedColumnNames="id"
+        />
+
+    </changeSet>
+</databaseChangeLog>
