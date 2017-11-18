@@ -1,5 +1,7 @@
 package org.pethotel.HeavenForPets.controllers;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.pethotel.HeavenForPets.domein.Owner;
 import org.pethotel.HeavenForPets.domein.Pet;
 import org.pethotel.HeavenForPets.domein.Room;
@@ -20,6 +22,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/hotel")
 public class HotelController implements ErrorController{
+
+    private static final Logger LOGGER = LogManager.getLogger(HotelController.class);
+
     private static final String PATH = "/error";
 
     @Autowired
@@ -33,9 +38,10 @@ public class HotelController implements ErrorController{
 
     @PostMapping("/add")
     public void addPets(@RequestBody Owner owner){
+        LOGGER.info("Add Owner with data: {}", owner);
         ownerService.saveOwner(owner);
-        System.out.println(owner);
-        System.out.println(owner.getAddress());
+//        System.out.println(owner);
+//        System.out.println(owner.getAddress());
     }
 
     @GetMapping("/getAllRoomsByType/{petType}")
