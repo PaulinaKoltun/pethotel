@@ -3,6 +3,7 @@ package org.pethotel.HeavenForPets.domein;
 import org.pethotel.HeavenForPets.enums.PetType;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 /**
  * Created by Paulina on 2017-09-27.
