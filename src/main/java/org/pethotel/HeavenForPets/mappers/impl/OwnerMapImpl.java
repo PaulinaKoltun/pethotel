@@ -70,6 +70,7 @@ public class OwnerMapImpl implements OwnerMap {
         ownerEntity.setFirstName(owner.getFirstName());
         ownerEntity.setLastName(owner.getLastName());
         ownerEntity.setOwnerCategory(owner.getOwnerCategory());
+        ownerEntity.setDiscount(owner.getOwnerCategory().getDiscount());
         return ownerEntity;
     }
 

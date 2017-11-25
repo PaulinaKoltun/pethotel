@@ -54,10 +54,16 @@ public class OwnerServiceImpl implements OwnerService {
             client.setFirstName(ownerEntity.getFirstName());
             client.setLastName(ownerEntity.getLastName());
             client.setPetNumbers(ownerEntity.getPetList().size());
-            client.setWholePrice(countWholePrice(ownerEntity.getPetList()));
+            client.setWholePrice(getWholePriceAfterDiscount(ownerEntity));
             clients.add(client);
         }
         return clients;
+    }
+
+    private int getWholePriceAfterDiscount(OwnerEntity ownerEntity) {
+        return countWholePrice(ownerEntity.getPetList()) -
+                (ownerEntity.getDiscount()*
+                countWholePrice(ownerEntity.getPetList())/100);
     }
 
     private int countWholePrice(List<PetEntity> petList) {
@@ -101,4 +107,12 @@ public class OwnerServiceImpl implements OwnerService {
             petRepository.delete(petEntity);
         }
     }
+
+    @Override
+    public void updateDiscountAtOwner(String lastName, int newDiscount) {
+        OwnerEntity ownerEntity = ownerRepository.getOwnerByLastName(lastName);
+        ownerEntity.setDiscount(newDiscount);
+        ownerRepository.save(ownerEntity);
+    }
+
 }

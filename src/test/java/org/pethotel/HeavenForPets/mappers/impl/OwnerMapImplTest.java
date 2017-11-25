@@ -1,5 +1,6 @@
 package org.pethotel.HeavenForPets.mappers.impl;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -27,6 +28,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by Paulina on 2017-10-04.
  */
+@Ignore
 @RunWith(MockitoJUnitRunner.class)
 public class OwnerMapImplTest {
 

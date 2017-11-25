@@ -15,7 +15,6 @@ public class RoomEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @NotNull
     private int roomNumber;
     private int numberOfPlaces;
     private int freePlaces;
