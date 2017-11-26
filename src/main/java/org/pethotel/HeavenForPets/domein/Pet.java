@@ -13,6 +13,8 @@ public class Pet implements Serializable {
     private String comment;
     private PetType petType;
     private int roomNumber;
+    private Date dateIn;
+    private Date dateOut;
 
     public Pet(){}
 
@@ -48,6 +50,22 @@ public class Pet implements Serializable {
         this.petType = petType;
     }
 
+    public Date getDateIn() {
+        return dateIn;
+    }
+
+    public void setDateIn(Date dateIn) {
+        this.dateIn = dateIn;
+    }
+
+    public Date getDateOut() {
+        return dateOut;
+    }
+
+    public void setDateOut(Date dateOut) {
+        this.dateOut = dateOut;
+    }
+
     @Override
     public String toString() {
         return "Pet{" +
@@ -55,6 +73,8 @@ public class Pet implements Serializable {
                 ", comment='" + comment + '\'' +
                 ", petType=" + petType +
                 ", roomNumber=" + roomNumber +
+                ", DateIn=" + dateIn +
+                ", DateOut=" + dateOut +
                 '}';
     }
 
@@ -68,7 +88,9 @@ public class Pet implements Serializable {
         if (roomNumber != pet.roomNumber) return false;
         if (name != null ? !name.equals(pet.name) : pet.name != null) return false;
         if (comment != null ? !comment.equals(pet.comment) : pet.comment != null) return false;
-        return petType == pet.petType;
+        if (petType != pet.petType) return false;
+        if (dateIn != null ? !dateIn.equals(pet.dateIn) : pet.dateIn != null) return false;
+        return dateOut != null ? dateOut.equals(pet.dateOut) : pet.dateOut == null;
     }
 
     @Override
@@ -77,6 +99,8 @@ public class Pet implements Serializable {
         result = 31 * result + (comment != null ? comment.hashCode() : 0);
         result = 31 * result + (petType != null ? petType.hashCode() : 0);
         result = 31 * result + roomNumber;
+        result = 31 * result + (dateIn != null ? dateIn.hashCode() : 0);
+        result = 31 * result + (dateOut != null ? dateOut.hashCode() : 0);
         return result;
     }
 }

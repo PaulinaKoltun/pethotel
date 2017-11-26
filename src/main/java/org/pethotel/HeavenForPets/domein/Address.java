@@ -8,8 +8,8 @@ import java.io.Serializable;
 public class Address implements Serializable{
     private String city;
     private String street;
-    private String numberofHouse;
-    private String numberofFlat;
+    private String numberOfHouse;
+    private String numberOfFlat;
     private String zipCode;
 
     public Address() {
@@ -31,20 +31,20 @@ public class Address implements Serializable{
         this.street = street;
     }
 
-    public String getNumberofHouse() {
-        return numberofHouse;
+    public String getNumberOfHouse() {
+        return numberOfHouse;
     }
 
-    public void setNumberofHouse(String numberofHouse) {
-        this.numberofHouse = numberofHouse;
+    public void setNumberOfHouse(String numberOfHouse) {
+        this.numberOfHouse = numberOfHouse;
     }
 
-    public String getNumberofFlat() {
-        return numberofFlat;
+    public String getNumberOfFlat() {
+        return numberOfFlat;
     }
 
-    public void setNumberofFlat(String numberofFlat) {
-        this.numberofFlat = numberofFlat;
+    public void setNumberOfFlat(String numberOfFlat) {
+        this.numberOfFlat = numberOfFlat;
     }
 
     public String getZipCode() {
@@ -64,9 +64,9 @@ public class Address implements Serializable{
 
         if (city != null ? !city.equals(address.city) : address.city != null) return false;
         if (street != null ? !street.equals(address.street) : address.street != null) return false;
-        if (numberofHouse != null ? !numberofHouse.equals(address.numberofHouse) : address.numberofHouse != null)
+        if (numberOfHouse != null ? !numberOfHouse.equals(address.numberOfHouse) : address.numberOfHouse != null)
             return false;
-        if (numberofFlat != null ? !numberofFlat.equals(address.numberofFlat) : address.numberofFlat != null)
+        if (numberOfFlat != null ? !numberOfFlat.equals(address.numberOfFlat) : address.numberOfFlat != null)
             return false;
         return zipCode != null ? zipCode.equals(address.zipCode) : address.zipCode == null;
     }
@@ -75,8 +75,8 @@ public class Address implements Serializable{
     public int hashCode() {
         int result = city != null ? city.hashCode() : 0;
         result = 31 * result + (street != null ? street.hashCode() : 0);
-        result = 31 * result + (numberofHouse != null ? numberofHouse.hashCode() : 0);
-        result = 31 * result + (numberofFlat != null ? numberofFlat.hashCode() : 0);
+        result = 31 * result + (numberOfHouse != null ? numberOfHouse.hashCode() : 0);
+        result = 31 * result + (numberOfFlat != null ? numberOfFlat.hashCode() : 0);
         result = 31 * result + (zipCode != null ? zipCode.hashCode() : 0);
         return result;
     }
@@ -86,8 +86,8 @@ public class Address implements Serializable{
         return "Address{" +
                 "city='" + city + '\'' +
                 ", street='" + street + '\'' +
-                ", numberofHouse='" + numberofHouse + '\'' +
-                ", numberofFlat='" + numberofFlat + '\'' +
+                ", numberOfHouse='" + numberOfHouse + '\'' +
+                ", numberOfFlat='" + numberOfFlat + '\'' +
                 ", zipCode='" + zipCode + '\'' +
                 '}';
     }

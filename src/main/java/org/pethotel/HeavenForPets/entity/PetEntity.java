@@ -3,6 +3,7 @@ package org.pethotel.HeavenForPets.entity;
 import org.pethotel.HeavenForPets.enums.PetType;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 /**
  * Created by Paulina on 2017-09-30.
@@ -19,6 +20,8 @@ public class PetEntity {
     private PetType petType;
     @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     private RoomEntity roomEntity;
+    private Date dateIn;
+    private Date dateOut;
 
     public PetEntity() {
     }
@@ -33,7 +36,9 @@ public class PetEntity {
         if (name != null ? !name.equals(petEntity.name) : petEntity.name != null) return false;
         if (comment != null ? !comment.equals(petEntity.comment) : petEntity.comment != null) return false;
         if (petType != petEntity.petType) return false;
-        return roomEntity != null ? roomEntity.equals(petEntity.roomEntity) : petEntity.roomEntity == null;
+        if (roomEntity != null ? !roomEntity.equals(petEntity.roomEntity) : petEntity.roomEntity != null) return false;
+        if (dateIn != null ? !dateIn.equals(petEntity.dateIn) : petEntity.dateIn != null) return false;
+        return dateOut != null ? dateOut.equals(petEntity.dateOut) : petEntity.dateOut == null;
     }
 
     @Override
@@ -42,6 +47,8 @@ public class PetEntity {
         result = 31 * result + (comment != null ? comment.hashCode() : 0);
         result = 31 * result + (petType != null ? petType.hashCode() : 0);
         result = 31 * result + (roomEntity != null ? roomEntity.hashCode() : 0);
+        result = 31 * result + (dateIn != null ? dateIn.hashCode() : 0);
+        result = 31 * result + (dateOut != null ? dateOut.hashCode() : 0);
         return result;
     }
 
@@ -70,6 +77,22 @@ public class PetEntity {
         this.petType = petType;
     }
 
+    public Date getDateIn() {
+        return dateIn;
+    }
+
+    public void setDateIn(Date dateIn) {
+        this.dateIn = dateIn;
+    }
+
+    public Date getDateOut() {
+        return dateOut;
+    }
+
+    public void setDateOut(Date dateOut) {
+        this.dateOut = dateOut;
+    }
+
     @Override
     public String toString() {
         return "PetEntity{" +
@@ -77,6 +100,8 @@ public class PetEntity {
                 ", comment='" + comment + '\'' +
                 ", petType=" + petType +
                 ", roomEntity=" + roomEntity +
+                ", dateIn=" + dateIn +
+                ", dateOut=" + dateOut +
                 '}';
     }
 

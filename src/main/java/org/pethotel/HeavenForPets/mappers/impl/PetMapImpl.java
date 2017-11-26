@@ -17,6 +17,8 @@ public class PetMapImpl implements PetMap {
         petEntity.setName(pet.getName());
         petEntity.setComment(pet.getComment());
         petEntity.setPetType(pet.getPetType());
+        petEntity.setDateIn(pet.getDateIn());
+        petEntity.setDateOut(pet.getDateOut());
         return petEntity;
     }
 }

@@ -8,13 +8,16 @@ import org.pethotel.HeavenForPets.entity.PetEntity;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.pethotel.HeavenForPets.exceptions.InvalidPetTypeException;
 import org.pethotel.HeavenForPets.mappers.OwnerMap;
+import org.pethotel.HeavenForPets.repository.AddressRepository;
 import org.pethotel.HeavenForPets.repository.OwnerRepository;
 import org.pethotel.HeavenForPets.repository.PetRepository;
+import org.pethotel.HeavenForPets.repository.RoomRepository;
 import org.pethotel.HeavenForPets.service.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,6 +35,9 @@ public class OwnerServiceImpl implements OwnerService {
     private PetRepository petRepository;
 
     @Autowired
+    private AddressRepository addressRepository;
+
+    @Autowired
     private OwnerMap ownerMap;
 
     @Override
@@ -39,6 +45,7 @@ public class OwnerServiceImpl implements OwnerService {
         try {
             OwnerEntity ownerEntity = ownerMap.map(owner);
             ownerRepository.save(ownerEntity);
+            addressRepository.save(ownerEntity.getAddressEntity());
         } catch (InvalidPetTypeException e) {
             e.printStackTrace();
         }
@@ -69,10 +76,14 @@ public class OwnerServiceImpl implements OwnerService {
     private int countWholePrice(List<PetEntity> petList) {
         int wholePrice = 0;
         for (PetEntity petEntity : petList) {
-            wholePrice = wholePrice + petEntity.getRoomEntity().getPrice();
-
+            wholePrice = (int) (wholePrice + petEntity.getRoomEntity().getPrice()* DaysOfVisit(petEntity));
         }
         return wholePrice;
+    }
+
+    private long DaysOfVisit(PetEntity petEntity) {
+        System.out.print(petEntity.getDateIn().getTime());
+        return (petEntity.getDateOut().getTime() - petEntity.getDateIn().getTime()) / 86400000;
     }
 
     @Override
@@ -86,6 +97,8 @@ public class OwnerServiceImpl implements OwnerService {
             pet.setName(petEntity.getName());
             pet.setComment(petEntity.getComment());
             pet.setPetType(petEntity.getPetType());
+            pet.setDateIn(petEntity.getDateIn());
+            pet.setDateOut(petEntity.getDateOut());
 
             RoomEntity roomEntity = petEntity.getRoomEntity();
             pet.setRoomNumber(roomEntity.getRoomNumber());

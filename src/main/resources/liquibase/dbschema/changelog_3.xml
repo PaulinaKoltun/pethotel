@@ -11,7 +11,7 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="city" type="varchar(255)"/>
-            <column name="number_of_flats" type="varchar(255)"/>
+            <column name="number_of_flat" type="varchar(255)"/>
             <column name="number_of_house" type="varchar(255)"/>
             <column name="street" type="varchar(255)"/>
             <column name="zip_code" type="varchar(255)"/>
