@@ -13,12 +13,12 @@
         />
 
         <addForeignKeyConstraint constraintName="FK_OWNER_AND_PET"
-                                 baseTableName="OWNER_PET_LIST" baseColumnNames="owner_entity_id"
+                                 baseTableName="OWNER_PET_LIST" baseColumnNames="owner_entity"
                                  referencedTableName="OWNER" referencedColumnNames="id"
         />
 
         <addForeignKeyConstraint constraintName="FK_OWNER_AND_PET_ID"
-                                 baseTableName="OWNER_PET_LIST" baseColumnNames="pet_list_id"
+                                 baseTableName="OWNER_PET_LIST" baseColumnNames="pet_list"
                                  referencedTableName="PET" referencedColumnNames="id"
         />
 

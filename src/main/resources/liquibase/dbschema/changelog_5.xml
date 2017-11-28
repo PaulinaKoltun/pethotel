@@ -7,10 +7,10 @@
 
     <changeSet id="261120172150" author="paulina">
         <addColumn tableName="PET">
-            <column name="dateIn" type="date" defaultValue="2017-11-26"></column>
+            <column name="date_in" type="datetime" defaultValue="2017-11-26"></column>
         </addColumn>
         <addColumn tableName="PET">
-            <column name="dateOut" type="date" defaultValue="2017-11-26"></column>
+            <column name="date_out" type="datetime" defaultValue="2017-11-26"></column>
         </addColumn>
     </changeSet>
 </databaseChangeLog>

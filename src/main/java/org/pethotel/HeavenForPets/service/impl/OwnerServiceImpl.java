@@ -76,14 +76,15 @@ public class OwnerServiceImpl implements OwnerService {
     private int countWholePrice(List<PetEntity> petList) {
         int wholePrice = 0;
         for (PetEntity petEntity : petList) {
-            wholePrice = (int) (wholePrice + petEntity.getRoomEntity().getPrice()* DaysOfVisit(petEntity));
+            long daysOfVisit = getDaysOfVisit(petEntity);
+            wholePrice = (int) (wholePrice + petEntity.getRoomEntity().getPrice()* daysOfVisit);
         }
         return wholePrice;
     }
 
-    private long DaysOfVisit(PetEntity petEntity) {
-        System.out.print(petEntity.getDateIn().getTime());
-        return (petEntity.getDateOut().getTime() - petEntity.getDateIn().getTime()) / 86400000;
+    private long getDaysOfVisit(PetEntity petEntity) {
+        long difference = Math.abs(petEntity.getDateOut().getTime().getTime() - petEntity.getDateIn().getTime().getTime());
+        return difference / (24 * 60 * 60 * 1000);
     }
 
     @Override

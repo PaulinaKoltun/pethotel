@@ -4,6 +4,7 @@ import org.pethotel.HeavenForPets.enums.PetType;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by Paulina on 2017-09-30.
@@ -20,8 +21,8 @@ public class PetEntity {
     private PetType petType;
     @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     private RoomEntity roomEntity;
-    private Date dateIn;
-    private Date dateOut;
+    private GregorianCalendar dateIn;
+    private GregorianCalendar dateOut;
 
     public PetEntity() {
     }
@@ -77,19 +78,19 @@ public class PetEntity {
         this.petType = petType;
     }
 
-    public Date getDateIn() {
+    public GregorianCalendar getDateIn() {
         return dateIn;
     }
 
-    public void setDateIn(Date dateIn) {
+    public void setDateIn(GregorianCalendar dateIn) {
         this.dateIn = dateIn;
     }
 
-    public Date getDateOut() {
+    public GregorianCalendar getDateOut() {
         return dateOut;
     }
 
-    public void setDateOut(Date dateOut) {
+    public void setDateOut(GregorianCalendar dateOut) {
         this.dateOut = dateOut;
     }
 
