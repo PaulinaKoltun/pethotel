@@ -83,7 +83,7 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     private long getDaysOfVisit(PetEntity petEntity) {
-        long difference = Math.abs(petEntity.getDateOut().getTime().getTime() - petEntity.getDateIn().getTime().getTime());
+        long difference = Math.abs(petEntity.getDateOut().getTime() - petEntity.getDateIn().getTime());
         return difference / (24 * 60 * 60 * 1000);
     }
 

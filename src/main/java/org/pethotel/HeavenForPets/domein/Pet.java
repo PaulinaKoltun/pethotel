@@ -3,8 +3,7 @@ package org.pethotel.HeavenForPets.domein;
 import org.pethotel.HeavenForPets.enums.PetType;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
@@ -15,8 +14,8 @@ public class Pet implements Serializable {
     private String comment;
     private PetType petType;
     private int roomNumber;
-    private GregorianCalendar dateIn;
-    private GregorianCalendar dateOut;
+    private Date dateIn;
+    private Date dateOut;
 
     public Pet(){}
 
@@ -52,19 +51,19 @@ public class Pet implements Serializable {
         this.petType = petType;
     }
 
-    public GregorianCalendar getDateIn() {
+    public Date getDateIn() {
         return dateIn;
     }
 
-    public void setDateIn(GregorianCalendar dateIn) {
+    public void setDateIn(Date dateIn) {
         this.dateIn = dateIn;
     }
 
-    public GregorianCalendar getDateOut() {
+    public Date getDateOut() {
         return dateOut;
     }
 
-    public void setDateOut(GregorianCalendar dateOut) {
+    public void setDateOut(Date dateOut) {
         this.dateOut = dateOut;
     }
 
