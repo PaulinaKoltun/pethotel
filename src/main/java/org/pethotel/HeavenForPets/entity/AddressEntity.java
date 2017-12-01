@@ -11,10 +11,15 @@ public class AddressEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
+    @Column(name = "city")
     private String city;
+    @Column(name = "street")
     private String street;
+    @Column(name = "number_of_house")
     private String numberOfHouse;
+    @Column(name = "number_of_flat")
     private String numberOfFlat;
+    @Column(name = "zip_code")
     private String zipCode;
 
     public AddressEntity(){
