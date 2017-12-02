@@ -5,16 +5,9 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
 
-    <changeSet id="011220172000" author="paulina">
-        <createTable tableName="FOOD">
-            <column name="id" type="bigint(20)" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="name" type="varchar(255)"/>
-            <column name="food_type" type="varchar(255)"/>
-            <column name="amount" type="int(11)"/>
-            <column name="pet_type" type="varchar(255)"/>
-            <column name="taste" type="varchar(255)"/>
-        </createTable>
+    <changeSet id="021220171100" author="paulina">
+        <addColumn tableName="FOOD">
+            <column name="price" type="numeric" defaultValue="0"></column>
+        </addColumn>
     </changeSet>
 </databaseChangeLog>

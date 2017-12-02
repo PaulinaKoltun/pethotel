@@ -5,7 +5,6 @@ import org.apache.logging.log4j.Logger;
 import org.pethotel.HeavenForPets.domein.Owner;
 import org.pethotel.HeavenForPets.domein.Pet;
 import org.pethotel.HeavenForPets.domein.Room;
-import org.pethotel.HeavenForPets.enums.PetType;
 import org.pethotel.HeavenForPets.service.OwnerService;
 import org.pethotel.HeavenForPets.service.PetService;
 import org.pethotel.HeavenForPets.service.RoomService;
@@ -40,8 +39,6 @@ public class HotelController implements ErrorController{
     public void addPets(@RequestBody Owner owner){
         LOGGER.info("Add Owner with data: {}", owner);
         ownerService.saveOwner(owner);
-//        System.out.println(owner);
-//        System.out.println(owner.getAddress());
     }
 
     @PutMapping("/updateDiscountAtOwner/{lastName}/{newDiscount}")

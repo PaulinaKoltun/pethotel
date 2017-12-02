@@ -1,5 +1,7 @@
 package org.pethotel.HeavenForPets.controllers;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.pethotel.HeavenForPets.domein.Client;
 import org.pethotel.HeavenForPets.domein.Pet;
 import org.pethotel.HeavenForPets.service.OwnerService;
@@ -18,6 +20,8 @@ import java.util.List;
 @RequestMapping("/clients")
 public class ClientController implements ErrorController {
     private static final String PATH = "/error";
+
+    private static final Logger LOGGER = LogManager.getLogger(ClientController.class);
 
     @Autowired
     OwnerService ownerService;
