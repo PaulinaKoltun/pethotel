@@ -30,13 +30,10 @@ public class PetEntity {
     @Column(name = "date_out")
     private Date dateOut;
     @Column(name = "breakfast")
-    @Transient
     private FoodEntity breakfast;
     @Column(name = "dinner")
-    @Transient
     private FoodEntity dinner;
     @Column(name = "supper")
-    @Transient
     private FoodEntity supper;
 
     public PetEntity() {
