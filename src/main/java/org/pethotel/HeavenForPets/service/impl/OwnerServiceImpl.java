@@ -25,6 +25,7 @@ import java.util.List;
 /**
  * Created by Paulina on 2017-09-30.
  */
+
 @Service
 public class OwnerServiceImpl implements OwnerService {
 

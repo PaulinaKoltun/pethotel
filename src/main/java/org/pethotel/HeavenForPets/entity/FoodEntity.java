@@ -4,6 +4,7 @@ import org.pethotel.HeavenForPets.enums.FoodType;
 import org.pethotel.HeavenForPets.enums.PetType;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "food")
@@ -23,16 +24,10 @@ public class FoodEntity {
     private PetType petType;
     @Column(name = "taste")
     private String taste;
+    @Column(name = "price")
+    private BigDecimal price;
 
     public FoodEntity() {
-    }
-
-    public FoodEntity(String name, FoodType foodType, int amount, PetType petType, String taste) {
-        this.name = name;
-        this.foodType = foodType;
-        this.amount = amount;
-        this.petType = petType;
-        this.taste = taste;
     }
 
     public String getName() {
@@ -75,6 +70,14 @@ public class FoodEntity {
         this.taste = taste;
     }
 
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,7 +89,8 @@ public class FoodEntity {
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (foodType != that.foodType) return false;
         if (petType != that.petType) return false;
-        return taste != null ? taste.equals(that.taste) : that.taste == null;
+        if (taste != null ? !taste.equals(that.taste) : that.taste != null) return false;
+        return price != null ? price.equals(that.price) : that.price == null;
     }
 
     @Override
@@ -96,6 +100,7 @@ public class FoodEntity {
         result = 31 * result + amount;
         result = 31 * result + (petType != null ? petType.hashCode() : 0);
         result = 31 * result + (taste != null ? taste.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
         return result;
     }
 
@@ -107,6 +112,7 @@ public class FoodEntity {
                 ", amount=" + amount +
                 ", petType=" + petType +
                 ", taste='" + taste + '\'' +
+                ", price=" + price +
                 '}';
     }
 }

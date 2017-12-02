@@ -29,6 +29,12 @@ public class PetEntity {
     private Date dateIn;
     @Column(name = "date_out")
     private Date dateOut;
+    @Column(name = "breakfast")
+    private FoodEntity breakfast;
+    @Column(name = "dinner")
+    private FoodEntity dinner;
+    @Column(name = "supper")
+    private FoodEntity supper;
 
     public PetEntity() {
     }
@@ -45,7 +51,10 @@ public class PetEntity {
         if (petType != petEntity.petType) return false;
         if (roomEntity != null ? !roomEntity.equals(petEntity.roomEntity) : petEntity.roomEntity != null) return false;
         if (dateIn != null ? !dateIn.equals(petEntity.dateIn) : petEntity.dateIn != null) return false;
-        return dateOut != null ? dateOut.equals(petEntity.dateOut) : petEntity.dateOut == null;
+        if (dateOut != null ? !dateOut.equals(petEntity.dateOut) : petEntity.dateOut != null) return false;
+        if (breakfast != null ? !breakfast.equals(petEntity.breakfast) : petEntity.breakfast != null) return false;
+        if (dinner != null ? !dinner.equals(petEntity.dinner) : petEntity.dinner != null) return false;
+        return supper != null ? supper.equals(petEntity.supper) : petEntity.supper == null;
     }
 
     @Override
@@ -56,6 +65,9 @@ public class PetEntity {
         result = 31 * result + (roomEntity != null ? roomEntity.hashCode() : 0);
         result = 31 * result + (dateIn != null ? dateIn.hashCode() : 0);
         result = 31 * result + (dateOut != null ? dateOut.hashCode() : 0);
+        result = 31 * result + (breakfast != null ? breakfast.hashCode() : 0);
+        result = 31 * result + (dinner != null ? dinner.hashCode() : 0);
+        result = 31 * result + (supper != null ? supper.hashCode() : 0);
         return result;
     }
 
@@ -100,6 +112,30 @@ public class PetEntity {
         this.dateOut = dateOut;
     }
 
+    public FoodEntity getBreakfast() {
+        return breakfast;
+    }
+
+    public void setBreakfast(FoodEntity breakfast) {
+        this.breakfast = breakfast;
+    }
+
+    public FoodEntity getDinner() {
+        return dinner;
+    }
+
+    public void setDinner(FoodEntity dinner) {
+        this.dinner = dinner;
+    }
+
+    public FoodEntity getSupper() {
+        return supper;
+    }
+
+    public void setSupper(FoodEntity supper) {
+        this.supper = supper;
+    }
+
     @Override
     public String toString() {
         return "PetEntity{" +
@@ -109,6 +145,9 @@ public class PetEntity {
                 ", roomEntity=" + roomEntity +
                 ", dateIn=" + dateIn +
                 ", dateOut=" + dateOut +
+                ", breakfast=" + breakfast +
+                ", dinner=" + dinner +
+                ", supper=" + supper +
                 '}';
     }
 

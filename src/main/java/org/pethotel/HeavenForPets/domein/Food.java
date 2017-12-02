@@ -3,22 +3,26 @@ package org.pethotel.HeavenForPets.domein;
 import org.pethotel.HeavenForPets.enums.FoodType;
 import org.pethotel.HeavenForPets.enums.PetType;
 
+import java.math.BigDecimal;
+
 public class Food {
     private String name;
     private FoodType foodType;
     private int amount;
     private PetType petType;
     private String taste;
+    private BigDecimal price;
 
     public Food() {
     }
 
-    public Food(String name, FoodType foodType, int amount, PetType petType, String taste) {
+    public Food(String name, FoodType foodType, int amount, PetType petType, String taste, BigDecimal price) {
         this.name = name;
         this.foodType = foodType;
         this.amount = amount;
         this.petType = petType;
         this.taste = taste;
+        this.price = price;
     }
 
     public String getName() {
@@ -61,6 +65,14 @@ public class Food {
         this.taste = taste;
     }
 
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -70,9 +82,10 @@ public class Food {
 
         if (amount != food.amount) return false;
         if (name != null ? !name.equals(food.name) : food.name != null) return false;
-        if (foodType != null ? !foodType.equals(food.foodType) : food.foodType != null) return false;
+        if (foodType != food.foodType) return false;
         if (petType != food.petType) return false;
-        return taste != null ? taste.equals(food.taste) : food.taste == null;
+        if (taste != null ? !taste.equals(food.taste) : food.taste != null) return false;
+        return price != null ? price.equals(food.price) : food.price == null;
     }
 
     @Override
@@ -82,6 +95,7 @@ public class Food {
         result = 31 * result + amount;
         result = 31 * result + (petType != null ? petType.hashCode() : 0);
         result = 31 * result + (taste != null ? taste.hashCode() : 0);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
         return result;
     }
 
@@ -93,6 +107,7 @@ public class Food {
                 ", amount=" + amount +
                 ", petType=" + petType +
                 ", taste='" + taste + '\'' +
+                ", price=" + price +
                 '}';
     }
 }
