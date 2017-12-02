@@ -11,7 +11,7 @@ import java.util.List;
  * Created by Paulina on 2017-09-30.
  */
 @Entity
-@Table(name = "owner")
+@Table(name = "OWNER")
 public class OwnerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,7 +26,11 @@ public class OwnerEntity {
     @Column(name = "discount")
     private int discount;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @Column(name = "pet")
+    @JoinTable(
+            name="OWNER_PET_LIST",
+            joinColumns = @JoinColumn( name="owner_entity"),
+            inverseJoinColumns = @JoinColumn( name="pet_list")
+    )
     private List<PetEntity> petList = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "address_entity")
