@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/food")
@@ -20,8 +22,8 @@ public class FoodController implements ErrorController{
     private FoodService foodService;
 
     @PostMapping("/addfood")
-    public void addNewFood(@RequestBody Food food){
-        foodService.saveFood(food);
+    public void addNewFood(@RequestBody List<Food> foodlist){
+        foodService.saveFood(foodlist);
     }
 
     @RequestMapping(value = PATH)

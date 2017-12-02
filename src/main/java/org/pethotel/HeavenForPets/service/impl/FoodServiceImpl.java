@@ -7,6 +7,8 @@ import org.pethotel.HeavenForPets.service.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FoodServiceImpl implements FoodService{
 
@@ -14,13 +16,15 @@ public class FoodServiceImpl implements FoodService{
     private FoodRepository foodRepository;
 
     @Override
-    public void saveFood(Food food) {
-        FoodEntity foodEntity = new FoodEntity();
-        foodEntity.setName(food.getName());
-        foodEntity.setFoodType(food.getFoodType());
-        foodEntity.setAmount(food.getAmount());
-        foodEntity.setPetType(food.getPetType());
-        foodEntity.setTaste(food.getTaste());
-        foodRepository.save(foodEntity);
+    public void saveFood(List<Food> foodlist) {
+        for (Food food : foodlist) {
+            FoodEntity foodEntity = new FoodEntity();
+            foodEntity.setName(food.getName());
+            foodEntity.setFoodType(food.getFoodType());
+            foodEntity.setAmount(food.getAmount());
+            foodEntity.setPetType(food.getPetType());
+            foodEntity.setTaste(food.getTaste());
+            foodRepository.save(foodEntity);
+        }
     }
 }
