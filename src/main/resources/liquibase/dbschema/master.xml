@@ -8,4 +8,6 @@
     <include file="src/main/resources/liquibase/dbschema/changelog_3.xml"/>
     <include file="src/main/resources/liquibase/dbschema/changelog_2.xml"/>
     <include file="src/main/resources/liquibase/dbschema/changelog_4.xml"/>
+    <include file="src/main/resources/liquibase/dbschema/changelog_5.xml"/>
+    <include file="src/main/resources/liquibase/dbschema/changelog_6.xml"/>
 </databaseChangeLog>

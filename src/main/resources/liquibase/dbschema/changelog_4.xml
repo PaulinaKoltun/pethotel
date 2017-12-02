@@ -8,17 +8,17 @@
     <changeSet id="251120171055" author="paulina">
 
         <addForeignKeyConstraint constraintName="FK_OWNER_TO_ADDRESS"
-                                 baseTableName="OWNER" baseColumnNames="address_entity_id"
+                                 baseTableName="OWNER" baseColumnNames="address_entity"
                                  referencedTableName="ADDRESS" referencedColumnNames="id"
         />
 
         <addForeignKeyConstraint constraintName="FK_OWNER_AND_PET"
-                                 baseTableName="OWNER_PET_LIST" baseColumnNames="owner_entity_id"
+                                 baseTableName="OWNER_PET_LIST" baseColumnNames="owner_entity"
                                  referencedTableName="OWNER" referencedColumnNames="id"
         />
 
         <addForeignKeyConstraint constraintName="FK_OWNER_AND_PET_ID"
-                                 baseTableName="OWNER_PET_LIST" baseColumnNames="pet_list_id"
+                                 baseTableName="OWNER_PET_LIST" baseColumnNames="pet_list"
                                  referencedTableName="PET" referencedColumnNames="id"
         />
 

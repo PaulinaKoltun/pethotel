@@ -13,12 +13,12 @@
             <column name="first_name" type="varchar(255)"/>
             <column name="last_name" type="varchar(255)"/>
             <column name="owner_category" type="varchar(255)"/>
-            <column name="address_entity_id" type="int(11)"/>
+            <column name="address_entity" type="int(11)"/>
             <column name="discount" type="integer"/>
         </createTable>
         <createTable tableName="OWNER_PET_LIST">
-            <column name="owner_entity_id" type="bigint(20)"/>
-            <column name="pet_list_id" type="int(11)"/>
+            <column name="owner_entity" type="bigint(20)"/>
+            <column name="pet_list" type="int(11)"/>
         </createTable>
     </changeSet>
 

@@ -19,8 +19,8 @@ public class AddressMapImpl implements AddressMap {
     public AddressEntity mapAddress(Address address) {
         AddressEntity addressEntity = new AddressEntity();
         addressEntity.setCity(address.getCity());
-        addressEntity.setNumberofFlat(address.getNumberofFlat());
-        addressEntity.setNumberofHouse(address.getNumberofHouse());
+        addressEntity.setNumberOfFlat(address.getNumberOfFlat());
+        addressEntity.setNumberOfHouse(address.getNumberOfHouse());
         addressEntity.setStreet(address.getStreet());
         addressEntity.setZipCode(address.getZipCode());
 

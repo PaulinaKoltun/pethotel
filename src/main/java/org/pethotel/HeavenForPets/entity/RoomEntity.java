@@ -15,11 +15,16 @@ public class RoomEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @Column(name = "room_number")
     private int roomNumber;
+    @Column(name = "number_of_places")
     private int numberOfPlaces;
+    @Column(name = "free_places")
     private int freePlaces;
     @Enumerated(EnumType.STRING)
+    @Column(name = "pet_type")
     private PetType petType;
+    @Column(name = "price")
     private int price;
 
     public RoomEntity() {

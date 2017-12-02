@@ -11,10 +11,15 @@ public class AddressEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
+    @Column(name = "city")
     private String city;
+    @Column(name = "street")
     private String street;
-    private String numberofHouse;
-    private String numberofFlat;
+    @Column(name = "number_of_house")
+    private String numberOfHouse;
+    @Column(name = "number_of_flat")
+    private String numberOfFlat;
+    @Column(name = "zip_code")
     private String zipCode;
 
     public AddressEntity(){
@@ -37,20 +42,20 @@ public class AddressEntity {
         this.street = street;
     }
 
-    public String getNumberofHouse() {
-        return numberofHouse;
+    public String getNumberOfHouse() {
+        return numberOfHouse;
     }
 
-    public void setNumberofHouse(String numberofHouse) {
-        this.numberofHouse = numberofHouse;
+    public void setNumberOfHouse(String numberOfHouse) {
+        this.numberOfHouse = numberOfHouse;
     }
 
-    public String getNumberofFlat() {
-        return numberofFlat;
+    public String getNumberOfFlat() {
+        return numberOfFlat;
     }
 
-    public void setNumberofFlat(String numberofFlat) {
-        this.numberofFlat = numberofFlat;
+    public void setNumberOfFlat(String numberOfFlat) {
+        this.numberOfFlat = numberOfFlat;
     }
 
     public String getZipCode() {
@@ -70,9 +75,9 @@ public class AddressEntity {
 
         if (city != null ? !city.equals(that.city) : that.city != null) return false;
         if (street != null ? !street.equals(that.street) : that.street != null) return false;
-        if (numberofHouse != null ? !numberofHouse.equals(that.numberofHouse) : that.numberofHouse != null)
+        if (numberOfHouse != null ? !numberOfHouse.equals(that.numberOfHouse) : that.numberOfHouse != null)
             return false;
-        if (numberofFlat != null ? !numberofFlat.equals(that.numberofFlat) : that.numberofFlat != null) return false;
+        if (numberOfFlat != null ? !numberOfFlat.equals(that.numberOfFlat) : that.numberOfFlat != null) return false;
         return zipCode != null ? zipCode.equals(that.zipCode) : that.zipCode == null;
     }
 
@@ -80,8 +85,8 @@ public class AddressEntity {
     public int hashCode() {
         int result = city != null ? city.hashCode() : 0;
         result = 31 * result + (street != null ? street.hashCode() : 0);
-        result = 31 * result + (numberofHouse != null ? numberofHouse.hashCode() : 0);
-        result = 31 * result + (numberofFlat != null ? numberofFlat.hashCode() : 0);
+        result = 31 * result + (numberOfHouse != null ? numberOfHouse.hashCode() : 0);
+        result = 31 * result + (numberOfFlat != null ? numberOfFlat.hashCode() : 0);
         result = 31 * result + (zipCode != null ? zipCode.hashCode() : 0);
         return result;
     }
@@ -91,8 +96,8 @@ public class AddressEntity {
         return "AddressEntity{" +
                 "city='" + city + '\'' +
                 ", street='" + street + '\'' +
-                ", numberofHouse='" + numberofHouse + '\'' +
-                ", numberofFlat='" + numberofFlat + '\'' +
+                ", numberOfHouse='" + numberOfHouse + '\'' +
+                ", numberOfFlat='" + numberOfFlat + '\'' +
                 ", zipCode='" + zipCode + '\'' +
                 '}';
     }
