@@ -23,20 +23,20 @@ public class PetEntity {
     @Column(name = "pet_type")
     private PetType petType;
     @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-    @JoinColumn(foreignKey = @ForeignKey(name = "FK_ROOM_TO_PET"))
+    @JoinColumn(name="room_entity", referencedColumnName="id", foreignKey = @ForeignKey(name = "FK_ROOM_TO_PET"))
     private RoomEntity roomEntity;
     @Column(name = "date_in")
     private Date dateIn;
     @Column(name = "date_out")
     private Date dateOut;
-    @Transient
-    @Column(name = "breakfast")
+    @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+    @JoinColumn(name="breakfast", referencedColumnName="id", foreignKey = @ForeignKey(name = "FK_BREAKFAST_TO_PET"))
     private FoodEntity breakfast;
-    @Transient
-    @Column(name = "dinner")
+    @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+    @JoinColumn(name="dinner", referencedColumnName="id", foreignKey = @ForeignKey(name = "FK_DINNER_TO_PET"))
     private FoodEntity dinner;
-    @Transient
-    @Column(name = "supper")
+    @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+    @JoinColumn(name="supper", referencedColumnName="id", foreignKey = @ForeignKey(name = "FK_SUPPER_TO_PET"))
     private FoodEntity supper;
 
     public PetEntity() {
