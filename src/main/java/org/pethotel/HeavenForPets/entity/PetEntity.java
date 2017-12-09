@@ -23,16 +23,19 @@ public class PetEntity {
     @Column(name = "pet_type")
     private PetType petType;
     @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-    @JoinColumn(name = "room_entity")
+    @JoinColumn(foreignKey = @ForeignKey(name = "FK_ROOM_TO_PET"))
     private RoomEntity roomEntity;
     @Column(name = "date_in")
     private Date dateIn;
     @Column(name = "date_out")
     private Date dateOut;
+    @Transient
     @Column(name = "breakfast")
     private FoodEntity breakfast;
+    @Transient
     @Column(name = "dinner")
     private FoodEntity dinner;
+    @Transient
     @Column(name = "supper")
     private FoodEntity supper;
 
