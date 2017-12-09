@@ -28,14 +28,15 @@ public class OwnerEntity {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name="OWNER_PET_LIST",
-            joinColumns = @JoinColumn(name="owner_entity", referencedColumnName="id ", foreignKey = @ForeignKey(name =
+            joinColumns = @JoinColumn(name="owner_entity", referencedColumnName="id", foreignKey = @ForeignKey(name =
                     "FK_OWNER_AND_PET")),
             inverseJoinColumns = @JoinColumn(name="pet_list", referencedColumnName="id", foreignKey = @ForeignKey(name =
                     "FK_OWNER_AND_PET_ID"))
     )
     private List<PetEntity> petList = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(foreignKey = @ForeignKey(name = "FK_OWNER_TO_ADDRESS"))
+    @JoinColumn(name="address_entity", referencedColumnName="id",
+            foreignKey = @ForeignKey(name = "FK_OWNER_TO_ADDRESS"))
     private AddressEntity addressEntity;
 
     public OwnerEntity() {

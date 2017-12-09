@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <changeSet id="091220171540" author="paulina">
+        <addColumn tableName="PET">
+            <column name="breakfast" type="bigint(20)"></column>
+            <column name="dinner" type="bigint(20)"></column>
+            <column name="supper" type="bigint(20)"></column>
+        </addColumn>
+
+        <addForeignKeyConstraint constraintName="FK_BREAKFAST_TO_PET"
+                                 baseTableName="PET" baseColumnNames="breakfast"
+                                 referencedTableName="FOOD" referencedColumnNames="id"
+        />
+        <addForeignKeyConstraint constraintName="FK_DINNER_TO_PET"
+                                 baseTableName="PET" baseColumnNames="dinner"
+                                 referencedTableName="FOOD" referencedColumnNames="id"
+        />
+        <addForeignKeyConstraint constraintName="FK_SUPPER_TO_PET"
+                                 baseTableName="PET" baseColumnNames="supper"
+                                 referencedTableName="FOOD" referencedColumnNames="id"
+        />
+    </changeSet>
+</databaseChangeLog>
