@@ -83,6 +83,14 @@
 			<artifactId>validation-api</artifactId>
 			<version>1.1.0.Final</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.7</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -104,8 +112,8 @@
 				<configuration>
 					<changeLogFile>src/main/resources/liquibase/dbschema/master.xml</changeLogFile>
 					<driver>com.mysql.jdbc.Driver</driver>
-					<url>jdbc:mysql://localhost:3307/pethotel</url>
-					<username>toor</username>
+					<url>jdbc:mysql://localhost:3306/pethotel</url>
+					<username>root</username>
 					<password>toor</password>
 				</configuration>
 				<executions>
