@@ -14,7 +14,7 @@
             <column name="number_of_places" type="integer"/>
             <column name="free_places" type="integer"/>
             <column name="pet_type" type="varchar(20)"/>
-            <column name="price" type="integer"/>
+            <column name="price" type="numeric"/>
         </createTable>
         <createTable tableName="PET">
             <column name="id" type="integer" autoIncrement="true">

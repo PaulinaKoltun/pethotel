@@ -6,6 +6,7 @@ import org.pethotel.HeavenForPets.controllers.FoodController;
 import org.pethotel.HeavenForPets.domein.Food;
 import org.pethotel.HeavenForPets.entity.FoodEntity;
 import org.pethotel.HeavenForPets.enums.PetType;
+import org.pethotel.HeavenForPets.mappers.FoodMap;
 import org.pethotel.HeavenForPets.repository.FoodRepository;
 import org.pethotel.HeavenForPets.service.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,18 +21,15 @@ public class FoodServiceImpl implements FoodService{
     private static final Logger LOGGER = LogManager.getLogger(FoodServiceImpl.class);
 
     @Autowired
+    private FoodMap foodMap;
+
+    @Autowired
     private FoodRepository foodRepository;
 
     @Override
     public void saveFood(List<Food> foodlist) {
         for (Food food : foodlist) {
-            FoodEntity foodEntity = new FoodEntity();
-            foodEntity.setName(food.getName());
-            foodEntity.setFoodType(food.getFoodType());
-            foodEntity.setAmount(food.getAmount());
-            foodEntity.setPetType(food.getPetType());
-            foodEntity.setTaste(food.getTaste());
-            foodEntity.setPrice(food.getPrice());
+            FoodEntity foodEntity = foodMap.map(food);
             foodRepository.save(foodEntity);
         }
     }
@@ -43,13 +41,7 @@ public class FoodServiceImpl implements FoodService{
         List<FoodEntity> foodEntityList = foodRepository.getFoodByPetType(petTypeEnum);
         List<Food> foodList = new ArrayList<>();
         for (FoodEntity foodEntity : foodEntityList) {
-            Food food = new Food();
-            food.setName(foodEntity.getName());
-            food.setAmount(foodEntity.getAmount());
-            food.setFoodType(foodEntity.getFoodType());
-            food.setPetType(foodEntity.getPetType());
-            food.setTaste(foodEntity.getTaste());
-            food.setPrice(foodEntity.getPrice());
+            Food food = foodMap.map(foodEntity);
             foodList.add(food);
         }
         return foodList;

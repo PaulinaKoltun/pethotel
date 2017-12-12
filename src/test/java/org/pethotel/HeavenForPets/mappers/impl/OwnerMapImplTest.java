@@ -7,37 +7,46 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.pethotel.HeavenForPets.domein.Address;
-import org.pethotel.HeavenForPets.domein.Owner;
-import org.pethotel.HeavenForPets.domein.Pet;
-import org.pethotel.HeavenForPets.entity.AddressEntity;
-import org.pethotel.HeavenForPets.entity.OwnerEntity;
-import org.pethotel.HeavenForPets.entity.PetEntity;
-import org.pethotel.HeavenForPets.entity.RoomEntity;
+import org.pethotel.HeavenForPets.domein.*;
+import org.pethotel.HeavenForPets.entity.*;
+import org.pethotel.HeavenForPets.enums.OwnerCategory;
 import org.pethotel.HeavenForPets.enums.PetType;
 import org.pethotel.HeavenForPets.exceptions.InvalidPetTypeException;
 import org.pethotel.HeavenForPets.mappers.AddressMap;
+import org.pethotel.HeavenForPets.mappers.FoodMap;
 import org.pethotel.HeavenForPets.mappers.PetMap;
 import org.pethotel.HeavenForPets.repository.AddressRepository;
+import org.pethotel.HeavenForPets.repository.OwnerRepository;
 import org.pethotel.HeavenForPets.repository.RoomRepository;
+import org.pethotel.HeavenForPets.service.OwnerService;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Paulina on 2017-10-04.
  */
-@Ignore
+
 @RunWith(MockitoJUnitRunner.class)
 public class OwnerMapImplTest {
 
     @Mock
     private PetMap petMap;
     @Mock
+    private FoodMap foodMap;
+    @Mock
     private AddressMap addressMap;
     @Mock
+    private OwnerService ownerService;
+    @Mock
     private RoomRepository roomRepository;
+    @Mock
+    private OwnerRepository ownerRepository;
 
     @InjectMocks
     private OwnerMapImpl ownerMap;
@@ -71,13 +80,14 @@ public class OwnerMapImplTest {
         String city = "Wroclaw";
         address.setCity(city);
         owner.setAddress(address);
+        owner.setOwnerCategory(OwnerCategory.NORMAL);
 
         AddressEntity addressEntity = new AddressEntity();
         addressEntity.setCity(city);
         Mockito.when(addressMap.mapAddress(address)).thenReturn(addressEntity);
-
+        System.out.printf(owner.toString());
         OwnerEntity ownerEntity = ownerMap.map(owner);
-
+        System.out.printf(ownerEntity.toString());
         assertEquals(owner.getAddress().getCity(),ownerEntity.getAddressEntity().getCity());
     }
     @Test
@@ -115,6 +125,7 @@ public class OwnerMapImplTest {
         System.out.println(pet1);
 
         owner.setPetList(Arrays.asList(pet));
+        owner.setOwnerCategory(OwnerCategory.NORMAL);
 
         PetEntity petEntity = new PetEntity();
         petEntity.setPetType(PetType.BIRD);
@@ -145,5 +156,40 @@ public class OwnerMapImplTest {
         pet.setPetType(petType);
         pet.setName(name);
         pet.setComment("komentarz");
+        pet.setDateIn(new Date(2017,02,12));
+        pet.setDateOut(new Date(2017,02,19));
+    }
+    @Test
+    public void shouldCheckFoodMapper(){
+        Food food = new Food();
+        food.setName("jedzonko");
+        FoodEntity foodEntity = new FoodEntity();
+        foodEntity.setName("jedzonko");
+        Mockito.when(foodMap.map(food)).thenReturn(foodEntity);
+
+        assertEquals(food.getName(), foodEntity.getName());
+    }
+
+    @Test
+    public void shouldCheckPriceCounter(){
+        OwnerEntity ownerEntity = new OwnerEntity();
+        PetEntity petEntity = new PetEntity();
+        RoomEntity roomEntity = new RoomEntity();
+
+        roomEntity.setPrice(BigDecimal.TEN);
+        petEntity.setRoomEntity(roomEntity);
+        petEntity.setDateIn(new Date(2017,10,10));
+        petEntity.setDateOut(new Date(2017,10,11));
+        ownerEntity.setPetList(Arrays.asList(petEntity));
+        ownerEntity.setOwnerCategory(OwnerCategory.VIP);
+        Client client = new Client();
+        client.setPetNumbers(1);
+        client.setWholePrice(BigDecimal.TEN);
+
+        List<Client> clientList = new ArrayList<>();
+        clientList.add(client);
+
+        Mockito.when(ownerService.getAllClients()).thenReturn(clientList);
+        assertEquals(clientList.get(0).getWholePrice(), BigDecimal.TEN);
     }
 }

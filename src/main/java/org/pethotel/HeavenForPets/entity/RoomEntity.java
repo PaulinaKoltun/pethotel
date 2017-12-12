@@ -8,6 +8,7 @@ import org.pethotel.HeavenForPets.enums.PetType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "ROOM")
@@ -25,16 +26,16 @@ public class RoomEntity {
     @Column(name = "pet_type")
     private PetType petType;
     @Column(name = "price")
-    private int price;
+    private BigDecimal price;
 
     public RoomEntity() {
     }
 
-    public int getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -80,8 +81,8 @@ public class RoomEntity {
         if (roomNumber != that.roomNumber) return false;
         if (numberOfPlaces != that.numberOfPlaces) return false;
         if (freePlaces != that.freePlaces) return false;
-        if (price != that.price) return false;
-        return petType == that.petType;
+        if (petType != that.petType) return false;
+        return price != null ? price.equals(that.price) : that.price == null;
     }
 
     @Override
@@ -90,7 +91,7 @@ public class RoomEntity {
         result = 31 * result + numberOfPlaces;
         result = 31 * result + freePlaces;
         result = 31 * result + (petType != null ? petType.hashCode() : 0);
-        result = 31 * result + price;
+        result = 31 * result + (price != null ? price.hashCode() : 0);
         return result;
     }
 

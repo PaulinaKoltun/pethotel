@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -57,35 +59,41 @@ public class OwnerServiceImpl implements OwnerService {
         List<OwnerEntity> ownerEntityList = (List<OwnerEntity>) ownerRepository.findAll();
         List<Client> clients = new ArrayList<>();
         for (OwnerEntity ownerEntity : ownerEntityList) {
-            Client client = new Client();
-            client.setId(ownerEntity.getId());
-            client.setFirstName(ownerEntity.getFirstName());
-            client.setLastName(ownerEntity.getLastName());
-            client.setPetNumbers(ownerEntity.getPetList().size());
-            client.setWholePrice(getWholePriceAfterDiscount(ownerEntity));
+            Client client = map(ownerEntity);
             clients.add(client);
         }
         return clients;
     }
 
-    private int getWholePriceAfterDiscount(OwnerEntity ownerEntity) {
-        return countWholePrice(ownerEntity.getPetList()) -
-                (ownerEntity.getDiscount()*
-                countWholePrice(ownerEntity.getPetList())/100);
+    private Client map(OwnerEntity ownerEntity) {
+        Client client = new Client();
+        client.setId(ownerEntity.getId());
+        client.setFirstName(ownerEntity.getFirstName());
+        client.setLastName(ownerEntity.getLastName());
+        client.setPetNumbers(ownerEntity.getPetList().size());
+        client.setWholePrice(getWholePriceAfterDiscount(ownerEntity));
+        return client;
     }
 
-    private int countWholePrice(List<PetEntity> petList) {
-        int wholePrice = 0;
+    private BigDecimal getWholePriceAfterDiscount(OwnerEntity ownerEntity) {
+        BigDecimal generalPrice = countWholePrice(ownerEntity.getPetList());
+        BigDecimal priceOfDiscount = generalPrice.multiply(new BigDecimal(ownerEntity.getDiscount()));
+        BigDecimal finalPrice = generalPrice.subtract(priceOfDiscount);
+        return finalPrice;
+    }
+
+    private BigDecimal countWholePrice(List<PetEntity> petList) {
+        BigDecimal wholePrice = BigDecimal.ZERO;
         for (PetEntity petEntity : petList) {
-            long daysOfVisit = getDaysOfVisit(petEntity);
-            wholePrice = (int) (wholePrice + petEntity.getRoomEntity().getPrice()* daysOfVisit);
+            BigDecimal daysOfVisit = new BigDecimal(getDaysOfVisit(petEntity));
+            wholePrice = (wholePrice.add(petEntity.getRoomEntity().getPrice().multiply(daysOfVisit)));
         }
         return wholePrice;
     }
 
     private long getDaysOfVisit(PetEntity petEntity) {
         long difference = Math.abs(petEntity.getDateOut().getTime() - petEntity.getDateIn().getTime());
-        return difference / (24 * 60 * 60 * 1000);
+        return  difference / (24 * 60 * 60 * 1000);
     }
 
     @Override
