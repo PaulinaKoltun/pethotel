@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RoomMapImpl implements RoomMap {
+
     @Override
     public Room map(RoomEntity roomEntity) {
         Room room = new Room();

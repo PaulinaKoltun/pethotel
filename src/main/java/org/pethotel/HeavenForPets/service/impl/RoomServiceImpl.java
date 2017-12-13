@@ -1,5 +1,6 @@
 package org.pethotel.HeavenForPets.service.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.pethotel.HeavenForPets.domein.Room;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.pethotel.HeavenForPets.enums.PetType;
@@ -97,6 +98,7 @@ public class RoomServiceImpl implements RoomService {
     private boolean isProperRoomType(String petType, RoomEntity roomEntity) {
         return roomEntity.getPetType().getShortType().equals(petType)
                 || roomEntity.getPetType().name().equals(petType)
-                || roomEntity.getPetType().getNumberType() == Integer.valueOf(petType);
+                || (StringUtils.isNumeric(petType)
+                    && roomEntity.getPetType().getNumberType() == Integer.valueOf(petType));
     }
 }
