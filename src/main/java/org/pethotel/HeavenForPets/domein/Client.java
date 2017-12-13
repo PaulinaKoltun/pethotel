@@ -1,5 +1,7 @@
 package org.pethotel.HeavenForPets.domein;
 
+import java.math.BigDecimal;
+
 /**
  * Created by Paulina on 2017-10-21.
  */
@@ -8,16 +10,16 @@ public class Client {
     private String firstName;
     private String lastName;
     private int petNumbers;
-    private int wholePrice;
+    private BigDecimal wholePrice;
 
     public Client() {
     }
 
-    public int getWholePrice() {
+    public BigDecimal getWholePrice() {
         return wholePrice;
     }
 
-    public void setWholePrice(int wholePrice) {
+    public void setWholePrice(BigDecimal wholePrice) {
         this.wholePrice = wholePrice;
     }
 
@@ -61,9 +63,9 @@ public class Client {
         Client client = (Client) o;
 
         if (petNumbers != client.petNumbers) return false;
-        if (wholePrice != client.wholePrice) return false;
         if (firstName != null ? !firstName.equals(client.firstName) : client.firstName != null) return false;
-        return lastName != null ? lastName.equals(client.lastName) : client.lastName == null;
+        if (lastName != null ? !lastName.equals(client.lastName) : client.lastName != null) return false;
+        return wholePrice != null ? wholePrice.equals(client.wholePrice) : client.wholePrice == null;
     }
 
     @Override
@@ -71,12 +73,13 @@ public class Client {
         int result = firstName != null ? firstName.hashCode() : 0;
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + petNumbers;
-        result = 31 * result + wholePrice;
+        result = 31 * result + (wholePrice != null ? wholePrice.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
+
         return "Client{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +

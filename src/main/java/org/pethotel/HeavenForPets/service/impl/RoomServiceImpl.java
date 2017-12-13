@@ -97,7 +97,7 @@ public class RoomServiceImpl implements RoomService {
     private boolean isProperRoomType(String petType, RoomEntity roomEntity) {
         return roomEntity.getPetType().getShortType().equals(petType)
                 || roomEntity.getPetType().name().equals(petType)
-                || (StringUtils.isNumeric(petType) && roomEntity.getPetType().getNumberType() == Integer.valueOf
-                (petType));
+                || (StringUtils.isNumeric(petType)
+                    && roomEntity.getPetType().getNumberType() == Integer.valueOf(petType));
     }
 }

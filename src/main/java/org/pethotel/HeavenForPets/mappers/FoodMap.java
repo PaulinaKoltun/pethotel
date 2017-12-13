@@ -5,4 +5,5 @@ import org.pethotel.HeavenForPets.entity.FoodEntity;
 
 public interface FoodMap {
     FoodEntity map(Food food);
+    Food map(FoodEntity foodEntity);
 }

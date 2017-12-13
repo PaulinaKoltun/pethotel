@@ -19,4 +19,16 @@ public class FoodMapImpl implements FoodMap {
         foodEntity.setAmount(food.getAmount());
         return foodEntity;
     }
+
+    @Override
+    public Food map(FoodEntity foodEntity) {
+        Food food = new Food();
+        food.setName(foodEntity.getName());
+        food.setPrice(foodEntity.getPrice());
+        food.setPetType(foodEntity.getPetType());
+        food.setFoodType(foodEntity.getFoodType());
+        food.setTaste(foodEntity.getTaste());
+        food.setAmount(foodEntity.getAmount());
+        return food;
+    }
 }

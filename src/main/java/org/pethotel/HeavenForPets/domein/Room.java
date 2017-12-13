@@ -3,6 +3,7 @@ package org.pethotel.HeavenForPets.domein;
 import org.pethotel.HeavenForPets.enums.PetType;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * Created by Paulina on 2017-10-07.
@@ -12,16 +13,16 @@ public class Room implements Serializable {
     private int numberOfPlaces;
     private int freePlaces;
     private PetType petType;
-    private int price;
+    private BigDecimal price;
 
     public Room() {
     }
 
-    public int getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -67,8 +68,8 @@ public class Room implements Serializable {
         if (roomNumber != room.roomNumber) return false;
         if (numberOfPlaces != room.numberOfPlaces) return false;
         if (freePlaces != room.freePlaces) return false;
-        if (price != room.price) return false;
-        return petType == room.petType;
+        if (petType != room.petType) return false;
+        return price != null ? price.equals(room.price) : room.price == null;
     }
 
     @Override
@@ -77,7 +78,7 @@ public class Room implements Serializable {
         result = 31 * result + numberOfPlaces;
         result = 31 * result + freePlaces;
         result = 31 * result + (petType != null ? petType.hashCode() : 0);
-        result = 31 * result + price;
+        result = 31 * result + (price != null ? price.hashCode() : 0);
         return result;
     }
 

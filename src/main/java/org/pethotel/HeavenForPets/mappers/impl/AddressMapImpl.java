@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AddressMapImpl implements AddressMap {
-    @Autowired
-    AddressRepository addressRepository;
 
     @Override
     public AddressEntity mapAddress(Address address) {
