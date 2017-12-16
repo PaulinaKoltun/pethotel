@@ -62,14 +62,14 @@ public class OwnerMapImplTest {
 
         RoomEntity roomEntity = new RoomEntity();
         roomEntity.setPetType(PetType.FISH);
-
+        System.out.println(pet);
         // when
         Mockito.when(petMap.map(pet)).thenReturn(petEntity);
         Mockito.when(roomRepository.getRoomByNumber(Mockito.anyInt()))
                 .thenReturn(roomEntity);
 
         OwnerEntity ownerEntity = ownerMap.map(owner);
-
+        System.out.println(ownerEntity.getPetList());
         // then
         assertEquals(owner.getFirstName(),ownerEntity.getFirstName());
     }
