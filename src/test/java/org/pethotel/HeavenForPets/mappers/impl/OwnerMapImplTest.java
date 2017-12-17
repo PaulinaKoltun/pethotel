@@ -18,11 +18,8 @@ import org.pethotel.HeavenForPets.repository.OwnerRepository;
 import org.pethotel.HeavenForPets.repository.RoomRepository;
 import org.pethotel.HeavenForPets.service.OwnerService;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -36,15 +33,9 @@ public class OwnerMapImplTest {
     @Mock
     private PetMap petMap;
     @Mock
-    private FoodMap foodMap;
-    @Mock
     private AddressMap addressMap;
     @Mock
-    private OwnerService ownerService;
-    @Mock
     private RoomRepository roomRepository;
-    @Mock
-    private OwnerRepository ownerRepository;
 
     @InjectMocks
     private OwnerMapImpl ownerMap;
@@ -62,14 +53,14 @@ public class OwnerMapImplTest {
 
         RoomEntity roomEntity = new RoomEntity();
         roomEntity.setPetType(PetType.FISH);
-
+        System.out.println(pet);
         // when
-        Mockito.when(petMap.map(pet)).thenReturn(petEntity);
+        Mockito.when(petMap.map(pet, roomEntity)).thenReturn(petEntity);
         Mockito.when(roomRepository.getRoomByNumber(Mockito.anyInt()))
                 .thenReturn(roomEntity);
 
         OwnerEntity ownerEntity = ownerMap.map(owner);
-
+        System.out.println(ownerEntity.getPetList());
         // then
         assertEquals(owner.getFirstName(),ownerEntity.getFirstName());
     }
@@ -103,10 +94,6 @@ public class OwnerMapImplTest {
         Pet pet = new Pet();
         preparePet(pet, "Ara", PetType.BIRD);
 
-        pet = new Pet();
-
-        pet.setName("bbbbbbbb");
-
         owner.setPetList(Arrays.asList(pet, pet));
         owner.setOwnerCategory(OwnerCategory.NORMAL);
 
@@ -116,7 +103,7 @@ public class OwnerMapImplTest {
         RoomEntity roomEntity = prepareRoom(PetType.BIRD, 5);
 
         // when
-        Mockito.when(petMap.map(pet)).thenReturn(petEntity);
+        Mockito.when(petMap.map(pet, roomEntity)).thenReturn(petEntity);
         Mockito.when(roomRepository.getRoomByNumber(pet.getRoomNumber()))
                 .thenReturn(roomEntity);
 
