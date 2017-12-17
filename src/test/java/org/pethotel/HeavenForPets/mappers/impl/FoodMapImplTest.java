@@ -80,7 +80,6 @@ public class FoodMapImplTest {
         assertEquals(foodEntity.getName(), food.getName());
     }
 
-
     @Test
     public void shouldCheckIfPriceIsCorrectlyMappedInFood(){
         FoodEntity foodEntity = new FoodEntity();
@@ -98,7 +97,6 @@ public class FoodMapImplTest {
         Food food = foodMap.map(foodEntity);
         assertEquals(foodEntity.getTaste(), food.getTaste());
     }
-
 
     @Test
     public void shouldCheckIfPetTypeIsCorrectlyMappedInFood(){

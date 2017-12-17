@@ -8,21 +8,19 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.pethotel.HeavenForPets.domein.Food;
 import org.pethotel.HeavenForPets.domein.Pet;
-import org.pethotel.HeavenForPets.domein.Room;
 import org.pethotel.HeavenForPets.entity.FoodEntity;
 import org.pethotel.HeavenForPets.entity.PetEntity;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.pethotel.HeavenForPets.enums.PetType;
 import org.pethotel.HeavenForPets.mappers.FoodMap;
-import org.pethotel.HeavenForPets.mappers.PetMap;
 import org.pethotel.HeavenForPets.repository.RoomRepository;
 
 import java.util.Date;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
 @RunWith(MockitoJUnitRunner.class)
 public class PetMapImplTest {
-
 
     @Mock
     private RoomRepository roomRepository;
@@ -38,9 +36,8 @@ public class PetMapImplTest {
         Pet pet = new Pet();
         pet.setName("Azor");
 
-        PetEntity petEntity = petMap.map(pet);
+        PetEntity petEntity = petMap.map(pet, null);
         assertEquals(pet.getName(), petEntity.getName());
-
 
     }
 
@@ -49,7 +46,7 @@ public class PetMapImplTest {
         Pet pet = new Pet();
         pet.setComment("Je wszystko");
 
-        PetEntity petEntity = petMap.map(pet);
+        PetEntity petEntity = petMap.map(pet, null);
         assertEquals(pet.getComment(), petEntity.getComment());
     }
 
@@ -58,7 +55,7 @@ public class PetMapImplTest {
         Pet pet = new Pet();
         pet.setPetType(PetType.MAMMAL);
 
-        PetEntity petEntity = petMap.map(pet);
+        PetEntity petEntity = petMap.map(pet, null);
         assertEquals(pet.getPetType(), petEntity.getPetType());
     }
 
@@ -67,7 +64,7 @@ public class PetMapImplTest {
         Pet pet = new Pet();
         pet.setDateIn(new Date(12,12,2017));
 
-        PetEntity petEntity = petMap.map(pet);
+        PetEntity petEntity = petMap.map(pet, null);
         assertEquals(pet.getDateIn(), petEntity.getDateIn());
     }
 
@@ -76,7 +73,7 @@ public class PetMapImplTest {
         Pet pet = new Pet();
         pet.setDateOut(new Date(13,12,2017));
 
-        PetEntity petEntity = petMap.map(pet);
+        PetEntity petEntity = petMap.map(pet, null);
         assertEquals(pet.getDateOut(), petEntity.getDateOut());
     }
 
@@ -90,7 +87,7 @@ public class PetMapImplTest {
 
         Mockito.when(foodMap.map(pet.getBreakfast())).thenReturn(foodEntity);
 
-        PetEntity petEntity = petMap.map(pet);
+        PetEntity petEntity = petMap.map(pet, null);
         assertEquals(pet.getBreakfast().getFoodType(), petEntity.getBreakfast().getFoodType());
     }
 
@@ -104,7 +101,7 @@ public class PetMapImplTest {
 
         Mockito.when(foodMap.map(pet.getDinner())).thenReturn(foodEntity);
 
-        PetEntity petEntity = petMap.map(pet);
+        PetEntity petEntity = petMap.map(pet, null);
         assertEquals(pet.getDinner().getName(), petEntity.getDinner().getName());
     }
 
@@ -114,11 +111,9 @@ public class PetMapImplTest {
         Food food = new Food();
         pet.setSupper(food);
 
-        FoodEntity foodEntity = new FoodEntity();
+        Mockito.when(foodMap.map(pet.getSupper())).thenReturn(new FoodEntity());
 
-        Mockito.when(foodMap.map(pet.getSupper())).thenReturn(foodEntity);
-
-        PetEntity petEntity = petMap.map(pet);
+        PetEntity petEntity = petMap.map(pet, null);
         assertEquals(pet.getSupper().getAmount(), petEntity.getSupper().getAmount());
     }
 
@@ -126,26 +121,17 @@ public class PetMapImplTest {
     public void shouldCheckIfRoomIsCorrectlyMappedToPetEntity(){
         Pet pet = new Pet();
         pet.setPetType(PetType.MAMMAL);
-        // pet.setRoomNumber(2);
-
-        Room room = new Room();
-        room.setRoomNumber(2);
-        pet.setRoomNumber(room.getRoomNumber());
-        System.out.println(pet);
+        pet.setRoomNumber(2);
 
         RoomEntity roomEntity = new RoomEntity();
         roomEntity.setPetType(PetType.MAMMAL);
-        roomRepository.save(roomEntity);
-
-        //    roomEntity.setRoomNumber(2);
+        roomEntity.setRoomNumber(2);
 
         Mockito.when(roomRepository.getRoomByNumber(pet.getRoomNumber()))
               .thenReturn(roomEntity);
 
-        PetEntity petEntity = petMap.map(pet);
-        System.out.println(petEntity);
+        PetEntity petEntity = petMap.map(pet, roomEntity);
+
         assertEquals(pet.getRoomNumber(), petEntity.getRoomEntity().getRoomNumber());
-
-
     }
 }

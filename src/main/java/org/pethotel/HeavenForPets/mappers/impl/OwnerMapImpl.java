@@ -41,12 +41,11 @@ public class OwnerMapImpl implements OwnerMap {
         List<PetEntity> petEntitys = new ArrayList<>();
 
         for (Pet pet : owner.getPetList()) {
-            PetEntity petEntity = petMap.map(pet);
-
             RoomEntity roomByNumber =
                     roomRepository.getRoomByNumber(pet.getRoomNumber());
-            validatePetType(petEntity, roomByNumber);
-            petEntity.setRoomEntity(roomByNumber);
+            validatePetType(pet, roomByNumber);
+
+            PetEntity petEntity = petMap.map(pet, roomByNumber);
 
             countPetsInRoom(roomMap, roomByNumber);
 
@@ -83,8 +82,8 @@ public class OwnerMapImpl implements OwnerMap {
         }
     }
 
-    private void validatePetType(PetEntity petEntity, RoomEntity roomByNumber) throws InvalidPetTypeException {
-        if (roomByNumber.getPetType() != petEntity.getPetType()){
+    private void validatePetType(Pet pet, RoomEntity roomByNumber) throws InvalidPetTypeException {
+        if (roomByNumber.getPetType() != pet.getPetType()){
             throw new InvalidPetTypeException();
         }
     }

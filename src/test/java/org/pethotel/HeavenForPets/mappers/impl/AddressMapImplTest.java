@@ -12,7 +12,7 @@ public class AddressMapImplTest {
     AddressMap addressMap = new AddressMapImpl();
 
     @Test
-    public void shouldTestIfCityIsMappedCorrectlyToAddresEntity(){
+    public void shouldTestIfCityIsMappedCorrectlyToAddressEntity(){
         Address address = new Address();
         address.setCity("Wro");
 
@@ -21,7 +21,7 @@ public class AddressMapImplTest {
     }
 
     @Test
-    public void shouldTestIfStreetIsMappedCorrectlyToAddresEntity(){
+    public void shouldTestIfStreetIsMappedCorrectlyToAddressEntity(){
         Address address = new Address();
         address.setStreet("Piękna");
 
@@ -30,7 +30,7 @@ public class AddressMapImplTest {
     }
 
     @Test
-    public void shouldTestIfZipCodeIsMappedCorrectlyToAddresEntity(){
+    public void shouldTestIfZipCodeIsMappedCorrectlyToAddressEntity(){
         Address address = new Address();
         address.setZipCode("22");
 
@@ -39,7 +39,7 @@ public class AddressMapImplTest {
     }
 
     @Test
-    public void shouldTestIfNumberOfHouseIsMappedCorrectlyToAddresEntity(){
+    public void shouldTestIfNumberOfHouseIsMappedCorrectlyToAddressEntity(){
         Address address = new Address();
         address.setNumberOfHouse("3");
 
@@ -48,7 +48,7 @@ public class AddressMapImplTest {
     }
 
     @Test
-    public void shouldTestIfNumberOfFlatIsMappedCorrectlyToAddresEntity(){
+    public void shouldTestIfNumberOfFlatIsMappedCorrectlyToAddressEntity(){
         Address address = new Address();
         address.setNumberOfFlat("3");
 
