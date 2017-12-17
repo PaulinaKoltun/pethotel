@@ -5,10 +5,10 @@ import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.pethotel.HeavenForPets.enums.PetType;
 import org.pethotel.HeavenForPets.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Paulina on 2017-10-07.
@@ -39,6 +39,11 @@ public class RoomController {
     @GetMapping("/findByRoomNumber/{roomNumber}")
     public RoomEntity findByRoomNumber(@PathVariable int roomNumber) {
         return roomService.findByRoomNumber(roomNumber);
+    }
+
+    @GetMapping("/freePlacesForPetType")
+    public Map<PetType,Integer> freePlacesForPetType(){
+        return roomService.freePlacesForPetType();
     }
 
     @PutMapping("/updateRoom")

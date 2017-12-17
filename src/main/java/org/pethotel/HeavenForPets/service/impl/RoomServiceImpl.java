@@ -1,8 +1,11 @@
 package org.pethotel.HeavenForPets.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.pethotel.HeavenForPets.domein.Room;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
+import org.pethotel.HeavenForPets.enums.PetType;
 import org.pethotel.HeavenForPets.mappers.RoomMap;
 import org.pethotel.HeavenForPets.repository.RoomRepository;
 import org.pethotel.HeavenForPets.service.RoomService;
@@ -10,13 +13,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by Paulina on 2017-10-07.
  */
 @Service
 public class RoomServiceImpl implements RoomService {
+
+    private static final Logger LOGGER = LogManager.getLogger(RoomServiceImpl.class);
     @Autowired
     RoomRepository roomRepository;
 
@@ -25,36 +33,36 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public void saveRoom(Room room) {
-        RoomEntity roomEntity = new RoomEntity();
-        roomEntity.setRoomNumber(room.getRoomNumber());
-        roomEntity.setFreePlaces(room.getFreePlaces());
-        roomEntity.setNumberOfPlaces(room.getNumberOfPlaces());
-        roomEntity.setPetType(room.getPetType());
-        roomEntity.setPrice(room.getPrice());
-        roomRepository.save(roomEntity);
+        if (roomRepository.getRoomByNumber(room.getRoomNumber()) == null) {
+            RoomEntity roomEntity = new RoomEntity();
+            roomEntity.setRoomNumber(room.getRoomNumber());
+            roomEntity.setFreePlaces(room.getFreePlaces());
+            roomEntity.setNumberOfPlaces(room.getNumberOfPlaces());
+            roomEntity.setPetType(room.getPetType());
+            roomEntity.setPrice(room.getPrice());
+            roomRepository.save(roomEntity);
+        }
+        else {
+            LOGGER.info("Room already exists");
+        }
     }
 
     @Override
     public List<Integer> getAllNumbers() {
-        List<Integer> allRooms = new ArrayList<>();
-        Iterable<RoomEntity> rooms = roomRepository.findAll();
-        for (RoomEntity room : rooms) {
-            if (room.getFreePlaces()>0) {
-                allRooms.add(room.getRoomNumber());
-            }
-        }
-        return allRooms;
+        List<RoomEntity> rooms = (List<RoomEntity>) roomRepository.findAll();
+        return rooms.stream()
+                .filter(r -> r.getFreePlaces() > 0)
+                .map(r -> r.getRoomNumber())
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Room> getAllRooms() {
         List<RoomEntity> roomEntityList = (List<RoomEntity>) roomRepository.findAll();
-        List<Room> rooms = new ArrayList<>();
-        for (RoomEntity roomEntity : roomEntityList) {
-            Room room = roomMap.map(roomEntity);
-            rooms.add(room);
-        }
-        return rooms;
+
+        return roomEntityList.stream()
+                .map(r -> roomMap.map(r))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -84,14 +92,29 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public List<Room> getAllRoomsByType(String petType) {
         List<RoomEntity> roomEntityList = (List<RoomEntity>) roomRepository.findAll();
-        List<Room> rooms = new ArrayList<>();
+
+        return roomEntityList.stream()
+                .filter(r -> isProperRoomType(petType, r))
+                .map(r -> roomMap.map(r))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Map<PetType, Integer> freePlacesForPetType() {
+        Iterable<RoomEntity> roomEntityList = roomRepository.findAll();
+        Map<PetType, Integer> freePlacesMap = new HashMap<>();
+
         for (RoomEntity roomEntity : roomEntityList) {
-            if (isProperRoomType(petType, roomEntity)) {
-                Room room = roomMap.map(roomEntity);
-                rooms.add(room);
+            if (freePlacesMap.containsKey(roomEntity.getPetType())){
+                int previousFreePlaces = freePlacesMap.get(roomEntity.getPetType());
+                int freePlaces = previousFreePlaces + roomEntity.getFreePlaces();
+                freePlacesMap.put(roomEntity.getPetType(), freePlaces);
+            }
+            else{
+                freePlacesMap.put(roomEntity.getPetType(), roomEntity.getFreePlaces());
             }
         }
-        return rooms;
+        return freePlacesMap;
     }
 
     private boolean isProperRoomType(String petType, RoomEntity roomEntity) {
