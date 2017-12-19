@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FoodServiceImpl implements FoodService{
@@ -39,11 +40,15 @@ public class FoodServiceImpl implements FoodService{
         PetType petTypeEnum = PetType.valueOf(petType);
         LOGGER.info("Szukam dla enuma: {}", petTypeEnum);
         List<FoodEntity> foodEntityList = foodRepository.getFoodByPetType(petTypeEnum);
-        List<Food> foodList = new ArrayList<>();
-        for (FoodEntity foodEntity : foodEntityList) {
-            Food food = foodMap.map(foodEntity);
-            foodList.add(food);
-        }
-        return foodList;
+//        List<Food> foodList = new ArrayList<>();
+        return foodEntityList.stream()
+                .map(r -> foodMap.map(r))
+                .collect(Collectors.toList());
+
+//        for (FoodEntity foodEntity : foodEntityList) {
+//            Food food = foodMap.map(foodEntity);
+//            foodList.add(food);
+//        }
+//        return foodList;
     }
 }
