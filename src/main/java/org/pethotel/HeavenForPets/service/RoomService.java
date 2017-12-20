@@ -13,7 +13,7 @@ import java.util.Map;
 public interface RoomService {
     void saveRoom(Room room);
     List<Integer> getAllNumbers();
-    List<Room> getAllRooms();
+    List<Room> getAllRooms(String sorted);
     RoomEntity findByRoomNumber(int roomNumber);
     void deleteRoom(int roomNumber);
     void updateRoom(Room room);

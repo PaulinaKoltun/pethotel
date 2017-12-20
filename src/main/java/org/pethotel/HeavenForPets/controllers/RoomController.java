@@ -31,9 +31,9 @@ public class RoomController {
         return roomService.getAllNumbers();
     }
 
-    @GetMapping("/getAllRooms")
-    public List<Room> getAllRooms(){
-        return roomService.getAllRooms();
+    @GetMapping("/getAllRooms/{sorted}")
+    public List<Room> getAllRooms(@PathVariable String sorted){
+        return roomService.getAllRooms(sorted);
     }
 
     @GetMapping("/findByRoomNumber/{roomNumber}")

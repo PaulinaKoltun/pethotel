@@ -57,9 +57,15 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<Room> getAllRooms() {
-        List<RoomEntity> roomEntityList = (List<RoomEntity>) roomRepository.findAll();
+    public List<Room> getAllRooms(String sorted) {
+        List<RoomEntity> roomEntityList;
 
+        if ("D".equals(sorted.toUpperCase())) {
+            roomEntityList = roomRepository.sortedRoomEntitiesDESC();
+        }
+        else {
+            roomEntityList = roomRepository.sortedRoomEntitiesASC();
+        }
         return roomEntityList.stream()
                 .map(r -> roomMap.map(r))
                 .collect(Collectors.toList());

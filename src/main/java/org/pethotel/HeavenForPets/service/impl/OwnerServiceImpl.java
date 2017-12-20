@@ -110,21 +110,26 @@ public class OwnerServiceImpl implements OwnerService {
         List<PetEntity> petEntities = ownerEntity.getPetList();
         List<Pet> pets = new ArrayList<>();
 
-        for (PetEntity petEntity : petEntities) {
-            Pet pet = new Pet();
-            pet.setName(petEntity.getName());
-            pet.setComment(petEntity.getComment());
-            pet.setPetType(petEntity.getPetType());
-            pet.setDateIn(petEntity.getDateIn());
-            pet.setDateOut(petEntity.getDateOut());
-
-            RoomEntity roomEntity = petEntity.getRoomEntity();
-            pet.setRoomNumber(roomEntity.getRoomNumber());
-
-            pets.add(pet);
-        }
+        //for (PetEntity petEntity : petEntities)
+        petEntities.stream()
+                .map(e -> getPet(e))
+                .collect(Collectors.toList());
 
         return pets;
+    }
+
+    private Pet getPet(PetEntity e) {
+        Pet pet = new Pet();
+        pet.setName(e.getName());
+        pet.setComment(e.getComment());
+        pet.setPetType(e.getPetType());
+        pet.setDateIn(e.getDateIn());
+        pet.setDateOut(e.getDateOut());
+
+        RoomEntity roomEntity = e.getRoomEntity();
+        pet.setRoomNumber(roomEntity.getRoomNumber());
+
+        return pet;
     }
 
     @Override
