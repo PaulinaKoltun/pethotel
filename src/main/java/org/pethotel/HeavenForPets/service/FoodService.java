@@ -7,4 +7,5 @@ import java.util.List;
 public interface FoodService {
     void saveFood(List<Food> foodlist);
     List<Food> getFoodByPet(String petType);
+
 }
