@@ -33,12 +33,12 @@ public class FoodServiceImpl implements FoodService{
 
         for (Food food : foodlist) {
             FoodEntity foodEntity = foodRepository.getFoodWeAlreadyHave(food.getName(), food.getFoodType(), food.getPetType(), food.getTaste());
-            if (foodEntity.equals(null)) {
+            if (foodEntity == null) {
                 FoodEntity newFoodEntity = foodMap.map(food);
                 foodRepository.save(newFoodEntity);
             }
             else {
-                foodEntity.setAmount(food.getAmount());
+                foodEntity.setAmount(foodEntity.getAmount() + food.getAmount());
                 foodEntity.setPrice(food.getPrice());
                 foodRepository.save(foodEntity);
             }
