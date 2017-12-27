@@ -10,9 +10,12 @@ import org.pethotel.HeavenForPets.mappers.RoomMap;
 import org.pethotel.HeavenForPets.repository.RoomRepository;
 import org.pethotel.HeavenForPets.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,16 +60,10 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<Room> getAllRooms(String sorted) {
-        List<RoomEntity> roomEntityList;
+    public List<Room> getAllRooms(Pageable pageable) {
+        Page<RoomEntity> roomEntityList = roomRepository.findAll(pageable);
 
-        if ("D".equals(sorted.toUpperCase())) {
-            roomEntityList = roomRepository.sortedRoomEntitiesDESC();
-        }
-        else {
-            roomEntityList = roomRepository.sortedRoomEntitiesASC();
-        }
-        return roomEntityList.stream()
+        return roomEntityList.getContent().stream()
                 .map(r -> roomMap.map(r))
                 .collect(Collectors.toList());
     }

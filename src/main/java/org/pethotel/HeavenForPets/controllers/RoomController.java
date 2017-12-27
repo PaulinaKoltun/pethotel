@@ -5,6 +5,7 @@ import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.pethotel.HeavenForPets.enums.PetType;
 import org.pethotel.HeavenForPets.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,9 +32,9 @@ public class RoomController {
         return roomService.getAllNumbers();
     }
 
-    @GetMapping("/getAllRooms/{sorted}")
-    public List<Room> getAllRooms(@PathVariable String sorted){
-        return roomService.getAllRooms(sorted);
+    @GetMapping("/getAllRooms")
+    public List<Room> getAllRooms(Pageable pageable){
+        return roomService.getAllRooms(pageable);
     }
 
     @GetMapping("/findByRoomNumber/{roomNumber}")
