@@ -21,4 +21,6 @@ public interface RoomService {
     List<Room> getAllRoomsByType(String petType);
 
     Map<PetType, Integer> freePlacesForPetType();
+
+    int getNumberOfRooms();
 }

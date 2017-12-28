@@ -123,6 +123,12 @@ public class RoomServiceImpl implements RoomService {
         return freePlacesMap;
     }
 
+    @Override
+    public int getNumberOfRooms() {
+        List<RoomEntity> roomEntityList = (List<RoomEntity>) roomRepository.findAll();
+        return roomEntityList.size();
+    }
+
     private boolean isProperRoomType(String petType, RoomEntity roomEntity) {
         return roomEntity.getPetType().getShortType().equals(petType)
                 || roomEntity.getPetType().name().equals(petType)

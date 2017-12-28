@@ -19,4 +19,7 @@ public interface RoomRepository extends CrudRepository<RoomEntity, Long>{
 
     @Query("SELECT r FROM RoomEntity r ORDER BY r.roomNumber DESC")
     List<RoomEntity> sortedRoomEntitiesDESC();
+
+    @Query("SELECT count(r) FROM RoomEntity r")
+    int getNumberOfRoomsFromQuery();
 }

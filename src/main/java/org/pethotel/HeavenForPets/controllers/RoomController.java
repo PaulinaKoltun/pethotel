@@ -3,6 +3,7 @@ package org.pethotel.HeavenForPets.controllers;
 import org.pethotel.HeavenForPets.domein.Room;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.pethotel.HeavenForPets.enums.PetType;
+import org.pethotel.HeavenForPets.repository.RoomRepository;
 import org.pethotel.HeavenForPets.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +22,22 @@ public class RoomController {
     @Autowired
     private RoomService roomService;
 
+    @Autowired
+    private RoomRepository roomRepository;
+
     @PostMapping("/add")
     public void addRoom(@RequestBody Room room){
         roomService.saveRoom(room);
+    }
+
+    @GetMapping("/getNumberOfRooms")
+    public int getNumberOfRooms(){
+        return roomService.getNumberOfRooms();
+    }
+
+    @GetMapping("/getNumberOfRoomsFromQuery")
+    public int getNumberOfRoomsFromQuery(){
+        return roomRepository.getNumberOfRoomsFromQuery();
     }
 
     @GetMapping("/getAllNumbers")
