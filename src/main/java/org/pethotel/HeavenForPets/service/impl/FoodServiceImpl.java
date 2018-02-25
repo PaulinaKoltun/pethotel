@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +30,6 @@ public class FoodServiceImpl implements FoodService{
 
     @Override
     public void saveFood(List<Food> foodlist) {
-        //FoodEntity foodEntity = foodRepository.getFoodWeAlreadyHave();
 
         for (Food food : foodlist) {
             FoodEntity foodEntity = foodRepository.getFoodWeAlreadyHave(food.getName(), food.getFoodType(), food.getPetType(), food.getTaste());
@@ -40,6 +40,8 @@ public class FoodServiceImpl implements FoodService{
             else {
                 foodEntity.setAmount(foodEntity.getAmount() + food.getAmount());
                 foodEntity.setPrice(food.getPrice());
+                foodEntity.setDeliveryAmount(food.getAmount());
+                foodEntity.setDeliveryDate(new Date());
                 foodRepository.save(foodEntity);
             }
         }
@@ -50,15 +52,10 @@ public class FoodServiceImpl implements FoodService{
         PetType petTypeEnum = PetType.valueOf(petType);
         LOGGER.info("Szukam dla enuma: {}", petTypeEnum);
         List<FoodEntity> foodEntityList = foodRepository.getFoodByPetType(petTypeEnum);
-//        List<Food> foodList = new ArrayList<>();
+
         return foodEntityList.stream()
                 .map(r -> foodMap.map(r))
                 .collect(Collectors.toList());
 
-//        for (FoodEntity foodEntity : foodEntityList) {
-//            Food food = foodMap.map(foodEntity);
-//            foodList.add(food);
-//        }
-//        return foodList;
     }
 }

@@ -5,6 +5,7 @@ import org.pethotel.HeavenForPets.enums.PetType;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
 @Table(name = "FOOD")
@@ -26,6 +27,10 @@ public class FoodEntity {
     private String taste;
     @Column(name = "price")
     private BigDecimal price;
+    @Column(name = "delivery_date")
+    private Date deliveryDate;
+    @Column(name = "delivery_amount")
+    private int deliveryAmount;
 
     public FoodEntity() {
     }
@@ -78,6 +83,22 @@ public class FoodEntity {
         this.price = price;
     }
 
+    public Date getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(Date deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+
+    public int getDeliveryAmount() {
+        return deliveryAmount;
+    }
+
+    public void setDeliveryAmount(int deliveryAmount) {
+        this.deliveryAmount = deliveryAmount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,11 +107,13 @@ public class FoodEntity {
         FoodEntity that = (FoodEntity) o;
 
         if (amount != that.amount) return false;
+        if (deliveryAmount != that.deliveryAmount) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (foodType != that.foodType) return false;
         if (petType != that.petType) return false;
         if (taste != null ? !taste.equals(that.taste) : that.taste != null) return false;
-        return price != null ? price.equals(that.price) : that.price == null;
+        if (price != null ? !price.equals(that.price) : that.price != null) return false;
+        return deliveryDate != null ? deliveryDate.equals(that.deliveryDate) : that.deliveryDate == null;
     }
 
     @Override
@@ -101,6 +124,8 @@ public class FoodEntity {
         result = 31 * result + (petType != null ? petType.hashCode() : 0);
         result = 31 * result + (taste != null ? taste.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (deliveryDate != null ? deliveryDate.hashCode() : 0);
+        result = 31 * result + deliveryAmount;
         return result;
     }
 

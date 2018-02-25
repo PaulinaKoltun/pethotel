@@ -5,6 +5,8 @@ import org.pethotel.HeavenForPets.entity.FoodEntity;
 import org.pethotel.HeavenForPets.mappers.FoodMap;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class FoodMapImpl implements FoodMap {
 
@@ -17,6 +19,8 @@ public class FoodMapImpl implements FoodMap {
         foodEntity.setFoodType(food.getFoodType());
         foodEntity.setTaste(food.getTaste());
         foodEntity.setAmount(food.getAmount());
+        foodEntity.setDeliveryAmount(food.getAmount());
+        foodEntity.setDeliveryDate(new Date());
         return foodEntity;
     }
 
