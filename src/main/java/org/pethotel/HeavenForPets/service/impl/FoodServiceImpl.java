@@ -1,15 +1,16 @@
 package org.pethotel.HeavenForPets.service.impl;
 
+import com.itextpdf.text.Document;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.pethotel.HeavenForPets.controllers.FoodController;
 import org.pethotel.HeavenForPets.domein.Food;
-import org.pethotel.HeavenForPets.domein.FoodDetails;
 import org.pethotel.HeavenForPets.entity.FoodEntity;
 import org.pethotel.HeavenForPets.enums.PetType;
 import org.pethotel.HeavenForPets.mappers.FoodMap;
 import org.pethotel.HeavenForPets.repository.FoodRepository;
 import org.pethotel.HeavenForPets.service.FoodService;
+import org.pethotel.HeavenForPets.utils.GeneratorPdfs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,10 +30,15 @@ public class FoodServiceImpl implements FoodService{
     @Autowired
     private FoodRepository foodRepository;
 
+    @Autowired
+    private GeneratorPdfs generatorPdfs;
+
     @Override
     public void saveFood(List<Food> foodlist) {
-
+        Document document = new Document();
+        generatorPdfs.openDocument(document);
         for (Food food : foodlist) {
+            generatorPdfs.generate(food, document);
             FoodEntity foodEntity = foodRepository.getFoodWeAlreadyHave(food.getName(), food.getFoodType(), food.getPetType(), food.getTaste());
             if (foodEntity == null) {
                 FoodEntity newFoodEntity = foodMap.map(food);
@@ -46,6 +52,7 @@ public class FoodServiceImpl implements FoodService{
                 foodRepository.save(foodEntity);
             }
         }
+        document.close();
     }
 
     @Override
