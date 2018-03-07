@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.pethotel.HeavenForPets.controllers.FoodController;
 import org.pethotel.HeavenForPets.domein.Food;
+import org.pethotel.HeavenForPets.domein.FoodDetails;
 import org.pethotel.HeavenForPets.entity.FoodEntity;
 import org.pethotel.HeavenForPets.enums.PetType;
 import org.pethotel.HeavenForPets.mappers.FoodMap;
@@ -57,5 +58,17 @@ public class FoodServiceImpl implements FoodService{
                 .map(r -> foodMap.map(r))
                 .collect(Collectors.toList());
 
+    }
+
+    @Override
+    public FoodDetails getFoodById(Integer id) {
+        FoodEntity foodEntity = foodRepository.findOne(Long.valueOf(id));
+        FoodDetails foodDetails = new FoodDetails();
+        Food food = foodMap.map(foodEntity);
+        foodDetails.setFood(food);
+        foodDetails.setDeliveryAmount(foodEntity.getDeliveryAmount());
+        foodDetails.setDeliveryDate(foodEntity.getDeliveryDate());
+
+        return foodDetails;
     }
 }

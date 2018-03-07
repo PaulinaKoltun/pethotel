@@ -2,6 +2,7 @@ package org.pethotel.HeavenForPets.controllers;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.pethotel.HeavenForPets.domein.FoodDetails;
 import org.pethotel.HeavenForPets.domein.Food;
 import org.pethotel.HeavenForPets.service.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,11 @@ public class FoodController implements ErrorController{
         List<Food> food = foodService.getFoodByPet(petType);
         LOGGER.info("Zwrócona lista jedzenia: {}", food);
         return food;
+    }
+
+    @GetMapping("/getfood/id/{id}")
+    public FoodDetails getFoodById(@PathVariable Integer id){
+        return foodService.getFoodById(id);
     }
 
     @RequestMapping(value = PATH)

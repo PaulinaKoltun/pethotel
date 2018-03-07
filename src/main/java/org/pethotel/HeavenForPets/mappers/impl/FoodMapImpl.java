@@ -33,6 +33,7 @@ public class FoodMapImpl implements FoodMap {
         food.setFoodType(foodEntity.getFoodType());
         food.setTaste(foodEntity.getTaste());
         food.setAmount(foodEntity.getAmount());
+        food.setId((int) foodEntity.getId());
         return food;
     }
 }

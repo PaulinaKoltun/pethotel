@@ -12,17 +12,9 @@ public class Food {
     private PetType petType;
     private String taste;
     private BigDecimal price;
+    private Integer id;
 
     public Food() {
-    }
-
-    public Food(String name, FoodType foodType, int amount, PetType petType, String taste, BigDecimal price) {
-        this.name = name;
-        this.foodType = foodType;
-        this.amount = amount;
-        this.petType = petType;
-        this.taste = taste;
-        this.price = price;
     }
 
     public String getName() {
@@ -73,6 +65,14 @@ public class Food {
         this.price = price;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -108,6 +108,7 @@ public class Food {
                 ", petType=" + petType +
                 ", taste='" + taste + '\'' +
                 ", price=" + price +
+                ", id=" + id +
                 '}';
     }
 }
