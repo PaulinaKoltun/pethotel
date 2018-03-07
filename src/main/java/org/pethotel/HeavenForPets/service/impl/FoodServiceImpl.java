@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.pethotel.HeavenForPets.controllers.FoodController;
 import org.pethotel.HeavenForPets.domein.Food;
+import org.pethotel.HeavenForPets.domein.FoodDetails;
 import org.pethotel.HeavenForPets.entity.FoodEntity;
 import org.pethotel.HeavenForPets.enums.PetType;
 import org.pethotel.HeavenForPets.mappers.FoodMap;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +31,6 @@ public class FoodServiceImpl implements FoodService{
 
     @Override
     public void saveFood(List<Food> foodlist) {
-        //FoodEntity foodEntity = foodRepository.getFoodWeAlreadyHave();
 
         for (Food food : foodlist) {
             FoodEntity foodEntity = foodRepository.getFoodWeAlreadyHave(food.getName(), food.getFoodType(), food.getPetType(), food.getTaste());
@@ -40,6 +41,8 @@ public class FoodServiceImpl implements FoodService{
             else {
                 foodEntity.setAmount(foodEntity.getAmount() + food.getAmount());
                 foodEntity.setPrice(food.getPrice());
+                foodEntity.setDeliveryAmount(food.getAmount());
+                foodEntity.setDeliveryDate(new Date());
                 foodRepository.save(foodEntity);
             }
         }
@@ -50,15 +53,22 @@ public class FoodServiceImpl implements FoodService{
         PetType petTypeEnum = PetType.valueOf(petType);
         LOGGER.info("Szukam dla enuma: {}", petTypeEnum);
         List<FoodEntity> foodEntityList = foodRepository.getFoodByPetType(petTypeEnum);
-//        List<Food> foodList = new ArrayList<>();
+
         return foodEntityList.stream()
                 .map(r -> foodMap.map(r))
                 .collect(Collectors.toList());
 
-//        for (FoodEntity foodEntity : foodEntityList) {
-//            Food food = foodMap.map(foodEntity);
-//            foodList.add(food);
-//        }
-//        return foodList;
+    }
+
+    @Override
+    public FoodDetails getFoodById(Integer id) {
+        FoodEntity foodEntity = foodRepository.findOne(Long.valueOf(id));
+        FoodDetails foodDetails = new FoodDetails();
+        Food food = foodMap.map(foodEntity);
+        foodDetails.setFood(food);
+        foodDetails.setDeliveryAmount(foodEntity.getDeliveryAmount());
+        foodDetails.setDeliveryDate(foodEntity.getDeliveryDate());
+
+        return foodDetails;
     }
 }
