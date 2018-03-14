@@ -39,6 +39,11 @@ public class FoodController implements ErrorController{
         return foodService.getFoodById(id);
     }
 
+    @GetMapping("/getfood/pdf/{id}")
+    public String getDetailsById(@PathVariable Integer id){
+        return foodService.getDetailsById(id);
+    }
+
     @RequestMapping(value = PATH)
     public String error() {
         return "Error handling";

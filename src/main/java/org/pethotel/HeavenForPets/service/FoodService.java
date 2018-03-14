@@ -9,4 +9,5 @@ public interface FoodService {
     void saveFood(List<Food> foodlist);
     List<Food> getFoodByPet(String petType);
     FoodDetails getFoodById(Integer id);
+    String getDetailsById(Integer id);
 }
