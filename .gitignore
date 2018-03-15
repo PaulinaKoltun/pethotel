@@ -1,6 +1,8 @@
 target/
 !.mvn/wrapper/maven-wrapper.jar
 
+src/main/webapp/WEB-INF/downloads/
+
 ### STS ###
 .apt_generated
 .classpath
