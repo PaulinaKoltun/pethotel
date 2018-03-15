@@ -78,12 +78,11 @@ public class FoodServiceImpl implements FoodService{
         return foodDetails;
     }
 
-    public String getDetailsById(Integer id){
+    public void getDetailsById(Integer id){
         FoodDetails foodDetails = getFoodById(id);
 
         generatorPdfs.generate(foodDetails);
 
-        return foodDetails.toString();
     }
 
 }

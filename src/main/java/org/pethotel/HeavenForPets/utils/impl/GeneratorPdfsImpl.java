@@ -14,11 +14,11 @@ import java.io.FileOutputStream;
 @Component
 public class GeneratorPdfsImpl implements GeneratorPdfs {
     @Override
-    public void generate(Object object) {
+    public Document generate(Object object) {
         Document document = new Document();
         FoodDetails foodDetails = (FoodDetails) object;
         try {
-            PdfWriter.getInstance(document, new FileOutputStream("../PDFs/iTextHelloWorld.pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream("src/main/webapp/WEB-INF/downloads/iTextHelloWorld.pdf"));
         } catch (DocumentException e) {
             e.printStackTrace();
         } catch (FileNotFoundException e) {
@@ -39,7 +39,7 @@ public class GeneratorPdfsImpl implements GeneratorPdfs {
         } finally {
             document.close();
         }
-
+        return document;
     }
 }
 
