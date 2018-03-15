@@ -1,5 +1,6 @@
 package org.pethotel.HeavenForPets.service.impl;
 
+import com.itextpdf.text.Document;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.pethotel.HeavenForPets.controllers.FoodController;
@@ -10,10 +11,10 @@ import org.pethotel.HeavenForPets.enums.PetType;
 import org.pethotel.HeavenForPets.mappers.FoodMap;
 import org.pethotel.HeavenForPets.repository.FoodRepository;
 import org.pethotel.HeavenForPets.service.FoodService;
+import org.pethotel.HeavenForPets.utils.GeneratorPdfs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,9 +30,11 @@ public class FoodServiceImpl implements FoodService{
     @Autowired
     private FoodRepository foodRepository;
 
+    @Autowired
+    private GeneratorPdfs generatorPdfs;
+
     @Override
     public void saveFood(List<Food> foodlist) {
-
         for (Food food : foodlist) {
             FoodEntity foodEntity = foodRepository.getFoodWeAlreadyHave(food.getName(), food.getFoodType(), food.getPetType(), food.getTaste());
             if (foodEntity == null) {
@@ -63,12 +66,23 @@ public class FoodServiceImpl implements FoodService{
     @Override
     public FoodDetails getFoodById(Integer id) {
         FoodEntity foodEntity = foodRepository.findOne(Long.valueOf(id));
+
         FoodDetails foodDetails = new FoodDetails();
         Food food = foodMap.map(foodEntity);
         foodDetails.setFood(food);
         foodDetails.setDeliveryAmount(foodEntity.getDeliveryAmount());
         foodDetails.setDeliveryDate(foodEntity.getDeliveryDate());
 
+//        generatorPdfs.generate(foodDetails);
+
         return foodDetails;
     }
+
+    public void getDetailsById(Integer id){
+        FoodDetails foodDetails = getFoodById(id);
+
+        generatorPdfs.generate(foodDetails);
+
+    }
+
 }
