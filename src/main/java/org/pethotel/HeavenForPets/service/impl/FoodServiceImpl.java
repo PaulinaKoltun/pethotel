@@ -1,9 +1,8 @@
 package org.pethotel.HeavenForPets.service.impl;
 
-import com.itextpdf.text.Document;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.pethotel.HeavenForPets.controllers.FoodController;
 import org.pethotel.HeavenForPets.domein.Food;
 import org.pethotel.HeavenForPets.domein.FoodDetails;
 import org.pethotel.HeavenForPets.entity.FoodEntity;
@@ -11,10 +10,12 @@ import org.pethotel.HeavenForPets.enums.PetType;
 import org.pethotel.HeavenForPets.mappers.FoodMap;
 import org.pethotel.HeavenForPets.repository.FoodRepository;
 import org.pethotel.HeavenForPets.service.FoodService;
-import org.pethotel.HeavenForPets.utils.GeneratorPdfs;
+import org.pethotel.HeavenForPets.utils.Generator;
+import org.pethotel.HeavenForPets.utils.Writer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,14 +25,24 @@ public class FoodServiceImpl implements FoodService{
 
     private static final Logger LOGGER = LogManager.getLogger(FoodServiceImpl.class);
 
-    @Autowired
     private FoodMap foodMap;
-
-    @Autowired
     private FoodRepository foodRepository;
+    private Generator generatorPdf;
+    private Generator generatorCsv;
+    private Writer writerPdf;
+    private Writer wrieterCsv;
 
     @Autowired
-    private GeneratorPdfs generatorPdfs;
+    private FoodServiceImpl(FoodMap foodMap, FoodRepository foodRepository,
+                            Generator generatorPdf, Generator generatorCsv,
+                            Writer writerPdf, Writer writerCsv){
+        this.foodMap = foodMap;
+        this.foodRepository = foodRepository;
+        this.generatorPdf = generatorPdf;
+        this.generatorCsv = generatorCsv;
+        this.writerPdf = writerPdf;
+        this.wrieterCsv = writerCsv;
+    }
 
     @Override
     public void saveFood(List<Food> foodlist) {
@@ -73,16 +84,23 @@ public class FoodServiceImpl implements FoodService{
         foodDetails.setDeliveryAmount(foodEntity.getDeliveryAmount());
         foodDetails.setDeliveryDate(foodEntity.getDeliveryDate());
 
-//        generatorPdfs.generate(foodDetails);
+//        generator.generate(foodDetails);
 
         return foodDetails;
     }
 
-    public void getDetailsById(Integer id){
+    public void getFile(HttpServletRequest request,
+                        HttpServletResponse response,
+                        Integer id,
+                        String file) {
         FoodDetails foodDetails = getFoodById(id);
-
-        generatorPdfs.generate(foodDetails);
-
+        if ("PDF".equals(file.toUpperCase())){
+            generatorPdf.generate(foodDetails);
+            writerPdf.writer(request, response, foodDetails);
+        }
+        else {
+            generatorCsv.generate(foodDetails);
+            wrieterCsv.writer(request, response, foodDetails);
+        }
     }
-
 }
