@@ -39,7 +39,7 @@ public class WriterCsv implements Writer {
                 response.addHeader("Content-Disposition", "attachment; filename=" + fileName);
                 try {
                     LOGGER.info("Start send");
-                //    Files.copy(file, response.getOutputStream());
+                    Files.copy(file, response.getOutputStream());
                     response.getOutputStream().flush();
                     LOGGER.info("end send");
                 } catch (IOException ex) {

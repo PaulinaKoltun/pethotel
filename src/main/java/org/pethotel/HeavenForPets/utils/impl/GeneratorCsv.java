@@ -10,12 +10,12 @@ import java.io.IOException;
 @Component
 public class GeneratorCsv  implements Generator{
 
-    private static final String filename = "src/main/webapp/WEB-INF/downloads/iTextHelloWorld.csv";
+    private static final String filename = "iTextHelloWorld.csv";
 
     @Override
     public String generate(FoodDetails foodDetails) {
         try {
-            FileWriter writer = new FileWriter(filename);
+            FileWriter writer = new FileWriter("src/main/webapp/WEB-INF/downloads/" + filename);
 
             StringBuilder sb = new StringBuilder();
 

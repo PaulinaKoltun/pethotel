@@ -30,7 +30,7 @@ public class FoodServiceImpl implements FoodService{
     private Generator generatorPdf;
     private Generator generatorCsv;
     private Writer writerPdf;
-    private Writer wrieterCsv;
+    private Writer writerCsv;
 
     @Autowired
     private FoodServiceImpl(FoodMap foodMap, FoodRepository foodRepository,
@@ -41,7 +41,7 @@ public class FoodServiceImpl implements FoodService{
         this.generatorPdf = generatorPdf;
         this.generatorCsv = generatorCsv;
         this.writerPdf = writerPdf;
-        this.wrieterCsv = writerCsv;
+        this.writerCsv = writerCsv;
     }
 
     @Override
@@ -94,13 +94,14 @@ public class FoodServiceImpl implements FoodService{
                         Integer id,
                         String file) {
         FoodDetails foodDetails = getFoodById(id);
+
         if ("PDF".equals(file.toUpperCase())){
             generatorPdf.generate(foodDetails);
             writerPdf.writer(request, response, foodDetails);
         }
         else {
             generatorCsv.generate(foodDetails);
-            wrieterCsv.writer(request, response, foodDetails);
+            writerCsv.writer(request, response, foodDetails);
         }
     }
 }
