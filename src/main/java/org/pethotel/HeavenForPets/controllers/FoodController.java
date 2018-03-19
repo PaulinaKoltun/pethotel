@@ -47,29 +47,13 @@ public class FoodController implements ErrorController{
     }
 
 
-    @RequestMapping(value = "/getfile/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/getfile/{id}/{file}", method = RequestMethod.GET)
     public void getFile( HttpServletRequest request,
                          HttpServletResponse response,
-            @PathVariable Integer id) {
+                         @PathVariable Integer id,
+                         @PathVariable String file) {
 
-        foodService.getDetailsById(id);
-
-        String fileName = "iTextHelloWorld.pdf";
-        String dataDirectory = request.getServletContext().getRealPath("/WEB-INF/downloads");
-        Path file = Paths.get(dataDirectory, fileName);
-        LOGGER.info("File " + dataDirectory);
-        if (Files.exists(file)) {
-            response.setContentType("application/pdf");
-            response.addHeader("Content-Disposition", "attachment; filename=" + fileName);
-            try {
-                LOGGER.info("Start send");
-                Files.copy(file, response.getOutputStream());
-                response.getOutputStream().flush();
-                LOGGER.info("end send");
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
+        foodService.getFile(request, response, id, file);
     }
 
     @RequestMapping(value = PATH)

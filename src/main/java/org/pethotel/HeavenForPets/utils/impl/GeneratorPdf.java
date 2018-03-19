@@ -2,23 +2,26 @@ package org.pethotel.HeavenForPets.utils.impl;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
-import org.pethotel.HeavenForPets.domein.Food;
+import liquibase.util.csv.CSVWriter;
 import org.pethotel.HeavenForPets.domein.FoodDetails;
-import org.pethotel.HeavenForPets.utils.GeneratorPdfs;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.pethotel.HeavenForPets.utils.Generator;
 import org.springframework.stereotype.Component;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.Writer;
 
 @Component
-public class GeneratorPdfsImpl implements GeneratorPdfs {
+public class GeneratorPdf implements Generator {
+
+    private static final String filename = "iTextHelloWorld.pdf";
+
     @Override
-    public Document generate(Object object) {
+    public String generate(FoodDetails foodDetails) {
         Document document = new Document();
-        FoodDetails foodDetails = (FoodDetails) object;
+
         try {
-            PdfWriter.getInstance(document, new FileOutputStream("src/main/webapp/WEB-INF/downloads/iTextHelloWorld.pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream("src/main/webapp/WEB-INF/downloads/" + filename));
         } catch (DocumentException e) {
             e.printStackTrace();
         } catch (FileNotFoundException e) {
@@ -39,7 +42,7 @@ public class GeneratorPdfsImpl implements GeneratorPdfs {
         } finally {
             document.close();
         }
-        return document;
+        return filename;
     }
 }
 
