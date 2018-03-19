@@ -1,15 +1,13 @@
-package org.pethotel.HeavenForPets.utils.impl;
+package org.pethotel.HeavenForPets.utils.fasade.impl;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
-import liquibase.util.csv.CSVWriter;
 import org.pethotel.HeavenForPets.domein.FoodDetails;
-import org.pethotel.HeavenForPets.utils.Generator;
+import org.pethotel.HeavenForPets.utils.fasade.Generator;
 import org.springframework.stereotype.Component;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.Writer;
 
 @Component
 public class GeneratorPdf implements Generator {

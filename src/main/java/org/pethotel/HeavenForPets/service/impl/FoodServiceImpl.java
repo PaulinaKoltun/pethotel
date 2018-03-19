@@ -10,8 +10,7 @@ import org.pethotel.HeavenForPets.enums.PetType;
 import org.pethotel.HeavenForPets.mappers.FoodMap;
 import org.pethotel.HeavenForPets.repository.FoodRepository;
 import org.pethotel.HeavenForPets.service.FoodService;
-import org.pethotel.HeavenForPets.utils.Generator;
-import org.pethotel.HeavenForPets.utils.Writer;
+import org.pethotel.HeavenForPets.utils.chain.MainGeneratorChain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,21 +26,14 @@ public class FoodServiceImpl implements FoodService{
 
     private FoodMap foodMap;
     private FoodRepository foodRepository;
-    private Generator generatorPdf;
-    private Generator generatorCsv;
-    private Writer writerPdf;
-    private Writer writerCsv;
+    private MainGeneratorChain mainGeneratorChain;
 
     @Autowired
     private FoodServiceImpl(FoodMap foodMap, FoodRepository foodRepository,
-                            Generator generatorPdf, Generator generatorCsv,
-                            Writer writerPdf, Writer writerCsv){
+                            MainGeneratorChain mainGeneratorChain){
         this.foodMap = foodMap;
         this.foodRepository = foodRepository;
-        this.generatorPdf = generatorPdf;
-        this.generatorCsv = generatorCsv;
-        this.writerPdf = writerPdf;
-        this.writerCsv = writerCsv;
+        this.mainGeneratorChain = mainGeneratorChain;
     }
 
     @Override
@@ -84,7 +76,7 @@ public class FoodServiceImpl implements FoodService{
         foodDetails.setDeliveryAmount(foodEntity.getDeliveryAmount());
         foodDetails.setDeliveryDate(foodEntity.getDeliveryDate());
 
-//        generator.generate(foodDetails);
+//        generator.isGenerate(foodDetails);
 
         return foodDetails;
     }
@@ -95,13 +87,6 @@ public class FoodServiceImpl implements FoodService{
                         String file) {
         FoodDetails foodDetails = getFoodById(id);
 
-        if ("PDF".equals(file.toUpperCase())){
-            generatorPdf.generate(foodDetails);
-            writerPdf.writer(request, response, foodDetails);
-        }
-        else {
-            generatorCsv.generate(foodDetails);
-            writerCsv.writer(request, response, foodDetails);
-        }
+        mainGeneratorChain.makeResponse(request,response, file, foodDetails);
     }
 }
