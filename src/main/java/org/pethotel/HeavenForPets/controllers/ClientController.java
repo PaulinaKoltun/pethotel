@@ -37,8 +37,8 @@ public class ClientController implements ErrorController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteAllPets(@PathVariable int id){
-        ownerService.deleteAllPets(id);
+    public void pickupAllPets(@PathVariable int id){
+        ownerService.pickupAllPets(id);
     }
 
     @RequestMapping(value = PATH)

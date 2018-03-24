@@ -134,14 +134,18 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     @Transactional
-    public void deleteAllPets(int id) {
+    public void pickupAllPets(int id) {
         OwnerEntity ownerEntity = ownerRepository.findOne(Long.valueOf(id));
         List<PetEntity> petEntities = ownerEntity.getPetList();
-        ownerEntity.setPetList(Collections.emptyList());
-        ownerRepository.save(ownerEntity);
 
         for (PetEntity petEntity : petEntities) {
-            petRepository.delete(petEntity);
+            petEntity.setPresent(0);
+
+            RoomEntity roomEntity = petEntity.getRoomEntity();
+            int newFreePlaces = roomEntity.getFreePlaces()+1;
+            roomEntity.setFreePlaces(newFreePlaces);
+
+            petEntity.setRoomEntity(null);
         }
     }
 

@@ -14,10 +14,12 @@ import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.pethotel.HeavenForPets.enums.PetType;
 import org.pethotel.HeavenForPets.mappers.FoodMap;
 import org.pethotel.HeavenForPets.repository.RoomRepository;
+import org.pethotel.HeavenForPets.service.FoodService;
 
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PetMapImplTest {
@@ -26,7 +28,7 @@ public class PetMapImplTest {
     private RoomRepository roomRepository;
 
     @Mock
-    private FoodMap foodMap;
+    private FoodService foodService;
 
     @InjectMocks
     private PetMapImpl petMap;
@@ -80,41 +82,38 @@ public class PetMapImplTest {
     @Test
     public void shouldCheckIfBreakfastIsCorrectlyMappedToPetEntity(){
         Pet pet = new Pet();
-        Food food = new Food();
-        pet.setBreakfast(food);
+        pet.setBreakfast(1);
 
         FoodEntity foodEntity = new FoodEntity();
 
-        Mockito.when(foodMap.map(pet.getBreakfast())).thenReturn(foodEntity);
+        Mockito.when(foodService.getFoodById(pet.getBreakfast())).thenReturn(foodEntity);
 
         PetEntity petEntity = petMap.map(pet, null);
-        assertEquals(pet.getBreakfast().getFoodType(), petEntity.getBreakfast().getFoodType());
+        assertNotNull(petEntity.getBreakfast());
     }
 
     @Test
     public void shouldCheckIfDinnerIsCorrectlyMappedToPetEntity(){
         Pet pet = new Pet();
-        Food food = new Food();
-        pet.setDinner(food);
+        pet.setDinner(1);
 
         FoodEntity foodEntity = new FoodEntity();
 
-        Mockito.when(foodMap.map(pet.getDinner())).thenReturn(foodEntity);
+        Mockito.when(foodService.getFoodById(pet.getDinner())).thenReturn(foodEntity);
 
         PetEntity petEntity = petMap.map(pet, null);
-        assertEquals(pet.getDinner().getName(), petEntity.getDinner().getName());
+        assertNotNull(petEntity.getDinner());
     }
 
     @Test
     public void shouldCheckIfSupperIsCorrectlyMappedToPetEntity(){
         Pet pet = new Pet();
-        Food food = new Food();
-        pet.setSupper(food);
+        pet.setSupper(1);
 
-        Mockito.when(foodMap.map(pet.getSupper())).thenReturn(new FoodEntity());
+        Mockito.when(foodService.getFoodById(pet.getSupper())).thenReturn(new FoodEntity());
 
         PetEntity petEntity = petMap.map(pet, null);
-        assertEquals(pet.getSupper().getAmount(), petEntity.getSupper().getAmount());
+        assertNotNull(petEntity.getSupper().getAmount());
     }
 
     @Test

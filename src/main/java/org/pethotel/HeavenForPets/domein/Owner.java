@@ -17,7 +17,7 @@ public class Owner implements Serializable {
     private int discount;
     private List<Pet> petList = new ArrayList<>();
     private Address address;
-
+        //szukac ownera po czyms unikalnym i dodac zwierze do hotelu jedno lub kilka sposrod jego zwierzat 
     public Owner(){
 
     }

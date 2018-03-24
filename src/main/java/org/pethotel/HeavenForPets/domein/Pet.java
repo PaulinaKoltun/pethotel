@@ -16,9 +16,9 @@ public class Pet implements Serializable {
     private int roomNumber;
     private Date dateIn;
     private Date dateOut;
-    private Food breakfast;
-    private Food dinner;
-    private Food supper;
+    private int breakfast;
+    private int dinner;
+    private int supper;
 
     public Pet(){}
 
@@ -70,27 +70,27 @@ public class Pet implements Serializable {
         this.dateOut = dateOut;
     }
 
-    public Food getBreakfast() {
+    public int getBreakfast() {
         return breakfast;
     }
 
-    public void setBreakfast(Food breakfast) {
+    public void setBreakfast(int breakfast) {
         this.breakfast = breakfast;
     }
 
-    public Food getDinner() {
+    public int getDinner() {
         return dinner;
     }
 
-    public void setDinner(Food dinner) {
+    public void setDinner(int dinner) {
         this.dinner = dinner;
     }
 
-    public Food getSupper() {
+    public int getSupper() {
         return supper;
     }
 
-    public void setSupper(Food supper) {
+    public void setSupper(int supper) {
         this.supper = supper;
     }
 
@@ -117,14 +117,14 @@ public class Pet implements Serializable {
         Pet pet = (Pet) o;
 
         if (roomNumber != pet.roomNumber) return false;
+        if (breakfast != pet.breakfast) return false;
+        if (dinner != pet.dinner) return false;
+        if (supper != pet.supper) return false;
         if (name != null ? !name.equals(pet.name) : pet.name != null) return false;
         if (comment != null ? !comment.equals(pet.comment) : pet.comment != null) return false;
         if (petType != pet.petType) return false;
         if (dateIn != null ? !dateIn.equals(pet.dateIn) : pet.dateIn != null) return false;
-        if (dateOut != null ? !dateOut.equals(pet.dateOut) : pet.dateOut != null) return false;
-        if (breakfast != null ? !breakfast.equals(pet.breakfast) : pet.breakfast != null) return false;
-        if (dinner != null ? !dinner.equals(pet.dinner) : pet.dinner != null) return false;
-        return supper != null ? supper.equals(pet.supper) : pet.supper == null;
+        return dateOut != null ? dateOut.equals(pet.dateOut) : pet.dateOut == null;
     }
 
     @Override
@@ -135,9 +135,9 @@ public class Pet implements Serializable {
         result = 31 * result + roomNumber;
         result = 31 * result + (dateIn != null ? dateIn.hashCode() : 0);
         result = 31 * result + (dateOut != null ? dateOut.hashCode() : 0);
-        result = 31 * result + (breakfast != null ? breakfast.hashCode() : 0);
-        result = 31 * result + (dinner != null ? dinner.hashCode() : 0);
-        result = 31 * result + (supper != null ? supper.hashCode() : 0);
+        result = 31 * result + breakfast;
+        result = 31 * result + dinner;
+        result = 31 * result + supper;
         return result;
     }
 }

@@ -67,7 +67,7 @@ public class FoodServiceImpl implements FoodService{
     }
 
     @Override
-    public FoodDetails getFoodById(Integer id) {
+    public FoodDetails getFoodDetailsById(Integer id) {
         FoodEntity foodEntity = foodRepository.findOne(Long.valueOf(id));
 
         FoodDetails foodDetails = new FoodDetails();
@@ -85,8 +85,13 @@ public class FoodServiceImpl implements FoodService{
                         HttpServletResponse response,
                         Integer id,
                         String file) {
-        FoodDetails foodDetails = getFoodById(id);
+        FoodDetails foodDetails = getFoodDetailsById(id);
 
         mainGeneratorChain.makeResponse(request,response, file, foodDetails);
+    }
+
+    @Override
+    public FoodEntity getFoodById(Integer id) {
+        return foodRepository.findOne((long) id);
     }
 }

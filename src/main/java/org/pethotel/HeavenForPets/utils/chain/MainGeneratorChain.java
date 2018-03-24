@@ -17,12 +17,17 @@ import java.util.List;
 public class MainGeneratorChain {
 
     private List<ChainGenerator> chainGenerator = new ArrayList<>();
+//
+//    @Autowired
+//    private MainGeneratorChain(ChainGenerator chainGeneratorPdf,
+//                               ChainGenerator chainGeneratorCsv) {
+//        chainGenerator.add(chainGeneratorPdf);
+//        chainGenerator.add(chainGeneratorCsv);
+//    }
 
     @Autowired
-    private MainGeneratorChain(ChainGenerator chainGeneratorPdf,
-                               ChainGenerator chainGeneratorCsv) {
-        chainGenerator.add(chainGeneratorPdf);
-        chainGenerator.add(chainGeneratorCsv);
+    public MainGeneratorChain(List<ChainGenerator> chainGenerator) {
+        this.chainGenerator = chainGenerator;
     }
 
     public void makeResponse(HttpServletRequest request, HttpServletResponse response,
