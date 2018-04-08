@@ -5,6 +5,7 @@ import org.pethotel.HeavenForPets.domein.Owner;
 import org.pethotel.HeavenForPets.domein.Pet;
 import org.pethotel.HeavenForPets.entity.PetEntity;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,4 +17,6 @@ public interface OwnerService {
     List<Pet> showAllPets(int id);
     void pickupAllPets(int id);
     void updateDiscountAtOwner(String lastName, int newDiscount);
+    void addPetToOwner(String lastname, Pet pet);
+    void bringPetAgain(int id, Date dateIn, Date dateOut);
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -31,9 +32,21 @@ public class ClientController implements ErrorController {
         return ownerService.getAllClients();
     }
 
+    @PostMapping("addPetToOwner/{lastname}")
+    public void addPetToOwner(@PathVariable String lastname, @RequestBody Pet pet){
+        ownerService.addPetToOwner(lastname, pet);
+    }
+
+    @PostMapping("/bringPetAgain/{id}/{dateIn}/{dateOut}")
+    public void bringPetAgain(@PathVariable int id, @PathVariable Date dateIn, @PathVariable Date dateOut){
+        ownerService.bringPetAgain(id, dateOut, dateOut);
+    }
+
+
     @GetMapping("/showAllPets/{id}")
     public List<Pet> showAllPets(@PathVariable int id){
-        return ownerService.showAllPets(id);
+        List<Pet> pets = ownerService.showAllPets(id);
+        return pets;
     }
 
     @DeleteMapping("/delete/{id}")

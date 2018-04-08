@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -43,7 +43,13 @@ public class OwnerServiceImpl implements OwnerService {
     private AddressRepository addressRepository;
 
     @Autowired
+    private RoomRepository roomRepository;
+
+    @Autowired
     private OwnerMap ownerMap;
+
+    @Autowired
+    private PetMap petMap;
 
     @Override
     public void saveOwner(Owner owner) {
@@ -59,18 +65,10 @@ public class OwnerServiceImpl implements OwnerService {
     @Override
     public List<Client> getAllClients() {
         List<OwnerEntity> ownerEntityList = (List<OwnerEntity>) ownerRepository.findAll();
-        List<Client> clients = new ArrayList<>();
 
         return ownerEntityList.stream()
                 .map(r->map(r))
                 .collect(Collectors.toList());
-
-
-//        for (OwnerEntity ownerEntity : ownerEntityList) {
-//            Client client = map(ownerEntity);
-//            clients.add(client);
-//        }
-//        return clients;
     }
 
     private Client map(OwnerEntity ownerEntity) {
@@ -154,6 +152,26 @@ public class OwnerServiceImpl implements OwnerService {
         OwnerEntity ownerEntity = ownerRepository.getOwnerByLastName(lastName);
         ownerEntity.setDiscount(newDiscount);
         ownerRepository.save(ownerEntity);
+    }
+
+    @Override
+    public void bringPetAgain(int id, Date dateIn, Date dateOut) {
+        PetEntity petEntity = petRepository.findOne((long) id);
+        petEntity.setPresent(1);
+        petEntity.setDateIn(dateIn);
+        petEntity.setDateOut(dateOut);
+        petRepository.save(petEntity);
+        // daty nie chcą przejść przez postmana ;/
+    }
+
+    @Override
+    public void addPetToOwner(String lastname, Pet pet) {
+        OwnerEntity ownerEntity = ownerRepository.getOwnerByLastName(lastname);
+        List<PetEntity> pets = ownerEntity.getPetList();
+        PetEntity petEntity = petMap.map(pet, roomRepository.getRoomByNumber(pet.getRoomNumber()));
+        pets.add(petEntity);
+        ownerEntity.setPetList(pets);
+        petRepository.save(petEntity);
     }
 
 }
