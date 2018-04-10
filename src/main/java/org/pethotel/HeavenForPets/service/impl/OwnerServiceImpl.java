@@ -1,5 +1,6 @@
 package org.pethotel.HeavenForPets.service.impl;
 
+import org.apache.logging.log4j.LogManager;
 import org.pethotel.HeavenForPets.domein.Client;
 import org.pethotel.HeavenForPets.domein.Owner;
 import org.pethotel.HeavenForPets.domein.Pet;
@@ -19,10 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Date;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +30,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class OwnerServiceImpl implements OwnerService {
+    private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger(OwnerServiceImpl.class);
 
     @Autowired
     private OwnerRepository ownerRepository;
@@ -91,8 +90,10 @@ public class OwnerServiceImpl implements OwnerService {
     private BigDecimal countWholePrice(List<PetEntity> petList) {
         BigDecimal wholePrice = BigDecimal.ZERO;
         for (PetEntity petEntity : petList) {
-            BigDecimal daysOfVisit = new BigDecimal(getDaysOfVisit(petEntity));
-            wholePrice = (wholePrice.add(petEntity.getRoomEntity().getPrice().multiply(daysOfVisit)));
+            if (null!=petEntity.getRoomEntity()) {
+                BigDecimal daysOfVisit = new BigDecimal(getDaysOfVisit(petEntity));
+                wholePrice = (wholePrice.add(petEntity.getRoomEntity().getPrice().multiply(daysOfVisit)));
+            }
         }
         return wholePrice;
     }
@@ -106,10 +107,9 @@ public class OwnerServiceImpl implements OwnerService {
     public List<Pet> showAllPets(int id) {
         OwnerEntity ownerEntity = ownerRepository.findOne(Long.valueOf(id));
         List<PetEntity> petEntities = ownerEntity.getPetList();
-        List<Pet> pets = new ArrayList<>();
 
         //for (PetEntity petEntity : petEntities)
-        petEntities.stream()
+        List<Pet> pets = petEntities.stream()
                 .map(e -> getPet(e))
                 .collect(Collectors.toList());
 
@@ -123,9 +123,12 @@ public class OwnerServiceImpl implements OwnerService {
         pet.setPetType(e.getPetType());
         pet.setDateIn(e.getDateIn());
         pet.setDateOut(e.getDateOut());
+        pet.setDinner((int) e.getDinner().getId());
+        pet.setSupper((int) e.getSupper().getId());
+        pet.setBreakfast((int) e.getBreakfast().getId());
 
         RoomEntity roomEntity = e.getRoomEntity();
-        pet.setRoomNumber(roomEntity.getRoomNumber());
+        pet.setRoomNumber(roomEntity != null ? roomEntity.getRoomNumber() : 0);
 
         return pet;
     }
@@ -165,8 +168,8 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public void addPetToOwner(String lastname, Pet pet) {
-        OwnerEntity ownerEntity = ownerRepository.getOwnerByLastName(lastname);
+    public void addPetToOwner(Long id, Pet pet) {
+        OwnerEntity ownerEntity = ownerRepository.findOne(id);
         List<PetEntity> pets = ownerEntity.getPetList();
         PetEntity petEntity = petMap.map(pet, roomRepository.getRoomByNumber(pet.getRoomNumber()));
         pets.add(petEntity);

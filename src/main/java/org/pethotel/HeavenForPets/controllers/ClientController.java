@@ -32,9 +32,9 @@ public class ClientController implements ErrorController {
         return ownerService.getAllClients();
     }
 
-    @PostMapping("addPetToOwner/{lastname}")
-    public void addPetToOwner(@PathVariable String lastname, @RequestBody Pet pet){
-        ownerService.addPetToOwner(lastname, pet);
+    @PostMapping("addPetToOwner/{id}")
+    public void addPetToOwner(@PathVariable Long id, @RequestBody Pet pet){
+        ownerService.addPetToOwner(id, pet);
     }
 
     @PostMapping("/bringPetAgain/{id}/{dateIn}/{dateOut}")
