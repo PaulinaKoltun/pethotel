@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -158,13 +157,25 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public void bringPetAgain(int id, Date dateIn, Date dateOut) {
-        PetEntity petEntity = petRepository.findOne((long) id);
+    public void bringPetAgain(Pet pet) {
+        PetEntity petEntity = petRepository.findOne(pet.getId());
         petEntity.setPresent(1);
-        petEntity.setDateIn(dateIn);
-        petEntity.setDateOut(dateOut);
+        RoomEntity roomEntity = roomRepository.getRoomByNumber(pet.getRoomNumber());
+        petMap.map(pet, petEntity, roomEntity);
         petRepository.save(petEntity);
-        // daty nie chcą przejść przez postmana ;/
+    }
+
+    @Override
+    public void pickupOnePet(int id) {
+        PetEntity petEntity = petRepository.findOne((long) id);
+
+        petEntity.setPresent(0);
+        RoomEntity roomEntity = petEntity.getRoomEntity();
+        int newFreePlaces = roomEntity.getFreePlaces()+1;
+        roomEntity.setFreePlaces(newFreePlaces);
+
+        petEntity.setRoomEntity(null);
+        petRepository.save(petEntity);
     }
 
     @Override

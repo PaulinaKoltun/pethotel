@@ -31,4 +31,16 @@ public class PetMapImpl implements PetMap {
         petEntity.setRoomEntity(roomByNumber);
         return petEntity;
     }
+
+    @Override
+    public PetEntity map(Pet pet, PetEntity petEntity, RoomEntity roomByNumber) {
+        petEntity.setComment(pet.getComment());
+        petEntity.setDateIn(pet.getDateIn());
+        petEntity.setDateOut(pet.getDateOut());
+        petEntity.setBreakfast(foodService.getFoodById(pet.getBreakfast()));
+        petEntity.setDinner(foodService.getFoodById(pet.getDinner()));
+        petEntity.setSupper(foodService.getFoodById(pet.getSupper()));
+        petEntity.setRoomEntity(roomByNumber);
+        return petEntity;
+    }
 }

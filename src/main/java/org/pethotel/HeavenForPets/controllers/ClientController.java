@@ -37,9 +37,9 @@ public class ClientController implements ErrorController {
         ownerService.addPetToOwner(id, pet);
     }
 
-    @PostMapping("/bringPetAgain/{id}/{dateIn}/{dateOut}")
-    public void bringPetAgain(@PathVariable int id, @PathVariable Date dateIn, @PathVariable Date dateOut){
-        ownerService.bringPetAgain(id, dateOut, dateOut);
+    @PostMapping("/bringPetAgain")
+    public void bringPetAgain(@RequestBody Pet pet ){
+        ownerService.bringPetAgain(pet);
     }
 
 
@@ -49,9 +49,14 @@ public class ClientController implements ErrorController {
         return pets;
     }
 
-    @DeleteMapping("/delete/{id}")
+    @PostMapping("/pickupAllPets/{id}")
     public void pickupAllPets(@PathVariable int id){
         ownerService.pickupAllPets(id);
+    }
+
+    @PostMapping("/pickupOnePet/{id}")
+    public void pickupOnePet(@PathVariable int id) {
+        ownerService.pickupOnePet(id);
     }
 
     @RequestMapping(value = PATH)

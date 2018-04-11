@@ -18,5 +18,6 @@ public interface OwnerService {
     void pickupAllPets(int id);
     void updateDiscountAtOwner(String lastName, int newDiscount);
     void addPetToOwner(Long id, Pet pet);
-    void bringPetAgain(int id, Date dateIn, Date dateOut);
+    void bringPetAgain(Pet pet);
+    void pickupOnePet(int id);
 }
