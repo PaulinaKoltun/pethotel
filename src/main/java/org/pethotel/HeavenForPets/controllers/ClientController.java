@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -54,9 +55,9 @@ public class ClientController implements ErrorController {
         ownerService.pickupAllPets(id);
     }
 
-    @PostMapping("/pickupOnePet/{id}")
-    public void pickupOnePet(@PathVariable int id) {
-        ownerService.pickupOnePet(id);
+    @PutMapping("/pickupPets")
+    public BigDecimal pickupPets(@RequestBody List<Integer> idList) {
+        return ownerService.pickupPets(idList);
     }
 
     @RequestMapping(value = PATH)

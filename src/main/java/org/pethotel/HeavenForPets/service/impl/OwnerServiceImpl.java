@@ -165,17 +165,37 @@ public class OwnerServiceImpl implements OwnerService {
         petRepository.save(petEntity);
     }
 
-    @Override
-    public void pickupOnePet(int id) {
+    private BigDecimal pickupOnePet(int id) {
         PetEntity petEntity = petRepository.findOne((long) id);
 
         petEntity.setPresent(0);
         RoomEntity roomEntity = petEntity.getRoomEntity();
+        BigDecimal price = roomEntity.getPrice();
+        price = price.multiply(BigDecimal.valueOf(getDaysOfVisit(petEntity)));
+
         int newFreePlaces = roomEntity.getFreePlaces()+1;
         roomEntity.setFreePlaces(newFreePlaces);
 
         petEntity.setRoomEntity(null);
         petRepository.save(petEntity);
+        return price;
+    }
+
+    @Override
+    public BigDecimal pickupPets(List<Integer> idList){
+        BigDecimal wholePrice = BigDecimal.ZERO;
+
+        validateTheOwnersForPets(idList);
+
+        for (Integer id : idList) {
+            BigDecimal price = pickupOnePet(id);
+            wholePrice = wholePrice.add(price);
+        }
+        return wholePrice;
+    }
+
+    private void validateTheOwnersForPets(List<Integer> idList) {
+        
     }
 
     @Override

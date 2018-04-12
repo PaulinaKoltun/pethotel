@@ -5,6 +5,7 @@ import org.pethotel.HeavenForPets.domein.Owner;
 import org.pethotel.HeavenForPets.domein.Pet;
 import org.pethotel.HeavenForPets.entity.PetEntity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -19,5 +20,5 @@ public interface OwnerService {
     void updateDiscountAtOwner(String lastName, int newDiscount);
     void addPetToOwner(Long id, Pet pet);
     void bringPetAgain(Pet pet);
-    void pickupOnePet(int id);
+    BigDecimal pickupPets(List<Integer> idList);
 }
