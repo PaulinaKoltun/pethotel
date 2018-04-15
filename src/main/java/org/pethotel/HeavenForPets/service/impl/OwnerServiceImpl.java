@@ -7,6 +7,7 @@ import org.pethotel.HeavenForPets.domein.Pet;
 import org.pethotel.HeavenForPets.entity.OwnerEntity;
 import org.pethotel.HeavenForPets.entity.PetEntity;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
+import org.pethotel.HeavenForPets.exceptions.DifferentOwnerException;
 import org.pethotel.HeavenForPets.exceptions.InvalidPetTypeException;
 import org.pethotel.HeavenForPets.mappers.OwnerMap;
 import org.pethotel.HeavenForPets.mappers.PetMap;
@@ -185,7 +186,13 @@ public class OwnerServiceImpl implements OwnerService {
     public BigDecimal pickupPets(List<Integer> idList){
         BigDecimal wholePrice = BigDecimal.ZERO;
 
-        validateTheOwnersForPets(idList);
+        try {
+            validateTheOwnersForPets(idList);
+        }catch (DifferentOwnerException e) {
+            e.printStackTrace();
+        } {
+
+        }
 
         for (Integer id : idList) {
             BigDecimal price = pickupOnePet(id);
@@ -194,8 +201,11 @@ public class OwnerServiceImpl implements OwnerService {
         return wholePrice;
     }
 
-    private void validateTheOwnersForPets(List<Integer> idList) {
-        
+    private void validateTheOwnersForPets(List<Integer> idList) throws DifferentOwnerException {
+        List<Integer> ownerList = petRepository.ownerEntityList(idList);
+        if (ownerList.size()!=1){
+            throw new DifferentOwnerException();
+        }
     }
 
     @Override
