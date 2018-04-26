@@ -1,6 +1,7 @@
 package org.pethotel.HeavenForPets.mappers.impl;
 
-import org.pethotel.HeavenForPets.domein.Room;
+import org.pethotel.HeavenForPets.domein.Rooms.PetRoom;
+import org.pethotel.HeavenForPets.domein.Rooms.Room;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.pethotel.HeavenForPets.mappers.RoomMap;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ public class RoomMapImpl implements RoomMap {
 
     @Override
     public Room map(RoomEntity roomEntity) {
-        Room room = new Room();
+        PetRoom room = new PetRoom();
         room.setFreePlaces(roomEntity.getFreePlaces());
         room.setNumberOfPlaces(roomEntity.getNumberOfPlaces());
         room.setPetType(roomEntity.getPetType());

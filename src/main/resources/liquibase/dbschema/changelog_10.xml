@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <changeSet id="260420181600" author="paulina">
+        <createTable tableName="SHELVES">
+            <column name="id" type="bigint(20)" autoIncrement="true">
+            <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="number" type="bigint(20)">
+            </column>
+            <column name="free" type="int(1)" defaultValue="1"/>
+            <column name="room_entity" type="int"/>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="FK_ROOM_TO_SHELF"
+                                 baseTableName="SHELVES" baseColumnNames="room_entity"
+                                 referencedTableName="ROOM" referencedColumnNames="id"
+        />
+
+        <createTable tableName="SHELVES_ROOMS_LIST">
+            <column name="shelf_id" type="bigint(20)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="room_id" type="integer">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

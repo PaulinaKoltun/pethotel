@@ -1,7 +1,8 @@
 package org.pethotel.HeavenForPets.mappers.impl;
 
 import org.junit.Test;
-import org.pethotel.HeavenForPets.domein.Room;
+import org.pethotel.HeavenForPets.domein.Rooms.PetRoom;
+import org.pethotel.HeavenForPets.domein.Rooms.Room;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.pethotel.HeavenForPets.enums.PetType;
 import org.pethotel.HeavenForPets.mappers.RoomMap;
@@ -46,7 +47,7 @@ public class RoomMapImplTest {
         RoomEntity roomEntity = new RoomEntity();
         roomEntity.setPetType(PetType.FISH);
 
-        Room room = roomMap.map(roomEntity);
+        PetRoom room = (PetRoom) roomMap.map(roomEntity);
         assertEquals(roomEntity.getPetType(), room.getPetType());
     }
 

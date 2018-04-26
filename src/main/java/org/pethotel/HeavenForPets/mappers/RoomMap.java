@@ -1,6 +1,6 @@
 package org.pethotel.HeavenForPets.mappers;
 
-import org.pethotel.HeavenForPets.domein.Room;
+import org.pethotel.HeavenForPets.domein.Rooms.Room;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
 
 /**

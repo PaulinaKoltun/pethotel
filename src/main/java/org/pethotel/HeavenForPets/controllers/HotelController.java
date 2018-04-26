@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.pethotel.HeavenForPets.domein.Owner;
 import org.pethotel.HeavenForPets.domein.Pet;
-import org.pethotel.HeavenForPets.domein.Room;
+import org.pethotel.HeavenForPets.domein.Rooms.Room;
 import org.pethotel.HeavenForPets.service.OwnerService;
 import org.pethotel.HeavenForPets.service.PetService;
 import org.pethotel.HeavenForPets.service.RoomService;

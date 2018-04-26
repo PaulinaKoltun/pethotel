@@ -3,18 +3,17 @@ package org.pethotel.HeavenForPets.service.impl;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.pethotel.HeavenForPets.domein.Room;
+import org.pethotel.HeavenForPets.domein.Rooms.PetRoom;
+import org.pethotel.HeavenForPets.domein.Rooms.PlantRoom;
+import org.pethotel.HeavenForPets.domein.Rooms.Room;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.pethotel.HeavenForPets.enums.PetType;
 import org.pethotel.HeavenForPets.mappers.RoomMap;
 import org.pethotel.HeavenForPets.repository.RoomRepository;
-import org.pethotel.HeavenForPets.service.PetService;
 import org.pethotel.HeavenForPets.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -42,8 +41,18 @@ public class RoomServiceImpl implements RoomService {
             roomEntity.setRoomNumber(room.getRoomNumber());
             roomEntity.setFreePlaces(room.getFreePlaces());
             roomEntity.setNumberOfPlaces(room.getNumberOfPlaces());
-            roomEntity.setPetType(room.getPetType());
+//            roomEntity.setPetType(room.getPetType());
             roomEntity.setPrice(room.getPrice());
+            if (room instanceof PetRoom) {
+                roomEntity.setPetType(((PetRoom)room).getPetType());
+            }
+            else {
+                List<ShelfEntity> 
+                for (Shelf shelf: ((PlantRoom)room).getShelves()) {
+                    ShelfEntity shelfEntity = shelfService.map(shelf);
+                }
+                roomEntity.setShelves(((PlantRoom)room).getShelves());
+            }
             roomRepository.save(roomEntity);
         }
         else {
@@ -82,7 +91,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public void updateRoom(Room room){
+    public void updateRoom(PetRoom room){
         RoomEntity entity = roomRepository.getRoomByNumber(room.getRoomNumber());
 
         entity.setFreePlaces(room.getFreePlaces());
