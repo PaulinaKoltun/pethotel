@@ -1,13 +1,10 @@
 package org.pethotel.HeavenForPets.service.impl;
 
-import
-        org.pethotel.HeavenForPets.domein.Pet;
-import org.pethotel.HeavenForPets.domein.Room;
+import org.pethotel.HeavenForPets.domein.Pet;
 import org.pethotel.HeavenForPets.entity.PetEntity;
 import org.pethotel.HeavenForPets.repository.PetRepository;
 import org.pethotel.HeavenForPets.service.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
