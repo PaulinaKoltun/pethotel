@@ -9,6 +9,7 @@ import org.pethotel.HeavenForPets.enums.PetType;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "ROOM")
@@ -27,6 +28,7 @@ public class RoomEntity {
     private PetType petType;
     @Column(name = "price")
     private BigDecimal price;
+    private List<ShelfEntity> shelfEntities;
 
     public RoomEntity() {
     }
@@ -71,6 +73,14 @@ public class RoomEntity {
         this.petType = petType;
     }
 
+    public List<ShelfEntity> getShelfEntities() {
+        return shelfEntities;
+    }
+
+    public void setShelfEntities(List<ShelfEntity> shelfEntities) {
+        this.shelfEntities = shelfEntities;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -82,7 +92,8 @@ public class RoomEntity {
         if (numberOfPlaces != that.numberOfPlaces) return false;
         if (freePlaces != that.freePlaces) return false;
         if (petType != that.petType) return false;
-        return price != null ? price.equals(that.price) : that.price == null;
+        if (price != null ? !price.equals(that.price) : that.price != null) return false;
+        return shelfEntities != null ? shelfEntities.equals(that.shelfEntities) : that.shelfEntities == null;
     }
 
     @Override
@@ -92,6 +103,7 @@ public class RoomEntity {
         result = 31 * result + freePlaces;
         result = 31 * result + (petType != null ? petType.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (shelfEntities != null ? shelfEntities.hashCode() : 0);
         return result;
     }
 
@@ -103,6 +115,7 @@ public class RoomEntity {
                 ", freePlaces=" + freePlaces +
                 ", petType=" + petType +
                 ", price=" + price +
+                ", shelfEntities=" + shelfEntities +
                 '}';
     }
 }

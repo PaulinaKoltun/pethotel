@@ -6,16 +6,21 @@ import org.apache.log4j.Logger;
 import org.pethotel.HeavenForPets.domein.Rooms.PetRoom;
 import org.pethotel.HeavenForPets.domein.Rooms.PlantRoom;
 import org.pethotel.HeavenForPets.domein.Rooms.Room;
+import org.pethotel.HeavenForPets.domein.Shelf;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
+import org.pethotel.HeavenForPets.entity.ShelfEntity;
 import org.pethotel.HeavenForPets.enums.PetType;
 import org.pethotel.HeavenForPets.mappers.RoomMap;
+import org.pethotel.HeavenForPets.mappers.ShelfMap;
 import org.pethotel.HeavenForPets.repository.RoomRepository;
 import org.pethotel.HeavenForPets.service.RoomService;
+import org.pethotel.HeavenForPets.service.ShelfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +39,9 @@ public class RoomServiceImpl implements RoomService {
     @Autowired
     RoomMap roomMap;
 
+    @Autowired
+    ShelfMap shelfMap;
+
     @Override
     public void saveRoom(Room room) {
         if (roomRepository.getRoomByNumber(room.getRoomNumber()) == null) {
@@ -47,11 +55,12 @@ public class RoomServiceImpl implements RoomService {
                 roomEntity.setPetType(((PetRoom)room).getPetType());
             }
             else {
-                List<ShelfEntity> 
+                List<ShelfEntity> shelfEntities = new ArrayList<>();
                 for (Shelf shelf: ((PlantRoom)room).getShelves()) {
-                    ShelfEntity shelfEntity = shelfService.map(shelf);
+                    ShelfEntity shelfEntity = shelfMap.map(shelf);
+                    shelfEntities.add(shelfEntity);
                 }
-                roomEntity.setShelves(((PlantRoom)room).getShelves());
+                roomEntity.setShelfEntities(shelfEntities);
             }
             roomRepository.save(roomEntity);
         }

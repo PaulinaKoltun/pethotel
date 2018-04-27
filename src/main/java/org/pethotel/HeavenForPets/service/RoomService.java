@@ -13,7 +13,7 @@ import java.util.Map;
  * Created by Paulina on 2017-10-07.
  */
 public interface RoomService {
-    void saveRoom(PetRoom room);
+    void saveRoom(Room room);
     List<Integer> getAllNumbers();
     List<Room> getAllRooms(Pageable pageable);
     RoomEntity findByRoomNumber(int roomNumber);
