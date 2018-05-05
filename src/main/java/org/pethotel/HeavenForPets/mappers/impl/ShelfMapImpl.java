@@ -14,4 +14,12 @@ public class ShelfMapImpl implements ShelfMap {
         shelfEntity.setFree(shelf.isFree());
         return shelfEntity;
     }
+
+    @Override
+    public Shelf map(ShelfEntity shelfEntity) {
+        Shelf shelf = new Shelf();
+        shelf.setFree(shelfEntity.isFree());
+        shelf.setNumber(shelfEntity.getNumber());
+        return shelf;
+    }
 }

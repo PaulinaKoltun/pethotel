@@ -28,6 +28,14 @@ public class RoomEntity {
     private PetType petType;
     @Column(name = "price")
     private BigDecimal price;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(
+            name="SHELVES_ROOMs_LIST",
+            joinColumns = @JoinColumn(name="room_entity", referencedColumnName="id", foreignKey = @ForeignKey(name =
+                    "FK_ROOM_AND_SHELF")),
+            inverseJoinColumns = @JoinColumn(name="shelves_entity", referencedColumnName="id", foreignKey = @ForeignKey(name =
+                    "FK_ROOM_AND_SHELF_ID"))
+    )
     private List<ShelfEntity> shelfEntities;
 
     public RoomEntity() {

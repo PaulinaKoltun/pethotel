@@ -17,7 +17,7 @@
         </createTable>
 
         <addForeignKeyConstraint constraintName="FK_ROOM_TO_SHELF"
-                                 baseTableName="SHELVES" baseColumnNames="room_entity"
+                                 baseTableName="SHELVES_ROOMS_LIST" baseColumnNames="room_entity"
                                  referencedTableName="ROOM" referencedColumnNames="id"
         />
 
