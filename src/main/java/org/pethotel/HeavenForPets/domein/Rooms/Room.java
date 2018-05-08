@@ -1,11 +1,22 @@
 package org.pethotel.HeavenForPets.domein.Rooms;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
  * Created by Paulina on 2017-10-07.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = PlantRoom.class, name = "PlantRoom"),
+
+        @JsonSubTypes.Type(value = PetRoom.class, name = "PetRoom") }
+)
 public abstract class Room implements Serializable {
     private int roomNumber;
     private int numberOfPlaces;

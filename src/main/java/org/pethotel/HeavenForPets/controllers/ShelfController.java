@@ -26,12 +26,12 @@ public class ShelfController {
         shelfService.saveShelves(shelves, id);
     }
 
-    @PostMapping("/getShelvesFromRoom/{id}")
+    @GetMapping("/getShelvesFromRoom/{id}")
     public List<Shelf> getShelvesFromRoom(@PathVariable int id){
         return shelfService.getShelvesFromRoom(id);
     }
 
-    @PostMapping("/getFreeShelvesInRoom/{id}")
+    @GetMapping("/getFreeShelvesInRoom/{id}")
     public List<Shelf> getFreeShelves(@PathVariable int id){
         return shelfService.getFreeShelves(id);
     }

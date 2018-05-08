@@ -7,7 +7,7 @@ import java.util.List;
 public class PlantRoom extends Room {
     List<Shelf> shelves;
 
-    public List<Shelf> getShelves() {
+    public List<Shelf> getPlantShelves() {
         return shelves;
     }
 
