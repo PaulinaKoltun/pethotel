@@ -6,7 +6,7 @@
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
 
     <changeSet id="260420181600" author="paulina">
-        <createTable tableName="SHELVES">
+        <createTable tableName="SHELF">
             <column name="id" type="bigint(20)" autoIncrement="true">
             <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -16,11 +16,6 @@
             <column name="room_entity" type="int"/>
         </createTable>
 
-        <addForeignKeyConstraint constraintName="FK_ROOM_TO_SHELF"
-                                 baseTableName="SHELVES_ROOMS_LIST" baseColumnNames="room_entity"
-                                 referencedTableName="ROOM" referencedColumnNames="id"
-        />
-
         <createTable tableName="SHELVES_ROOMS_LIST">
             <column name="shelf_id" type="bigint(20)">
                 <constraints primaryKey="true" nullable="false"/>
@@ -29,5 +24,10 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
         </createTable>
+
+        <addForeignKeyConstraint constraintName="FK_ROOM_AND_SHELF"
+                                 baseTableName="SHELVES_ROOMS_LIST" baseColumnNames="room_id"
+                                 referencedTableName="ROOM" referencedColumnNames="id"
+        />
     </changeSet>
 </databaseChangeLog>

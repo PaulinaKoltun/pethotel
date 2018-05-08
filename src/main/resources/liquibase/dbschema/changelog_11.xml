@@ -7,9 +7,9 @@
 
     <changeSet id="050520182100" author="paulina">
 
-        <addForeignKeyConstraint constraintName="FK_ROOM_TO_SHELF"
-                                 baseTableName="SHELVES_ROOMS_LIST" baseColumnNames="shelf_entity"
-                                 referencedTableName="SHELVES" referencedColumnNames="id"
+        <addForeignKeyConstraint constraintName="FK_ROOM_AND_SHELF_ID"
+                                 baseTableName="SHELVES_ROOMS_LIST" baseColumnNames="shelf_id"
+                                 referencedTableName="SHELF" referencedColumnNames="id"
         />
     </changeSet>
 </databaseChangeLog>

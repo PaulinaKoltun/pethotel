@@ -16,24 +16,30 @@ public class OwnerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @Column(name = "first_name")
     private String firstName;
+
     @Column(name = "last_name")
     private String lastName;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "owner_category")
     private OwnerCategory ownerCategory;
+
     @Column(name = "discount")
     private int discount;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name="OWNER_PET_LIST",
-            joinColumns = @JoinColumn(name="owner_entity", referencedColumnName="id", foreignKey = @ForeignKey(name =
-                    "FK_OWNER_AND_PET")),
-            inverseJoinColumns = @JoinColumn(name="pet_list", referencedColumnName="id", foreignKey = @ForeignKey(name =
-                    "FK_OWNER_AND_PET_ID"))
+            joinColumns = @JoinColumn(name="owner_entity", referencedColumnName="id",
+                    foreignKey = @ForeignKey(name = "FK_OWNER_AND_PET")),
+            inverseJoinColumns = @JoinColumn(name="pet_list", referencedColumnName="id",
+                    foreignKey = @ForeignKey(name = "FK_OWNER_AND_PET_ID"))
     )
     private List<PetEntity> petList = new ArrayList<>();
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="address_entity", referencedColumnName="id",
             foreignKey = @ForeignKey(name = "FK_OWNER_TO_ADDRESS"))

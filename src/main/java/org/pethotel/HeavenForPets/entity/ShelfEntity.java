@@ -3,6 +3,7 @@ package org.pethotel.HeavenForPets.entity;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "SHELF")
 public class ShelfEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
