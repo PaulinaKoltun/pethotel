@@ -25,4 +25,5 @@ public interface RoomService {
     Map<PetType, Integer> freePlacesForPetType();
 
     int getNumberOfRooms();
+    RoomEntity getRoomByNumber(int number);
 }

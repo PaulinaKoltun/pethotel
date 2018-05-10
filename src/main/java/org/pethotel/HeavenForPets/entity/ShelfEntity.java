@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class ShelfEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
     @Column(name = "number")
     private int number;
     @Column(name = "free")

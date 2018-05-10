@@ -12,7 +12,7 @@ import java.util.Date;
 public class FoodEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    long id;
+    Long id;
     @Column(name = "name")
     private String name;
     @Enumerated(EnumType.STRING)

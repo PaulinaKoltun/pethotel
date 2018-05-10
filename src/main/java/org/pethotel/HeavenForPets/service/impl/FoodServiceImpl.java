@@ -29,7 +29,8 @@ public class FoodServiceImpl implements FoodService{
     private MainGeneratorChain mainGeneratorChain;
 
     @Autowired
-    private FoodServiceImpl(FoodMap foodMap, FoodRepository foodRepository,
+    private FoodServiceImpl(FoodMap foodMap,
+                            FoodRepository foodRepository,
                             MainGeneratorChain mainGeneratorChain){
         this.foodMap = foodMap;
         this.foodRepository = foodRepository;
@@ -45,13 +46,17 @@ public class FoodServiceImpl implements FoodService{
                 foodRepository.save(newFoodEntity);
             }
             else {
-                foodEntity.setAmount(foodEntity.getAmount() + food.getAmount());
-                foodEntity.setPrice(food.getPrice());
-                foodEntity.setDeliveryAmount(food.getAmount());
-                foodEntity.setDeliveryDate(new Date());
+                updateFood(food, foodEntity);
                 foodRepository.save(foodEntity);
             }
         }
+    }
+
+    private void updateFood(Food food, FoodEntity foodEntity) {
+        foodEntity.setAmount(foodEntity.getAmount() + food.getAmount());
+        foodEntity.setPrice(food.getPrice());
+        foodEntity.setDeliveryAmount(food.getAmount());
+        foodEntity.setDeliveryDate(new Date());
     }
 
     @Override
@@ -69,15 +74,17 @@ public class FoodServiceImpl implements FoodService{
     @Override
     public FoodDetails getFoodDetailsById(Integer id) {
         FoodEntity foodEntity = foodRepository.findOne(Long.valueOf(id));
-
         FoodDetails foodDetails = new FoodDetails();
+
+        return prepareFoodDetails(foodEntity, foodDetails);
+    }
+
+    private FoodDetails prepareFoodDetails(FoodEntity foodEntity, FoodDetails foodDetails) {
         Food food = foodMap.map(foodEntity);
+
         foodDetails.setFood(food);
         foodDetails.setDeliveryAmount(foodEntity.getDeliveryAmount());
         foodDetails.setDeliveryDate(foodEntity.getDeliveryDate());
-
-//        generator.isGenerate(foodDetails);
-
         return foodDetails;
     }
 

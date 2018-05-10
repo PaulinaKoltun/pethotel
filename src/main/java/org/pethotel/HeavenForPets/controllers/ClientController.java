@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.pethotel.HeavenForPets.domein.Client;
 import org.pethotel.HeavenForPets.domein.Pet;
 import org.pethotel.HeavenForPets.service.OwnerService;
+import org.pethotel.HeavenForPets.service.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,10 @@ public class ClientController implements ErrorController {
     private static final Logger LOGGER = LogManager.getLogger(ClientController.class);
 
     @Autowired
-    OwnerService ownerService;
+    private OwnerService ownerService;
+
+    @Autowired
+    private PetService petService;
 
     @GetMapping("/getAllClients")
     public List<Client> getAllClients(){
@@ -35,12 +39,12 @@ public class ClientController implements ErrorController {
 
     @PostMapping("addPetToOwner/{id}")
     public void addPetToOwner(@PathVariable Long id, @RequestBody Pet pet){
-        ownerService.addPetToOwner(id, pet);
+        petService.addPetToOwner(id, pet);
     }
 
     @PostMapping("/bringPetAgain")
     public void bringPetAgain(@RequestBody Pet pet ){
-        ownerService.bringPetAgain(pet);
+        petService.bringPetAgain(pet);
     }
 
 
@@ -57,7 +61,7 @@ public class ClientController implements ErrorController {
 
     @PutMapping("/pickupPets")
     public BigDecimal pickupPets(@RequestBody List<Integer> idList) {
-        return ownerService.pickupPets(idList);
+        return petService.pickupPets(idList);
     }
 
     @RequestMapping(value = PATH)

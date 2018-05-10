@@ -22,4 +22,13 @@ public class RoomMapImpl implements RoomMap {
         room.setPrice(roomEntity.getPrice());
         return room;
     }
+
+    @Override
+    public RoomEntity map(RoomEntity entity, PetRoom room){
+        entity.setFreePlaces(room.getFreePlaces());
+        entity.setPetType(room.getPetType());
+        entity.setNumberOfPlaces(room.getNumberOfPlaces());
+        entity.setPrice(room.getPrice());
+        return entity;
+    }
 }

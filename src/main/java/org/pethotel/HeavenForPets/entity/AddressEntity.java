@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class AddressEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    int id;
+    Long id;
     @Column(name = "city")
     private String city;
     @Column(name = "street")

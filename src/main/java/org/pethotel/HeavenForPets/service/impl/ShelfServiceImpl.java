@@ -8,6 +8,7 @@ import org.pethotel.HeavenForPets.entity.ShelfEntity;
 import org.pethotel.HeavenForPets.mappers.ShelfMap;
 import org.pethotel.HeavenForPets.repository.RoomRepository;
 import org.pethotel.HeavenForPets.repository.ShelfRepository;
+import org.pethotel.HeavenForPets.service.RoomService;
 import org.pethotel.HeavenForPets.service.ShelfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,17 +22,20 @@ public class ShelfServiceImpl implements ShelfService {
     private static final Logger LOGGER = LogManager.getLogger(RoomServiceImpl.class);
 
     @Autowired
-    ShelfRepository shelfRepository;
+    private ShelfRepository shelfRepository;
 
     @Autowired
-    RoomRepository roomRepository;
+    private RoomRepository roomRepository;
 
     @Autowired
-    ShelfMap shelfMap;
+    private ShelfMap shelfMap;
+
+    @Autowired
+    private RoomService roomService;
 
     @Override
     public void saveShelves(List<Shelf> shelves, int id) {
-        RoomEntity roomEntity = roomRepository.findOne((long) id);
+        RoomEntity roomEntity = roomService.getRoomByNumber(id);
         List<ShelfEntity> shelfEntities = roomEntity.getShelfEntities();
 
         for (Shelf shelf : shelves) {
@@ -44,7 +48,7 @@ public class ShelfServiceImpl implements ShelfService {
 
     @Override
     public List<Shelf> getShelvesFromRoom(int id) {
-        RoomEntity roomEntity = roomRepository.findOne((long) id);
+        RoomEntity roomEntity = roomService.getRoomByNumber(id);
         List<ShelfEntity> shelfEntities = roomEntity.getShelfEntities();
         List<Shelf> shelves = new ArrayList<>();
 
@@ -58,7 +62,7 @@ public class ShelfServiceImpl implements ShelfService {
 
     @Override
     public List<Shelf> getFreeShelves(int id) {
-        RoomEntity roomEntity = roomRepository.findOne((long) id);
+        RoomEntity roomEntity = roomService.getRoomByNumber(id);
         List<ShelfEntity> shelfEntities = roomEntity.getShelfEntities();
         List<Shelf> shelves = new ArrayList<>();
 

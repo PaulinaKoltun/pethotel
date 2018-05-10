@@ -9,13 +9,15 @@ import org.pethotel.HeavenForPets.entity.PetEntity;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.pethotel.HeavenForPets.exceptions.DifferentOwnerException;
 import org.pethotel.HeavenForPets.exceptions.InvalidPetTypeException;
+import org.pethotel.HeavenForPets.mappers.ClientMap;
 import org.pethotel.HeavenForPets.mappers.OwnerMap;
 import org.pethotel.HeavenForPets.mappers.PetMap;
-import org.pethotel.HeavenForPets.repository.AddressRepository;
 import org.pethotel.HeavenForPets.repository.OwnerRepository;
 import org.pethotel.HeavenForPets.repository.PetRepository;
 import org.pethotel.HeavenForPets.repository.RoomRepository;
+import org.pethotel.HeavenForPets.service.AddressService;
 import org.pethotel.HeavenForPets.service.OwnerService;
+import org.pethotel.HeavenForPets.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,13 +38,7 @@ public class OwnerServiceImpl implements OwnerService {
     private OwnerRepository ownerRepository;
 
     @Autowired
-    private PetRepository petRepository;
-
-    @Autowired
-    private AddressRepository addressRepository;
-
-    @Autowired
-    private RoomRepository roomRepository;
+    private ClientMap clientMap;
 
     @Autowired
     private OwnerMap ownerMap;
@@ -50,12 +46,15 @@ public class OwnerServiceImpl implements OwnerService {
     @Autowired
     private PetMap petMap;
 
+    @Autowired
+    private AddressService addressService;
+
     @Override
     public void saveOwner(Owner owner) {
         try {
             OwnerEntity ownerEntity = ownerMap.map(owner);
             ownerRepository.save(ownerEntity);
-            addressRepository.save(ownerEntity.getAddressEntity());
+            addressService.saveAddress(owner.getAddress());
         } catch (InvalidPetTypeException e) {
             e.printStackTrace();
         }
@@ -66,41 +65,8 @@ public class OwnerServiceImpl implements OwnerService {
         List<OwnerEntity> ownerEntityList = (List<OwnerEntity>) ownerRepository.findAll();
 
         return ownerEntityList.stream()
-                .map(r->map(r))
+                .map(r -> clientMap.map(r))
                 .collect(Collectors.toList());
-    }
-
-    private Client map(OwnerEntity ownerEntity) {
-        Client client = new Client();
-        client.setId(ownerEntity.getId());
-        client.setFirstName(ownerEntity.getFirstName());
-        client.setLastName(ownerEntity.getLastName());
-        client.setPetNumbers(ownerEntity.getPetList().size());
-        client.setWholePrice(getWholePriceAfterDiscount(ownerEntity));
-        return client;
-    }
-
-    private BigDecimal getWholePriceAfterDiscount(OwnerEntity ownerEntity) {
-        BigDecimal generalPrice = countWholePrice(ownerEntity.getPetList());
-        BigDecimal priceOfDiscount = generalPrice.multiply(new BigDecimal(ownerEntity.getDiscount()));
-        BigDecimal finalPrice = generalPrice.subtract(priceOfDiscount);
-        return finalPrice;
-    }
-
-    private BigDecimal countWholePrice(List<PetEntity> petList) {
-        BigDecimal wholePrice = BigDecimal.ZERO;
-        for (PetEntity petEntity : petList) {
-            if (null!=petEntity.getRoomEntity()) {
-                BigDecimal daysOfVisit = new BigDecimal(getDaysOfVisit(petEntity));
-                wholePrice = (wholePrice.add(petEntity.getRoomEntity().getPrice().multiply(daysOfVisit)));
-            }
-        }
-        return wholePrice;
-    }
-
-    private long getDaysOfVisit(PetEntity petEntity) {
-        long difference = Math.abs(petEntity.getDateOut().getTime() - petEntity.getDateIn().getTime());
-        return  difference / (24 * 60 * 60 * 1000);
     }
 
     @Override
@@ -108,29 +74,11 @@ public class OwnerServiceImpl implements OwnerService {
         OwnerEntity ownerEntity = ownerRepository.findOne(Long.valueOf(id));
         List<PetEntity> petEntities = ownerEntity.getPetList();
 
-        //for (PetEntity petEntity : petEntities)
         List<Pet> pets = petEntities.stream()
-                .map(e -> getPet(e))
+                .map(e -> petMap.map(e))
                 .collect(Collectors.toList());
 
         return pets;
-    }
-
-    private Pet getPet(PetEntity e) {
-        Pet pet = new Pet();
-        pet.setName(e.getName());
-        pet.setComment(e.getComment());
-        pet.setPetType(e.getPetType());
-        pet.setDateIn(e.getDateIn());
-        pet.setDateOut(e.getDateOut());
-        pet.setDinner((int) e.getDinner().getId());
-        pet.setSupper((int) e.getSupper().getId());
-        pet.setBreakfast((int) e.getBreakfast().getId());
-
-        RoomEntity roomEntity = e.getRoomEntity();
-        pet.setRoomNumber(roomEntity != null ? roomEntity.getRoomNumber() : 0);
-
-        return pet;
     }
 
     @Override
@@ -143,7 +91,7 @@ public class OwnerServiceImpl implements OwnerService {
             petEntity.setPresent(0);
 
             RoomEntity roomEntity = petEntity.getRoomEntity();
-            int newFreePlaces = roomEntity.getFreePlaces()+1;
+            int newFreePlaces = roomEntity.getFreePlaces() + 1;
             roomEntity.setFreePlaces(newFreePlaces);
 
             petEntity.setRoomEntity(null);
@@ -158,64 +106,7 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public void bringPetAgain(Pet pet) {
-        PetEntity petEntity = petRepository.findOne(pet.getId());
-        petEntity.setPresent(1);
-        RoomEntity roomEntity = roomRepository.getRoomByNumber(pet.getRoomNumber());
-        petMap.map(pet, petEntity, roomEntity);
-        petRepository.save(petEntity);
+    public OwnerEntity getOwnerById(Long id) {
+        return ownerRepository.findOne(id);
     }
-
-    private BigDecimal pickupOnePet(int id) {
-        PetEntity petEntity = petRepository.findOne((long) id);
-
-        petEntity.setPresent(0);
-        RoomEntity roomEntity = petEntity.getRoomEntity();
-        BigDecimal price = roomEntity.getPrice();
-        price = price.multiply(BigDecimal.valueOf(getDaysOfVisit(petEntity)));
-
-        int newFreePlaces = roomEntity.getFreePlaces()+1;
-        roomEntity.setFreePlaces(newFreePlaces);
-
-        petEntity.setRoomEntity(null);
-        petRepository.save(petEntity);
-        return price;
-    }
-
-    @Override
-    public BigDecimal pickupPets(List<Integer> idList){
-        BigDecimal wholePrice = BigDecimal.ZERO;
-
-        try {
-            validateTheOwnersForPets(idList);
-        }catch (DifferentOwnerException e) {
-            e.printStackTrace();
-        } {
-
-        }
-
-        for (Integer id : idList) {
-            BigDecimal price = pickupOnePet(id);
-            wholePrice = wholePrice.add(price);
-        }
-        return wholePrice;
-    }
-
-    private void validateTheOwnersForPets(List<Integer> idList) throws DifferentOwnerException {
-        List<Integer> ownerList = petRepository.ownerEntityList(idList);
-        if (ownerList.size()!=1){
-            throw new DifferentOwnerException();
-        }
-    }
-
-    @Override
-    public void addPetToOwner(Long id, Pet pet) {
-        OwnerEntity ownerEntity = ownerRepository.findOne(id);
-        List<PetEntity> pets = ownerEntity.getPetList();
-        PetEntity petEntity = petMap.map(pet, roomRepository.getRoomByNumber(pet.getRoomNumber()));
-        pets.add(petEntity);
-        ownerEntity.setPetList(pets);
-        petRepository.save(petEntity);
-    }
-
 }

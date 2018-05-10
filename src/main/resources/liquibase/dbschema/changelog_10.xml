@@ -13,11 +13,10 @@
             <column name="number" type="bigint(20)">
             </column>
             <column name="free" type="int(1)" defaultValue="1"/>
-            <column name="room_entity" type="int"/>
         </createTable>
 
         <createTable tableName="SHELVES_ROOMS_LIST">
-            <column name="shelf_id" type="bigint(20)">
+            <column name="shelf_id" type="bigint(20)" >
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="room_id" type="integer">

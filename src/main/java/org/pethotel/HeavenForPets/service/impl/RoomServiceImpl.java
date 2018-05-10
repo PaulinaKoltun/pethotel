@@ -13,6 +13,7 @@ import org.pethotel.HeavenForPets.enums.PetType;
 import org.pethotel.HeavenForPets.mappers.RoomMap;
 import org.pethotel.HeavenForPets.mappers.ShelfMap;
 import org.pethotel.HeavenForPets.repository.RoomRepository;
+import org.pethotel.HeavenForPets.repository.ShelfRepository;
 import org.pethotel.HeavenForPets.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,6 +36,9 @@ public class RoomServiceImpl implements RoomService {
     RoomRepository roomRepository;
 
     @Autowired
+    ShelfRepository shelfRepository;
+
+    @Autowired
     RoomMap roomMap;
 
     @Autowired
@@ -53,9 +57,12 @@ public class RoomServiceImpl implements RoomService {
                 LOGGER.info("PlantRoom");
                 PlantRoom plantRoom = (PlantRoom)room;
                 List<ShelfEntity> shelfEntities = shelfMap.map(plantRoom.getPlantShelves());
-
+                for (ShelfEntity shelfEntity : shelfEntities) {
+                    shelfRepository.save(shelfEntity);
+                }
                 roomEntity = RoomEntityBuilder
                         .fromRoom(plantRoom, shelfEntities);
+                LOGGER.info("room entity" + roomEntity);
             }
             roomRepository.save(roomEntity);
         }
@@ -98,10 +105,7 @@ public class RoomServiceImpl implements RoomService {
     public void updateRoom(PetRoom room){
         RoomEntity entity = roomRepository.getRoomByNumber(room.getRoomNumber());
 
-        entity.setFreePlaces(room.getFreePlaces());
-        entity.setPetType(room.getPetType());
-        entity.setNumberOfPlaces(room.getNumberOfPlaces());
-        entity.setPrice(room.getPrice());
+        entity = roomMap.map(entity, room);
 
         roomRepository.save(entity);
     }
@@ -145,5 +149,11 @@ public class RoomServiceImpl implements RoomService {
                 || roomEntity.getPetType().name().equals(petType)
                 || (StringUtils.isNumeric(petType)
                     && roomEntity.getPetType().getNumberType() == Integer.valueOf(petType));
+    }
+
+    @Override
+    public RoomEntity getRoomByNumber(int number){
+        return roomRepository.getRoomByNumber(number);
+
     }
 }

@@ -2,6 +2,7 @@ package org.pethotel.HeavenForPets.service;
 
 import org.pethotel.HeavenForPets.domein.Pet;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -9,5 +10,8 @@ import java.util.List;
  */
 public interface PetService {
     List<Pet> getPets();
+    void bringPetAgain(Pet pet);
+    BigDecimal pickupPets(List<Integer> idList);
 
+    void addPetToOwner(Long id, Pet pet);
 }

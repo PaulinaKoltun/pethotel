@@ -16,7 +16,7 @@ import java.util.List;
 public class RoomEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
     @Column(name = "room_number")
     private int roomNumber;
     @Column(name = "number_of_places")
@@ -31,9 +31,9 @@ public class RoomEntity {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name="SHELVES_ROOMS_LIST",
-            joinColumns = @JoinColumn(name="room_entity", referencedColumnName="id",
+            joinColumns = @JoinColumn(name="room_id", referencedColumnName="id",
                     foreignKey = @ForeignKey(name = "FK_ROOM_AND_SHELF")),
-            inverseJoinColumns = @JoinColumn(name="shelves_entity", referencedColumnName="id",
+            inverseJoinColumns = @JoinColumn(name="shelf_id", referencedColumnName="id",
                     foreignKey = @ForeignKey(name = "FK_ROOM_AND_SHELF_ID"))
     )
     private List<ShelfEntity> shelfEntities;
