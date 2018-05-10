@@ -1,6 +1,5 @@
 package org.pethotel.HeavenForPets.controllers;
 
-import com.itextpdf.text.Document;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,10 +11,6 @@ import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -43,7 +38,7 @@ public class FoodController implements ErrorController{
 
     @GetMapping("/getfood/id/{id}")
     public FoodDetails getFoodById(@PathVariable Integer id){
-        return foodService.getFoodById(id);
+        return foodService.getFoodDetailsById(id);
     }
 
 

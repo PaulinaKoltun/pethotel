@@ -1,14 +1,14 @@
-package org.pethotel.HeavenForPets.utils.impl;
+package org.pethotel.HeavenForPets.utils.fasade.impl;
 
 import org.pethotel.HeavenForPets.domein.FoodDetails;
-import org.pethotel.HeavenForPets.utils.Generator;
+import org.pethotel.HeavenForPets.utils.fasade.Generator;
 import org.springframework.stereotype.Component;
 
 import java.io.FileWriter;
 import java.io.IOException;
 
 @Component
-public class GeneratorCsv  implements Generator{
+public class GeneratorCsv  implements Generator {
 
     private static final String filename = "iTextHelloWorld.csv";
 

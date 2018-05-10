@@ -1,6 +1,8 @@
-package org.pethotel.HeavenForPets.domein;
+package org.pethotel.HeavenForPets.domein.Rooms;
 
-import org.pethotel.HeavenForPets.enums.PetType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -8,11 +10,17 @@ import java.math.BigDecimal;
 /**
  * Created by Paulina on 2017-10-07.
  */
-public class Room implements Serializable {
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = PlantRoom.class, name = "PlantRoom"),
+
+        @JsonSubTypes.Type(value = PetRoom.class, name = "PetRoom") }
+)
+public abstract class Room implements Serializable {
     private int roomNumber;
     private int numberOfPlaces;
     private int freePlaces;
-    private PetType petType;
     private BigDecimal price;
 
     public Room() {
@@ -50,14 +58,6 @@ public class Room implements Serializable {
         this.freePlaces = freePlaces;
     }
 
-    public PetType getPetType() {
-        return petType;
-    }
-
-    public void setPetType(PetType petType) {
-        this.petType = petType;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -68,7 +68,6 @@ public class Room implements Serializable {
         if (roomNumber != room.roomNumber) return false;
         if (numberOfPlaces != room.numberOfPlaces) return false;
         if (freePlaces != room.freePlaces) return false;
-        if (petType != room.petType) return false;
         return price != null ? price.equals(room.price) : room.price == null;
     }
 
@@ -77,7 +76,6 @@ public class Room implements Serializable {
         int result = roomNumber;
         result = 31 * result + numberOfPlaces;
         result = 31 * result + freePlaces;
-        result = 31 * result + (petType != null ? petType.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
         return result;
     }
@@ -88,7 +86,6 @@ public class Room implements Serializable {
                 "roomNumber=" + roomNumber +
                 ", numberOfPlaces=" + numberOfPlaces +
                 ", freePlaces=" + freePlaces +
-                ", petType=" + petType +
                 ", price=" + price +
                 '}';
     }

@@ -3,17 +3,21 @@ package org.pethotel.HeavenForPets.service.impl;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.pethotel.HeavenForPets.domein.Room;
+import org.pethotel.HeavenForPets.domein.Rooms.PetRoom;
+import org.pethotel.HeavenForPets.domein.Rooms.PlantRoom;
+import org.pethotel.HeavenForPets.domein.Rooms.Room;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
+import org.pethotel.HeavenForPets.entity.RoomEntityBuilder;
+import org.pethotel.HeavenForPets.entity.ShelfEntity;
 import org.pethotel.HeavenForPets.enums.PetType;
 import org.pethotel.HeavenForPets.mappers.RoomMap;
+import org.pethotel.HeavenForPets.mappers.ShelfMap;
 import org.pethotel.HeavenForPets.repository.RoomRepository;
+import org.pethotel.HeavenForPets.repository.ShelfRepository;
 import org.pethotel.HeavenForPets.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -32,17 +36,34 @@ public class RoomServiceImpl implements RoomService {
     RoomRepository roomRepository;
 
     @Autowired
+    ShelfRepository shelfRepository;
+
+    @Autowired
     RoomMap roomMap;
+
+    @Autowired
+    ShelfMap shelfMap;
 
     @Override
     public void saveRoom(Room room) {
+        LOGGER.info("saveRoom: " + room);
         if (roomRepository.getRoomByNumber(room.getRoomNumber()) == null) {
-            RoomEntity roomEntity = new RoomEntity();
-            roomEntity.setRoomNumber(room.getRoomNumber());
-            roomEntity.setFreePlaces(room.getFreePlaces());
-            roomEntity.setNumberOfPlaces(room.getNumberOfPlaces());
-            roomEntity.setPetType(room.getPetType());
-            roomEntity.setPrice(room.getPrice());
+            RoomEntity roomEntity;
+            if (room instanceof PetRoom) {
+                LOGGER.info("PetRoom");
+                roomEntity = RoomEntityBuilder.fromRoom((PetRoom)room);
+            }
+            else {
+                LOGGER.info("PlantRoom");
+                PlantRoom plantRoom = (PlantRoom)room;
+                List<ShelfEntity> shelfEntities = shelfMap.map(plantRoom.getPlantShelves());
+                for (ShelfEntity shelfEntity : shelfEntities) {
+                    shelfRepository.save(shelfEntity);
+                }
+                roomEntity = RoomEntityBuilder
+                        .fromRoom(plantRoom, shelfEntities);
+                LOGGER.info("room entity" + roomEntity);
+            }
             roomRepository.save(roomEntity);
         }
         else {
@@ -81,13 +102,10 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public void updateRoom(Room room){
+    public void updateRoom(PetRoom room){
         RoomEntity entity = roomRepository.getRoomByNumber(room.getRoomNumber());
 
-        entity.setFreePlaces(room.getFreePlaces());
-        entity.setPetType(room.getPetType());
-        entity.setNumberOfPlaces(room.getNumberOfPlaces());
-        entity.setPrice(room.getPrice());
+        entity = roomMap.map(entity, room);
 
         roomRepository.save(entity);
     }
@@ -131,5 +149,11 @@ public class RoomServiceImpl implements RoomService {
                 || roomEntity.getPetType().name().equals(petType)
                 || (StringUtils.isNumeric(petType)
                     && roomEntity.getPetType().getNumberType() == Integer.valueOf(petType));
+    }
+
+    @Override
+    public RoomEntity getRoomByNumber(int number){
+        return roomRepository.getRoomByNumber(number);
+
     }
 }

@@ -1,6 +1,5 @@
-package org.pethotel.HeavenForPets.utils;
+package org.pethotel.HeavenForPets.utils.fasade;
 
-import com.itextpdf.text.Document;
 import org.pethotel.HeavenForPets.domein.FoodDetails;
 
 public interface Generator {

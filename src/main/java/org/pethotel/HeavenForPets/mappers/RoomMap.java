@@ -1,6 +1,7 @@
 package org.pethotel.HeavenForPets.mappers;
 
-import org.pethotel.HeavenForPets.domein.Room;
+import org.pethotel.HeavenForPets.domein.Rooms.PetRoom;
+import org.pethotel.HeavenForPets.domein.Rooms.Room;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
 
 /**
@@ -8,4 +9,6 @@ import org.pethotel.HeavenForPets.entity.RoomEntity;
  */
 public interface RoomMap {
     Room map(RoomEntity roomEntity);
+
+    RoomEntity map(RoomEntity entity, PetRoom room);
 }

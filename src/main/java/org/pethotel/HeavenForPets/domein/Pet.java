@@ -10,17 +10,26 @@ import java.util.GregorianCalendar;
  * Created by Paulina on 2017-09-27.
  */
 public class Pet implements Serializable {
+    private long id;
     private String name;
     private String comment;
     private PetType petType;
     private int roomNumber;
     private Date dateIn;
     private Date dateOut;
-    private Food breakfast;
-    private Food dinner;
-    private Food supper;
+    private int breakfast;
+    private int dinner;
+    private int supper;
 
     public Pet(){}
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public int getRoomNumber() {
         return roomNumber;
@@ -70,42 +79,43 @@ public class Pet implements Serializable {
         this.dateOut = dateOut;
     }
 
-    public Food getBreakfast() {
+    public int getBreakfast() {
         return breakfast;
     }
 
-    public void setBreakfast(Food breakfast) {
+    public void setBreakfast(int breakfast) {
         this.breakfast = breakfast;
     }
 
-    public Food getDinner() {
+    public int getDinner() {
         return dinner;
     }
 
-    public void setDinner(Food dinner) {
+    public void setDinner(int dinner) {
         this.dinner = dinner;
     }
 
-    public Food getSupper() {
+    public int getSupper() {
         return supper;
     }
 
-    public void setSupper(Food supper) {
+    public void setSupper(int supper) {
         this.supper = supper;
     }
 
     @Override
     public String toString() {
         return "Pet{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", comment='" + comment + '\'' +
                 ", petType=" + petType +
                 ", roomNumber=" + roomNumber +
                 ", dateIn=" + dateIn +
                 ", dateOut=" + dateOut +
-                ", Breakfast=" + breakfast +
-                ", Dinner=" + dinner +
-                ", Supper=" + supper +
+                ", breakfast=" + breakfast +
+                ", dinner=" + dinner +
+                ", supper=" + supper +
                 '}';
     }
 
@@ -116,28 +126,30 @@ public class Pet implements Serializable {
 
         Pet pet = (Pet) o;
 
+        if (id != pet.id) return false;
         if (roomNumber != pet.roomNumber) return false;
+        if (breakfast != pet.breakfast) return false;
+        if (dinner != pet.dinner) return false;
+        if (supper != pet.supper) return false;
         if (name != null ? !name.equals(pet.name) : pet.name != null) return false;
         if (comment != null ? !comment.equals(pet.comment) : pet.comment != null) return false;
         if (petType != pet.petType) return false;
         if (dateIn != null ? !dateIn.equals(pet.dateIn) : pet.dateIn != null) return false;
-        if (dateOut != null ? !dateOut.equals(pet.dateOut) : pet.dateOut != null) return false;
-        if (breakfast != null ? !breakfast.equals(pet.breakfast) : pet.breakfast != null) return false;
-        if (dinner != null ? !dinner.equals(pet.dinner) : pet.dinner != null) return false;
-        return supper != null ? supper.equals(pet.supper) : pet.supper == null;
+        return dateOut != null ? dateOut.equals(pet.dateOut) : pet.dateOut == null;
     }
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (comment != null ? comment.hashCode() : 0);
         result = 31 * result + (petType != null ? petType.hashCode() : 0);
         result = 31 * result + roomNumber;
         result = 31 * result + (dateIn != null ? dateIn.hashCode() : 0);
         result = 31 * result + (dateOut != null ? dateOut.hashCode() : 0);
-        result = 31 * result + (breakfast != null ? breakfast.hashCode() : 0);
-        result = 31 * result + (dinner != null ? dinner.hashCode() : 0);
-        result = 31 * result + (supper != null ? supper.hashCode() : 0);
+        result = 31 * result + breakfast;
+        result = 31 * result + dinner;
+        result = 31 * result + supper;
         return result;
     }
 }

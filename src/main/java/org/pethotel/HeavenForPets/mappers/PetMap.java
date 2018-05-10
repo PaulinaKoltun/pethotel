@@ -9,4 +9,6 @@ import org.pethotel.HeavenForPets.entity.RoomEntity;
  */
 public interface PetMap {
     PetEntity map(Pet pet, RoomEntity roomByNumber);
+    PetEntity map(Pet pet, PetEntity petEntity, RoomEntity roomByNumber);
+    Pet map(PetEntity e);
 }

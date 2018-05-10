@@ -10,8 +10,7 @@ import org.pethotel.HeavenForPets.enums.PetType;
 import org.pethotel.HeavenForPets.mappers.FoodMap;
 import org.pethotel.HeavenForPets.repository.FoodRepository;
 import org.pethotel.HeavenForPets.service.FoodService;
-import org.pethotel.HeavenForPets.utils.Generator;
-import org.pethotel.HeavenForPets.utils.Writer;
+import org.pethotel.HeavenForPets.utils.chain.MainGeneratorChain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,21 +26,15 @@ public class FoodServiceImpl implements FoodService{
 
     private FoodMap foodMap;
     private FoodRepository foodRepository;
-    private Generator generatorPdf;
-    private Generator generatorCsv;
-    private Writer writerPdf;
-    private Writer writerCsv;
+    private MainGeneratorChain mainGeneratorChain;
 
     @Autowired
-    private FoodServiceImpl(FoodMap foodMap, FoodRepository foodRepository,
-                            Generator generatorPdf, Generator generatorCsv,
-                            Writer writerPdf, Writer writerCsv){
+    private FoodServiceImpl(FoodMap foodMap,
+                            FoodRepository foodRepository,
+                            MainGeneratorChain mainGeneratorChain){
         this.foodMap = foodMap;
         this.foodRepository = foodRepository;
-        this.generatorPdf = generatorPdf;
-        this.generatorCsv = generatorCsv;
-        this.writerPdf = writerPdf;
-        this.writerCsv = writerCsv;
+        this.mainGeneratorChain = mainGeneratorChain;
     }
 
     @Override
@@ -53,13 +46,17 @@ public class FoodServiceImpl implements FoodService{
                 foodRepository.save(newFoodEntity);
             }
             else {
-                foodEntity.setAmount(foodEntity.getAmount() + food.getAmount());
-                foodEntity.setPrice(food.getPrice());
-                foodEntity.setDeliveryAmount(food.getAmount());
-                foodEntity.setDeliveryDate(new Date());
+                updateFood(food, foodEntity);
                 foodRepository.save(foodEntity);
             }
         }
+    }
+
+    private void updateFood(Food food, FoodEntity foodEntity) {
+        foodEntity.setAmount(foodEntity.getAmount() + food.getAmount());
+        foodEntity.setPrice(food.getPrice());
+        foodEntity.setDeliveryAmount(food.getAmount());
+        foodEntity.setDeliveryDate(new Date());
     }
 
     @Override
@@ -75,17 +72,19 @@ public class FoodServiceImpl implements FoodService{
     }
 
     @Override
-    public FoodDetails getFoodById(Integer id) {
+    public FoodDetails getFoodDetailsById(Integer id) {
         FoodEntity foodEntity = foodRepository.findOne(Long.valueOf(id));
-
         FoodDetails foodDetails = new FoodDetails();
+
+        return prepareFoodDetails(foodEntity, foodDetails);
+    }
+
+    private FoodDetails prepareFoodDetails(FoodEntity foodEntity, FoodDetails foodDetails) {
         Food food = foodMap.map(foodEntity);
+
         foodDetails.setFood(food);
         foodDetails.setDeliveryAmount(foodEntity.getDeliveryAmount());
         foodDetails.setDeliveryDate(foodEntity.getDeliveryDate());
-
-//        generator.generate(foodDetails);
-
         return foodDetails;
     }
 
@@ -93,15 +92,13 @@ public class FoodServiceImpl implements FoodService{
                         HttpServletResponse response,
                         Integer id,
                         String file) {
-        FoodDetails foodDetails = getFoodById(id);
+        FoodDetails foodDetails = getFoodDetailsById(id);
 
-        if ("PDF".equals(file.toUpperCase())){
-            generatorPdf.generate(foodDetails);
-            writerPdf.writer(request, response, foodDetails);
-        }
-        else {
-            generatorCsv.generate(foodDetails);
-            writerCsv.writer(request, response, foodDetails);
-        }
+        mainGeneratorChain.makeResponse(request,response, file, foodDetails);
+    }
+
+    @Override
+    public FoodEntity getFoodById(Integer id) {
+        return foodRepository.findOne((long) id);
     }
 }

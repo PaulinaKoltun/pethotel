@@ -3,8 +3,11 @@ package org.pethotel.HeavenForPets.service;
 import org.pethotel.HeavenForPets.domein.Client;
 import org.pethotel.HeavenForPets.domein.Owner;
 import org.pethotel.HeavenForPets.domein.Pet;
+import org.pethotel.HeavenForPets.entity.OwnerEntity;
 import org.pethotel.HeavenForPets.entity.PetEntity;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,6 +17,8 @@ public interface OwnerService {
     void saveOwner(Owner owner);
     List<Client> getAllClients();
     List<Pet> showAllPets(int id);
-    void deleteAllPets(int id);
+    void pickupAllPets(int id);
     void updateDiscountAtOwner(String lastName, int newDiscount);
+
+    OwnerEntity getOwnerById(Long id);
 }

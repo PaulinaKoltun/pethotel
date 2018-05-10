@@ -1,6 +1,7 @@
 package org.pethotel.HeavenForPets.controllers;
 
-import org.pethotel.HeavenForPets.domein.Room;
+import org.pethotel.HeavenForPets.domein.Rooms.PetRoom;
+import org.pethotel.HeavenForPets.domein.Rooms.Room;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.pethotel.HeavenForPets.enums.PetType;
 import org.pethotel.HeavenForPets.repository.RoomRepository;
@@ -62,7 +63,7 @@ public class RoomController {
     }
 
     @PutMapping("/updateRoom")
-    public void updateRoom(@RequestBody Room room) {
+    public void updateRoom(@RequestBody PetRoom room) {
         roomService.updateRoom(room);
     }
 
