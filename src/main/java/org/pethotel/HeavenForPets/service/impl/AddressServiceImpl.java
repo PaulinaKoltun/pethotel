@@ -14,10 +14,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class AddressServiceImpl implements AddressService {
     @Autowired
-    AddressRepository addressRepository;
+    private AddressRepository addressRepository;
 
     @Autowired
-    AddressMap addressMap;
+    private AddressMap addressMap;
 
     @Override
     public void saveAddress(Address address) {

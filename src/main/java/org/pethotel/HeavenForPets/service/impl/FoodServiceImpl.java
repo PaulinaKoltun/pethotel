@@ -40,7 +40,8 @@ public class FoodServiceImpl implements FoodService{
     @Override
     public void saveFood(List<Food> foodlist) {
         for (Food food : foodlist) {
-            FoodEntity foodEntity = foodRepository.getFoodWeAlreadyHave(food.getName(), food.getFoodType(), food.getPetType(), food.getTaste());
+            FoodEntity foodEntity = foodRepository.getFoodWeAlreadyHave(food.getName(),
+                    food.getFoodType(), food.getPetType(), food.getTaste());
             if (foodEntity == null) {
                 FoodEntity newFoodEntity = foodMap.map(food);
                 foodRepository.save(newFoodEntity);
