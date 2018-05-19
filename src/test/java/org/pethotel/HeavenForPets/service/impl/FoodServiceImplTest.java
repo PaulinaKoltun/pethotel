@@ -116,6 +116,17 @@ public class FoodServiceImplTest {
 
         mainGeneratorChain.makeResponse(request, response, file, foodDetails);
 
+    }
 
+    @Test
+    public void getFoodById(){
+        int id = 1;
+        FoodEntity foodEntity = new FoodEntity();
+
+        when(foodRepository.findOne((long) id)).thenReturn(foodEntity);
+
+        foodService.getFoodById(id);
+
+        verify(foodRepository, times(1)).findOne((long) id);
     }
 }

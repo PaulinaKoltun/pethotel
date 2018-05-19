@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.pethotel.HeavenForPets.domein.Pet;
 import org.pethotel.HeavenForPets.domein.Rooms.Room;
+import org.pethotel.HeavenForPets.entity.OwnerEntity;
 import org.pethotel.HeavenForPets.entity.PetEntity;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.pethotel.HeavenForPets.mappers.PetMap;
@@ -45,8 +46,10 @@ public class PetServiceImplTest {
 
 
     @Test
-    public void getPets(){
+    public void getPets() throws Exception{
         List<PetEntity> petEntities = new ArrayList<>();
+        PetEntity petEntity = new PetEntity();
+        petEntities.add(petEntity);
 
         when(petRepository.findAll()).thenReturn(petEntities);
 
@@ -56,7 +59,7 @@ public class PetServiceImplTest {
     }
 
     @Test
-    public void bringPetAgain(){
+    public void bringPetAgain() throws Exception{
         Pet pet = new Pet();
         PetEntity petEntity = new PetEntity();
         RoomEntity roomEntity = new RoomEntity();
@@ -72,7 +75,7 @@ public class PetServiceImplTest {
     }
 
     @Test
-    public void pickUpPets(){
+    public void pickUpPets() throws Exception{
         List<Integer> idList = new ArrayList<>();
         Integer id = new Integer(2);
         idList.add(id);
@@ -94,6 +97,20 @@ public class PetServiceImplTest {
     }
 
     @Test
-    public void 
+    public void addPettoOwner() throws Exception{
+        Long id = 1l;
+        Pet pet = new Pet();
+        OwnerEntity ownerEntity = new OwnerEntity();
+        RoomEntity roomEntity = new RoomEntity();
+        PetEntity petEntity = new PetEntity();
 
+        when(ownerService.getOwnerById(id)).thenReturn(ownerEntity);
+        when(roomService.getRoomByNumber(pet.getRoomNumber())).thenReturn(roomEntity);
+        when(petMap.map(pet, roomService.getRoomByNumber(pet.getRoomNumber()))).thenReturn(petEntity);
+        when(petRepository.save(petEntity)).thenReturn(petEntity);
+
+        petService.addPetToOwner(id, pet);
+
+        verify(petRepository, times(1)).save(petEntity);
+    }
 }
