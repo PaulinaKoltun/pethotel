@@ -34,7 +34,7 @@ public class ShelfServiceImplTest {
 
 
     @Test
-    public void saveShelves() throws Exception{
+    public void checkIfSaveShelvesIsCalled() throws Exception{
         List<Shelf> shelves = new ArrayList<>();
         int id = 1;
         RoomEntity roomEntity = new RoomEntity();
@@ -57,7 +57,7 @@ public class ShelfServiceImplTest {
     }
 
     @Test
-    public void getShelvesFromRoom() throws Exception{
+    public void checkIfShowsShelvesByRoomId() throws Exception{
         int id = 1;
         RoomEntity roomEntity = new RoomEntity();
         ShelfEntity shelfEntity = new ShelfEntity();
@@ -73,7 +73,7 @@ public class ShelfServiceImplTest {
     }
 
     @Test
-    public void getFreeShelves() throws Exception{
+    public void checkIfShowsFreeShelvesByRoomId() throws Exception{
         int id = 1;
         RoomEntity roomEntity = new RoomEntity();
         ShelfEntity shelfEntity = new ShelfEntity();

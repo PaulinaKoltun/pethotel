@@ -50,7 +50,7 @@ public class OwnerServiceImplTest {
     private OwnerServiceImpl ownerService;
 
     @Test
-    public void saveOwner() throws Exception{
+    public void checkIfSaveOwnerIsCalled() throws Exception{
         Owner owner = new Owner();
         OwnerEntity ownerEntity = new OwnerEntity();
 
@@ -63,7 +63,7 @@ public class OwnerServiceImplTest {
     }
 
     @Test
-    public void getAllClients(){
+    public void checkIfRepositoryGivesAllClients(){
         List<OwnerEntity> ownerEntityList = new ArrayList<>();
         OwnerEntity ownerEntity = new OwnerEntity();
         ownerEntityList.add(ownerEntity);
@@ -78,7 +78,7 @@ public class OwnerServiceImplTest {
     }
 
     @Test
-    public void showAllPets(){
+    public void checkIfRepositoryShowsAllPets(){
         Integer id = 1;
         OwnerEntity ownerEntity = new OwnerEntity();
         PetEntity petEntity = new PetEntity();
@@ -94,7 +94,7 @@ public class OwnerServiceImplTest {
     }
 
     @Test
-    public void pickupAllPets(){
+    public void checkIfPickupAllPetsIsCalled(){
         Integer id = 2;
         OwnerEntity ownerEntity = new OwnerEntity();
         PetEntity petEntity = new PetEntity();
@@ -111,7 +111,7 @@ public class OwnerServiceImplTest {
     }
 
     @Test
-    public void updateDiscountAtOwner(){
+    public void checkIfUpdateDiscounIsDone(){
         String lastName = "lastname";
         int discount = 2;
         OwnerEntity ownerEntity = new OwnerEntity();
@@ -126,7 +126,7 @@ public class OwnerServiceImplTest {
     }
 
     @Test
-    public void getOwnerById(){
+    public void checkIfRepositoryFindOneIsCalled(){
         int id = 2;
         OwnerEntity ownerEntity = new OwnerEntity();
 

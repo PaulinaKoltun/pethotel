@@ -25,7 +25,7 @@ public class AddressServiceImplTest {
     private AddressServiceImpl addressService;
 
     @Test
-    public void saveAddress() throws Exception {
+    public void chechIfRepositorySaveAddressWasCalled() throws Exception {
         Address address = new Address();
         AddressEntity addressEntity = new AddressEntity();
 

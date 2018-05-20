@@ -41,7 +41,7 @@ public class FoodServiceImplTest {
     private FoodServiceImpl foodService;
 
     @Test
-    public void saveFoodWhenNull() throws Exception{
+    public void chechIfSaveFoodIsCalledWhenNull() throws Exception{
         List<Food> foodlist = new ArrayList<>();
         Food food = new Food();
         foodlist.add(food);
@@ -59,7 +59,7 @@ public class FoodServiceImplTest {
     }
 
     @Test
-    public void saveFoodWhenNotNull() throws Exception{
+    public void chechIfSaveFoodIsCalledWhenNotNull() throws Exception{
         List<Food> foodlist = new ArrayList<>();
         Food food = new Food();
         food.setName("Azor");
@@ -77,7 +77,7 @@ public class FoodServiceImplTest {
     }
 
     @Test
-    public void getFoodByPet() throws Exception{
+    public void chechIfGetFoodByPetIsCalled() throws Exception{
         PetType petType = PetType.FISH;
         List<FoodEntity> foodEntityList = new ArrayList<>();
         FoodEntity foodEntity = new FoodEntity();
@@ -93,7 +93,7 @@ public class FoodServiceImplTest {
     }
 
     @Test
-    public void getFoodDetailsById() throws Exception{
+    public void checkIfRepositoryFindOneFoodDetailsIsCalled() throws Exception{
         Integer id = 2;
         FoodEntity foodEntity = new FoodEntity();
 
@@ -119,7 +119,7 @@ public class FoodServiceImplTest {
     }
 
     @Test
-    public void getFoodById(){
+    public void checkIfRepositoryFindOneByIdIsCalled(){
         int id = 1;
         FoodEntity foodEntity = new FoodEntity();
 

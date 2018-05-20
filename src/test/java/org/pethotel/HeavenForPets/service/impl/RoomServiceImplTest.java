@@ -21,6 +21,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.*;
 
 import static org.junit.Assert.*;
@@ -49,7 +50,7 @@ public class RoomServiceImplTest{
     private RoomServiceImpl roomService;
 
     @Test
-    public void saveRoomWhenPetRoom() throws Exception{
+    public void checkIfSaveRoomIsCalledWhenPetRoom() throws Exception{
         PetRoom room = new PetRoom();
         RoomEntity roomEntity = new RoomEntity();
 
@@ -62,7 +63,7 @@ public class RoomServiceImplTest{
     }
 
     @Test
-    public void saveRoomWhenPlantRoom() throws Exception{
+    public void checkIfSaveRoomIsCalledWhenPlantRoom() throws Exception{
         PlantRoom plantRoom = new PlantRoom();
         List<ShelfEntity> shelfEntities = new ArrayList<>();
         ShelfEntity shelfEntity = new ShelfEntity();
@@ -79,7 +80,7 @@ public class RoomServiceImplTest{
     }
 
     @Test
-    public void saveRoomWhenNotExist() throws Exception{
+    public void checkIfSaveRoomIsCalledWhenNotExist() throws Exception{
         PetRoom room = new PetRoom();
         RoomEntity roomEntity = new RoomEntity();
 
@@ -89,7 +90,7 @@ public class RoomServiceImplTest{
     }
 
     @Test
-    public void getAllNumbers() throws Exception{
+    public void checkIfShowsAllRoomNumbers() throws Exception{
         List<RoomEntity> roomEntityList = new ArrayList<>();
 
         when(roomRepository.findAll()).thenReturn(roomEntityList);
@@ -100,7 +101,7 @@ public class RoomServiceImplTest{
     }
 
     @Test
-    public void getAllRooms() throws Exception{
+    public void checkIfShowsAllRooms() throws Exception{
         String type = "Plant room";
         Pageable pageable = new PageRequest(0,10);
         RoomEntity roomEntity = new RoomEntity();
@@ -117,7 +118,7 @@ public class RoomServiceImplTest{
     }
 
     @Test
-    public void findByRoomNumber() throws Exception{
+    public void checkIfRepositoryGivesRoomByNumber() throws Exception{
         int roomNumber = 2;
         RoomEntity roomEntity = new RoomEntity();
 
@@ -129,7 +130,7 @@ public class RoomServiceImplTest{
     }
 
     @Test
-    public void deleteRoom() throws Exception{
+    public void checkIfRepositoryDeleteRoom() throws Exception{
         int roomNumber = 1;
         RoomEntity roomEntity = new RoomEntity();
 
@@ -141,7 +142,7 @@ public class RoomServiceImplTest{
     }
 
     @Test
-    public void updateRoom() throws Exception{
+    public void checkIfRoomWasUpdated() throws Exception{
         PetRoom room = new PetRoom();
         RoomEntity roomEntity = new RoomEntity();
 
@@ -155,7 +156,7 @@ public class RoomServiceImplTest{
     }
 
     @Test
-    public void getAllRoomsByPetType() throws Exception{
+    public void checkIfShowsAllRoomsByPetType() throws Exception{
         String petType = "FISH";
         List<RoomEntity> roomEntityList = new ArrayList<>();
         RoomEntity roomEntity = new RoomEntity();
@@ -172,21 +173,23 @@ public class RoomServiceImplTest{
     }
 
     @Test
-    public void freePlacesForPetType() throws Exception{
+    public void checkIfFreePlacesForPetTypeIsCalled() throws Exception{
         Iterable<RoomEntity> roomEntityList;
 
         RoomEntity roomEntity = new RoomEntity();
         roomEntity.setPetType(PetType.FISH);
-        roomEntity.setFreePlaces(2);
+        roomEntity.setFreePlaces(4);
         roomEntityList = Arrays.asList(roomEntity, roomEntity);
 
         when(roomRepository.findAll()).thenReturn(roomEntityList);
 
-        roomService.freePlacesForPetType();
+        Map<PetType, Integer> freePlacesMap = roomService.freePlacesForPetType();
+
+        //assertEquals(freePlacesMap.get(PetType.FISH),4);
     }
 
     @Test
-    public void getNumberOfRooms() throws Exception{
+    public void checkNumberOfRooms() throws Exception{
         List<RoomEntity> roomEntityList = new ArrayList<>();
 
         when(roomRepository.findAll()).thenReturn(roomEntityList);
@@ -197,7 +200,7 @@ public class RoomServiceImplTest{
     }
 
     @Test
-    public void getRoomByNumber() throws Exception{
+    public void checkIfRepositoryShowsRoomByNumber() throws Exception{
         int number = 1;
         RoomEntity roomEntity = new RoomEntity();
 

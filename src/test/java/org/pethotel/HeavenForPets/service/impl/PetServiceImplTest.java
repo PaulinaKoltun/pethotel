@@ -42,7 +42,7 @@ public class PetServiceImplTest {
 
 
     @Test
-    public void getPets() throws Exception{
+    public void checkIfShowsAllPets() throws Exception{
         List<PetEntity> petEntities = new ArrayList<>();
         PetEntity petEntity = new PetEntity();
         petEntities.add(petEntity);
@@ -55,7 +55,7 @@ public class PetServiceImplTest {
     }
 
     @Test
-    public void bringPetAgain() throws Exception{
+    public void checkIfBringPetAgainIsCalled() throws Exception{
         Pet pet = new Pet();
         PetEntity petEntity = new PetEntity();
         RoomEntity roomEntity = new RoomEntity();
@@ -71,7 +71,7 @@ public class PetServiceImplTest {
     }
 
     @Test
-    public void pickUpPets() throws Exception{
+    public void checkIfPickUpPetsIsCalled() throws Exception{
         List<Integer> idList = new ArrayList<>();
         Integer id = new Integer(2);
         idList.add(id);
@@ -93,7 +93,7 @@ public class PetServiceImplTest {
     }
 
     @Test
-    public void addPettoOwner() throws Exception{
+    public void checkIfPetWasAddedToOwner() throws Exception{
         Long id = 1l;
         Pet pet = new Pet();
         OwnerEntity ownerEntity = new OwnerEntity();
