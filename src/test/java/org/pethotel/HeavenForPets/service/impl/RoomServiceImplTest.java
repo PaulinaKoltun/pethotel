@@ -101,6 +101,7 @@ public class RoomServiceImplTest{
 
     @Test
     public void getAllRooms() throws Exception{
+        String type = "Plant room";
         Pageable pageable = new PageRequest(0,10);
         RoomEntity roomEntity = new RoomEntity();
         Page<RoomEntity> roomEntityList = new PageImpl<RoomEntity>(Arrays.asList(roomEntity));
@@ -110,7 +111,7 @@ public class RoomServiceImplTest{
         when(roomRepository.findAll(pageable)).thenReturn(roomEntityList);
         when(roomMap.map(roomEntity)).thenReturn(room);
 
-        roomService.getAllRooms(pageable);
+        roomService.getAllRooms(type, pageable);
 
         verify(roomMap, times(1)).map(roomEntity);
     }

@@ -81,12 +81,21 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<Room> getAllRooms(Pageable pageable) {
+    public List<Room> getAllRooms(String type, Pageable pageable) {
         Page<RoomEntity> roomEntityList = roomRepository.findAll(pageable);
 
-        return roomEntityList.getContent().stream()
-                .map(r -> roomMap.map(r))
-                .collect(Collectors.toList());
+        if ("plant".equals(type)) {
+            return roomEntityList.getContent().stream()
+                    .filter(r -> r.getPetType() == null)
+                    .map(r -> roomMap.map(r))
+                    .collect(Collectors.toList());
+
+        } else {
+            return roomEntityList.getContent().stream()
+                    .filter(r -> r.getPetType() != null)
+                    .map(r -> roomMap.map(r))
+                    .collect(Collectors.toList());
+        }
     }
 
     @Override
