@@ -90,7 +90,6 @@ public class RoomServiceImpl implements RoomService {
             return roomEntityList.stream()
                     .map(r -> roomMap.map(r))
                     .collect(Collectors.toList());
-
         } else {
             List<RoomEntity> roomEntityList = roomRepository.findAllPetRooms();
 

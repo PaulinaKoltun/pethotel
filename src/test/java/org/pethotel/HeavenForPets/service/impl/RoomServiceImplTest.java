@@ -101,21 +101,41 @@ public class RoomServiceImplTest{
     }
 
     @Test
-    public void checkIfShowsAllRooms() throws Exception{
-        String type = "Plant room";
+    public void checkIfShowsAllPlantRooms() throws Exception{
+        String type = "plant";
         Pageable pageable = new PageRequest(0,10);
         RoomEntity roomEntity = new RoomEntity();
-        Page<RoomEntity> roomEntityList = new PageImpl<RoomEntity>(Arrays.asList(roomEntity));
-
+        //Page<RoomEntity> roomEntityList = new PageImpl<RoomEntity>(Arrays.asList(roomEntity));
+        List<RoomEntity> roomEntityList = new ArrayList<>();
         Room room = new PetRoom();
 
-        when(roomRepository.findAll(pageable)).thenReturn(roomEntityList);
+        //when(roomRepository.findAll(pageable)).thenReturn(roomEntityList);
         when(roomMap.map(roomEntity)).thenReturn(room);
+        when(roomRepository.findAllPlantRooms()).thenReturn(roomEntityList);
 
         roomService.getAllRooms(type, pageable);
 
-        verify(roomMap, times(1)).map(roomEntity);
+        verify(roomRepository, times(1)).findAllPlantRooms();
     }
+
+    @Test
+    public void checkIfShowsAllPetRooms() throws Exception{
+        String type = "pet";
+        Pageable pageable = new PageRequest(0,10);
+        RoomEntity roomEntity = new RoomEntity();
+        //Page<RoomEntity> roomEntityList = new PageImpl<RoomEntity>(Arrays.asList(roomEntity));
+        List<RoomEntity> roomEntityList = new ArrayList<>();
+        Room room = new PetRoom();
+
+        //when(roomRepository.findAll(pageable)).thenReturn(roomEntityList);
+        when(roomMap.map(roomEntity)).thenReturn(room);
+        when(roomRepository.findAllPetRooms()).thenReturn(roomEntityList);
+
+        roomService.getAllRooms(type, pageable);
+
+        verify(roomRepository, times(1)).findAllPetRooms();
+    }
+
 
     @Test
     public void checkIfRepositoryGivesRoomByNumber() throws Exception{
