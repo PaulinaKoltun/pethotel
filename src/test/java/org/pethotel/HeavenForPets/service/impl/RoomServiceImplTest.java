@@ -1,6 +1,5 @@
 package org.pethotel.HeavenForPets.service.impl;
 
-import javafx.beans.binding.When;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -21,11 +20,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.*;
 
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyList;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -70,7 +66,7 @@ public class RoomServiceImplTest{
         shelfEntities.add(shelfEntity);
         RoomEntity roomEntity = new RoomEntity();
 
-        when(shelfMap.map(plantRoom.getPlantShelves())).thenReturn(shelfEntities);
+        when(shelfMap.mapToEntity(plantRoom.getPlantShelves())).thenReturn(shelfEntities);
         when(shelfRepository.save(shelfEntity)).thenReturn(shelfEntity);
         when(roomRepository.save(roomEntity)).thenReturn(roomEntity);
 
@@ -105,17 +101,17 @@ public class RoomServiceImplTest{
         String type = "plant";
         Pageable pageable = new PageRequest(0,10);
         RoomEntity roomEntity = new RoomEntity();
-        //Page<RoomEntity> roomEntityList = new PageImpl<RoomEntity>(Arrays.asList(roomEntity));
-        List<RoomEntity> roomEntityList = new ArrayList<>();
+        Page<RoomEntity> roomEntityList = new PageImpl<RoomEntity>(Arrays.asList(roomEntity));
+//        List<RoomEntity> roomEntityList = new ArrayList<>();
         Room room = new PetRoom();
 
         //when(roomRepository.findAll(pageable)).thenReturn(roomEntityList);
         when(roomMap.map(roomEntity)).thenReturn(room);
-        when(roomRepository.findAllPlantRooms()).thenReturn(roomEntityList);
+        when(roomRepository.findAllPlantRooms(pageable)).thenReturn(roomEntityList);
 
         roomService.getAllRooms(type, pageable);
 
-        verify(roomRepository, times(1)).findAllPlantRooms();
+        verify(roomRepository, times(1)).findAllPlantRooms(pageable);
     }
 
     @Test
@@ -123,17 +119,17 @@ public class RoomServiceImplTest{
         String type = "pet";
         Pageable pageable = new PageRequest(0,10);
         RoomEntity roomEntity = new RoomEntity();
-        //Page<RoomEntity> roomEntityList = new PageImpl<RoomEntity>(Arrays.asList(roomEntity));
-        List<RoomEntity> roomEntityList = new ArrayList<>();
+        Page<RoomEntity> roomEntityList = new PageImpl<RoomEntity>(Arrays.asList(roomEntity));
+//        List<RoomEntity> roomEntityList = new ArrayList<>();
         Room room = new PetRoom();
 
         //when(roomRepository.findAll(pageable)).thenReturn(roomEntityList);
         when(roomMap.map(roomEntity)).thenReturn(room);
-        when(roomRepository.findAllPetRooms()).thenReturn(roomEntityList);
+        when(roomRepository.findAllPetRooms(pageable)).thenReturn(roomEntityList);
 
         roomService.getAllRooms(type, pageable);
 
-        verify(roomRepository, times(1)).findAllPetRooms();
+        verify(roomRepository, times(1)).findAllPetRooms(pageable);
     }
 
 

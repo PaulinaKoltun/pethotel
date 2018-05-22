@@ -56,7 +56,7 @@ public class RoomServiceImpl implements RoomService {
             else {
                 LOGGER.info("PlantRoom");
                 PlantRoom plantRoom = (PlantRoom)room;
-                List<ShelfEntity> shelfEntities = shelfMap.map(plantRoom.getPlantShelves());
+                List<ShelfEntity> shelfEntities = shelfMap.mapToEntity(plantRoom.getPlantShelves());
                 for (ShelfEntity shelfEntity : shelfEntities) {
                     shelfRepository.save(shelfEntity);
                 }
@@ -82,21 +82,17 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public List<Room> getAllRooms(String type, Pageable pageable) {
-        //Page<RoomEntity> roomEntityList = roomRepository.findAll(pageable);
+        Page<RoomEntity> roomEntityList;
 
         if ("plant".equals(type)) {
-            List<RoomEntity> roomEntityList = roomRepository.findAllPlantRooms();
-
-            return roomEntityList.stream()
-                    .map(r -> roomMap.map(r))
-                    .collect(Collectors.toList());
+            roomEntityList = roomRepository.findAllPlantRooms(pageable);
         } else {
-            List<RoomEntity> roomEntityList = roomRepository.findAllPetRooms();
-
-            return roomEntityList.stream()
-                    .map(r -> roomMap.map(r))
-                    .collect(Collectors.toList());
+            roomEntityList = roomRepository.findAllPetRooms(pageable);
         }
+
+        return roomEntityList.getContent().stream()
+                .map(r -> roomMap.map(r))
+                .collect(Collectors.toList());
     }
 
     @Override

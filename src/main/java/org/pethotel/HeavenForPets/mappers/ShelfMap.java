@@ -8,5 +8,6 @@ import java.util.List;
 public interface ShelfMap {
     ShelfEntity map(Shelf shelf);
     Shelf map(ShelfEntity shelfEntity);
-    List<ShelfEntity> map(List<Shelf> shelves);
+    List<ShelfEntity> mapToEntity(List<Shelf> shelves);
+    List<Shelf> mapToDto(List<ShelfEntity> shelfEntities);
 }
