@@ -10,6 +10,7 @@ import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.pethotel.HeavenForPets.entity.RoomEntityBuilder;
 import org.pethotel.HeavenForPets.entity.ShelfEntity;
 import org.pethotel.HeavenForPets.enums.PetType;
+import org.pethotel.HeavenForPets.enums.RoomType;
 import org.pethotel.HeavenForPets.mappers.RoomMap;
 import org.pethotel.HeavenForPets.mappers.ShelfMap;
 import org.pethotel.HeavenForPets.repository.RoomRepository;
@@ -84,9 +85,9 @@ public class RoomServiceImpl implements RoomService {
     public List<Room> getAllRooms(String type, Pageable pageable) {
         Page<RoomEntity> roomEntityList;
 
-        if ("plant".equals(type)) {
+        if (RoomType.PLANT.getStringType().equals(type.toLowerCase())) {
             roomEntityList = roomRepository.findAllPlantRooms(pageable);
-        } else {
+        } else{
             roomEntityList = roomRepository.findAllPetRooms(pageable);
         }
 
