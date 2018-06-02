@@ -27,12 +27,22 @@ public class ShelfMapImpl implements ShelfMap {
     }
 
     @Override
-    public List<ShelfEntity> map(List<Shelf> shelves) {
+    public List<ShelfEntity> mapToEntity(List<Shelf> shelves) {
         List<ShelfEntity> shelfEntities = new ArrayList<>();
         for (Shelf shelf: shelves) {
             ShelfEntity shelfEntity = map(shelf);
             shelfEntities.add(shelfEntity);
         }
         return shelfEntities;
+    }
+
+    @Override
+    public List<Shelf> mapToDto(List<ShelfEntity> shelfEntities) {
+        List<Shelf> shelves = new ArrayList<>();
+        for (ShelfEntity shelfEntity : shelfEntities) {
+            Shelf shelf = map(shelfEntity);
+            shelves.add(shelf);
+        }
+        return shelves;
     }
 }

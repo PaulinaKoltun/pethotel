@@ -47,9 +47,9 @@ public class RoomController {
         return roomService.getAllNumbers();
     }
 
-    @GetMapping("/getAllRooms")
-    public List<Room> getAllRooms(Pageable pageable){
-        return roomService.getAllRooms(pageable);
+    @GetMapping("/getAllRooms/{type}")
+    public List<Room> getAllRooms(@PathVariable String type, Pageable pageable){
+        return roomService.getAllRooms(type, pageable);
     }
 
     @GetMapping("/findByRoomNumber/{roomNumber}")

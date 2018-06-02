@@ -10,6 +10,7 @@ import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.pethotel.HeavenForPets.entity.RoomEntityBuilder;
 import org.pethotel.HeavenForPets.entity.ShelfEntity;
 import org.pethotel.HeavenForPets.enums.PetType;
+import org.pethotel.HeavenForPets.enums.RoomType;
 import org.pethotel.HeavenForPets.mappers.RoomMap;
 import org.pethotel.HeavenForPets.mappers.ShelfMap;
 import org.pethotel.HeavenForPets.repository.RoomRepository;
@@ -17,13 +18,18 @@ import org.pethotel.HeavenForPets.repository.ShelfRepository;
 import org.pethotel.HeavenForPets.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import static junit.framework.TestCase.assertNull;
+import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 
 /**
  * Created by Paulina on 2017-10-07.
@@ -56,7 +62,7 @@ public class RoomServiceImpl implements RoomService {
             else {
                 LOGGER.info("PlantRoom");
                 PlantRoom plantRoom = (PlantRoom)room;
-                List<ShelfEntity> shelfEntities = shelfMap.map(plantRoom.getPlantShelves());
+                List<ShelfEntity> shelfEntities = shelfMap.mapToEntity(plantRoom.getPlantShelves());
                 for (ShelfEntity shelfEntity : shelfEntities) {
                     shelfRepository.save(shelfEntity);
                 }
@@ -81,8 +87,17 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<Room> getAllRooms(Pageable pageable) {
-        Page<RoomEntity> roomEntityList = roomRepository.findAll(pageable);
+    public List<Room> getAllRooms(String type, Pageable pageable) {
+        Page<RoomEntity> roomEntityList;
+
+        if (RoomType.PLANT.getStringType().equals(type.toLowerCase())) {
+            roomEntityList = roomRepository.findAllPlantRooms(pageable);
+        } else if (RoomType.PET.getStringType().equals(type.toLowerCase())){
+            roomEntityList = roomRepository.findAllPetRooms(pageable);
+        } else {
+            LOGGER.info("Wrong type");
+            return Collections.EMPTY_LIST;
+        }
 
         return roomEntityList.getContent().stream()
                 .map(r -> roomMap.map(r))

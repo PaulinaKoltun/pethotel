@@ -15,7 +15,7 @@ import java.util.Map;
 public interface RoomService {
     void saveRoom(Room room);
     List<Integer> getAllNumbers();
-    List<Room> getAllRooms(Pageable pageable);
+    List getAllRooms(String type, Pageable pageable);
     RoomEntity findByRoomNumber(int roomNumber);
     void deleteRoom(int roomNumber);
     void updateRoom(PetRoom room);

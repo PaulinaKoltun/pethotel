@@ -24,4 +24,11 @@ public interface RoomRepository extends PagingAndSortingRepository<RoomEntity, L
 
     @Query("SELECT count(r) FROM RoomEntity r")
     int getNumberOfRoomsFromQuery();
+
+    @Query("SELECT e FROM RoomEntity e WHERE e.petType is null")
+    Page<RoomEntity> findAllPlantRooms(Pageable pageable);
+
+    @Query("SELECT e FROM RoomEntity e WHERE e.petType is not null")
+    Page<RoomEntity> findAllPetRooms(Pageable pageable);
+
 }

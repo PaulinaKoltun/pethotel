@@ -1,13 +1,9 @@
 package org.pethotel.HeavenForPets.service.impl;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import org.pethotel.HeavenForPets.domein.Shelf;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.pethotel.HeavenForPets.entity.ShelfEntity;
 import org.pethotel.HeavenForPets.mappers.ShelfMap;
-import org.pethotel.HeavenForPets.repository.RoomRepository;
-import org.pethotel.HeavenForPets.repository.ShelfRepository;
 import org.pethotel.HeavenForPets.service.RoomService;
 import org.pethotel.HeavenForPets.service.ShelfService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +14,6 @@ import java.util.List;
 
 @Service
 public class ShelfServiceImpl implements ShelfService {
-
-    private static final Logger LOGGER = LogManager.getLogger(RoomServiceImpl.class);
-
-    @Autowired
-    private ShelfRepository shelfRepository;
-
-    @Autowired
-    private RoomRepository roomRepository;
 
     @Autowired
     private ShelfMap shelfMap;
