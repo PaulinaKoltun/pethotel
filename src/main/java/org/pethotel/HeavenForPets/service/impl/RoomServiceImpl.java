@@ -18,13 +18,18 @@ import org.pethotel.HeavenForPets.repository.ShelfRepository;
 import org.pethotel.HeavenForPets.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import static junit.framework.TestCase.assertNull;
+import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 
 /**
  * Created by Paulina on 2017-10-07.
@@ -87,8 +92,11 @@ public class RoomServiceImpl implements RoomService {
 
         if (RoomType.PLANT.getStringType().equals(type.toLowerCase())) {
             roomEntityList = roomRepository.findAllPlantRooms(pageable);
-        } else{
+        } else if (RoomType.PET.getStringType().equals(type.toLowerCase())){
             roomEntityList = roomRepository.findAllPetRooms(pageable);
+        } else {
+            LOGGER.info("Wrong type");
+            return Collections.EMPTY_LIST;
         }
 
         return roomEntityList.getContent().stream()
