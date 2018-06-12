@@ -2,7 +2,9 @@ package org.pethotel.HeavenForPets.mappers.impl;
 
 import org.pethotel.HeavenForPets.domein.Address;
 import org.pethotel.HeavenForPets.domein.Owner;
-import org.pethotel.HeavenForPets.domein.Pet;
+import org.pethotel.HeavenForPets.domein.Pet.Animal;
+import org.pethotel.HeavenForPets.domein.Pet.Pet;
+import org.pethotel.HeavenForPets.domein.Pet.Plant;
 import org.pethotel.HeavenForPets.entity.AddressEntity;
 import org.pethotel.HeavenForPets.entity.OwnerEntity;
 import org.pethotel.HeavenForPets.entity.PetEntity;
@@ -38,7 +40,8 @@ public class OwnerMapImpl implements OwnerMap {
     @Override
     public OwnerEntity map(Owner owner) throws InvalidPetTypeException {
         Map<RoomEntity, Integer> roomMap = new HashMap<>();
-        List<PetEntity> petEntitys = new ArrayList<>();
+        List<PetEntity> petEntities = new ArrayList<>();
+        List<PetEntity> plantEntities = new ArrayList<>();
 
         for (Pet pet : owner.getPetList()) {
             RoomEntity roomByNumber =
@@ -49,13 +52,24 @@ public class OwnerMapImpl implements OwnerMap {
 
             countPetsInRoom(roomMap, roomByNumber);
 
-            petEntitys.add(petEntity);
+            petEntities.add(petEntity);
+        }
+
+        for (Plant plant: owner.getPlantList()) {
+            RoomEntity roomByNumber =
+                    roomRepository.getRoomByNumber(plant.getRoomNumber());
+            PetEntity plantEntity = petMap.map(plant, roomByNumber);
+
+            countPetsInRoom(roomMap, roomByNumber);
+
+            plantEntities.add(plantEntity);
         }
 
         updateFreeRoomsInDB(roomMap);
 
         OwnerEntity ownerEntity = getOwnerEntity(owner);
-        ownerEntity.setPetList(petEntitys);
+        ownerEntity.setAnimalList(petEntities);
+        ownerEntity.setPlantList(plantEntities);
 
         Address address = owner.getAddress();
         AddressEntity addressEntity = addressMap.mapAddress(address);
@@ -83,7 +97,7 @@ public class OwnerMapImpl implements OwnerMap {
     }
 
     private void validatePetType(Pet pet, RoomEntity roomByNumber) throws InvalidPetTypeException {
-        if (roomByNumber.getPetType() != pet.getPetType()){
+        if (roomByNumber.getPetType() != ((Animal) pet).getPetType()){
             throw new InvalidPetTypeException();
         }
     }

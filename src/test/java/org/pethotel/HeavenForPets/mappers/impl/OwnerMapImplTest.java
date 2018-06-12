@@ -7,16 +7,14 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.pethotel.HeavenForPets.domein.*;
+import org.pethotel.HeavenForPets.domein.Pet.Pet;
 import org.pethotel.HeavenForPets.entity.*;
 import org.pethotel.HeavenForPets.enums.OwnerCategory;
 import org.pethotel.HeavenForPets.enums.PetType;
 import org.pethotel.HeavenForPets.exceptions.InvalidPetTypeException;
 import org.pethotel.HeavenForPets.mappers.AddressMap;
-import org.pethotel.HeavenForPets.mappers.FoodMap;
 import org.pethotel.HeavenForPets.mappers.PetMap;
-import org.pethotel.HeavenForPets.repository.OwnerRepository;
 import org.pethotel.HeavenForPets.repository.RoomRepository;
-import org.pethotel.HeavenForPets.service.OwnerService;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -60,7 +58,7 @@ public class OwnerMapImplTest {
                 .thenReturn(roomEntity);
 
         OwnerEntity ownerEntity = ownerMap.map(owner);
-        System.out.println(ownerEntity.getPetList());
+        System.out.println(ownerEntity.getAnimalList());
         // then
         assertEquals(owner.getFirstName(),ownerEntity.getFirstName());
     }

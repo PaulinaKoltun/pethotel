@@ -6,13 +6,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.pethotel.HeavenForPets.domein.Food;
-import org.pethotel.HeavenForPets.domein.Pet;
+import org.pethotel.HeavenForPets.domein.Pet.Pet;
 import org.pethotel.HeavenForPets.entity.FoodEntity;
 import org.pethotel.HeavenForPets.entity.PetEntity;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.pethotel.HeavenForPets.enums.PetType;
-import org.pethotel.HeavenForPets.mappers.FoodMap;
 import org.pethotel.HeavenForPets.repository.RoomRepository;
 import org.pethotel.HeavenForPets.service.FoodService;
 

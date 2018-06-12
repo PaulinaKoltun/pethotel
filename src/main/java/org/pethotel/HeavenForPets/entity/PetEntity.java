@@ -25,6 +25,10 @@ public class PetEntity {
     @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     @JoinColumn(name="room_entity", referencedColumnName="id", foreignKey = @ForeignKey(name = "FK_ROOM_TO_PET"))
     private RoomEntity roomEntity;
+    @Column(name = "shelf")
+    private int shelf;
+    @Column(name = "toWater")
+    private int toWater;
     @Column(name = "date_in")
     private Date dateIn;
     @Column(name = "date_out")
@@ -125,6 +129,22 @@ public class PetEntity {
         this.present = present;
     }
 
+    public int getShelf() {
+        return shelf;
+    }
+
+    public void setShelf(int shelf) {
+        this.shelf = shelf;
+    }
+
+    public int getToWater() {
+        return toWater;
+    }
+
+    public void setToWater(int toWater) {
+        this.toWater = toWater;
+    }
+
     @Override
     public String toString() {
         return "PetEntity{" +
@@ -132,6 +152,8 @@ public class PetEntity {
                 ", comment='" + comment + '\'' +
                 ", petType=" + petType +
                 ", roomEntity=" + roomEntity +
+                ", shelf=" + shelf +
+                ", toWater=" + toWater +
                 ", dateIn=" + dateIn +
                 ", dateOut=" + dateOut +
                 ", breakfast=" + breakfast +
@@ -148,6 +170,8 @@ public class PetEntity {
 
         PetEntity petEntity = (PetEntity) o;
 
+        if (shelf != petEntity.shelf) return false;
+        if (toWater != petEntity.toWater) return false;
         if (name != null ? !name.equals(petEntity.name) : petEntity.name != null) return false;
         if (comment != null ? !comment.equals(petEntity.comment) : petEntity.comment != null) return false;
         if (petType != petEntity.petType) return false;
@@ -166,6 +190,8 @@ public class PetEntity {
         result = 31 * result + (comment != null ? comment.hashCode() : 0);
         result = 31 * result + (petType != null ? petType.hashCode() : 0);
         result = 31 * result + (roomEntity != null ? roomEntity.hashCode() : 0);
+        result = 31 * result + shelf;
+        result = 31 * result + toWater;
         result = 31 * result + (dateIn != null ? dateIn.hashCode() : 0);
         result = 31 * result + (dateOut != null ? dateOut.hashCode() : 0);
         result = 31 * result + (breakfast != null ? breakfast.hashCode() : 0);

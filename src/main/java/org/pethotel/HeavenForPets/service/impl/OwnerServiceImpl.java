@@ -3,26 +3,21 @@ package org.pethotel.HeavenForPets.service.impl;
 import org.apache.logging.log4j.LogManager;
 import org.pethotel.HeavenForPets.domein.Client;
 import org.pethotel.HeavenForPets.domein.Owner;
-import org.pethotel.HeavenForPets.domein.Pet;
+import org.pethotel.HeavenForPets.domein.Pet.Pet;
 import org.pethotel.HeavenForPets.entity.OwnerEntity;
 import org.pethotel.HeavenForPets.entity.PetEntity;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
-import org.pethotel.HeavenForPets.exceptions.DifferentOwnerException;
 import org.pethotel.HeavenForPets.exceptions.InvalidPetTypeException;
 import org.pethotel.HeavenForPets.mappers.ClientMap;
 import org.pethotel.HeavenForPets.mappers.OwnerMap;
 import org.pethotel.HeavenForPets.mappers.PetMap;
 import org.pethotel.HeavenForPets.repository.OwnerRepository;
-import org.pethotel.HeavenForPets.repository.PetRepository;
-import org.pethotel.HeavenForPets.repository.RoomRepository;
 import org.pethotel.HeavenForPets.service.AddressService;
 import org.pethotel.HeavenForPets.service.OwnerService;
-import org.pethotel.HeavenForPets.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,7 +67,7 @@ public class OwnerServiceImpl implements OwnerService {
     @Override
     public List<Pet> showAllPets(int id) {
         OwnerEntity ownerEntity = ownerRepository.findOne(Long.valueOf(id));
-        List<PetEntity> petEntities = ownerEntity.getPetList();
+        List<PetEntity> petEntities = ownerEntity.getAnimalList();
 
         List<Pet> pets = petEntities.stream()
                 .map(e -> petMap.map(e))
@@ -85,7 +80,7 @@ public class OwnerServiceImpl implements OwnerService {
     @Transactional
     public void pickupAllPets(int id) {
         OwnerEntity ownerEntity = ownerRepository.findOne(Long.valueOf(id));
-        List<PetEntity> petEntities = ownerEntity.getPetList();
+        List<PetEntity> petEntities = ownerEntity.getAnimalList();
 
         for (PetEntity petEntity : petEntities) {
             petEntity.setPresent(0);

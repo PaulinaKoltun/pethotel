@@ -2,12 +2,9 @@ package org.pethotel.HeavenForPets.service;
 
 import org.pethotel.HeavenForPets.domein.Client;
 import org.pethotel.HeavenForPets.domein.Owner;
-import org.pethotel.HeavenForPets.domein.Pet;
+import org.pethotel.HeavenForPets.domein.Pet.Pet;
 import org.pethotel.HeavenForPets.entity.OwnerEntity;
-import org.pethotel.HeavenForPets.entity.PetEntity;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 /**

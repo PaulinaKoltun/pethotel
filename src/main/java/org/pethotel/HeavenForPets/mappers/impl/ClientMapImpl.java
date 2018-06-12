@@ -20,14 +20,14 @@ public class ClientMapImpl implements ClientMap {
         client.setId(ownerEntity.getId());
         client.setFirstName(ownerEntity.getFirstName());
         client.setLastName(ownerEntity.getLastName());
-        client.setPetNumbers(ownerEntity.getPetList().size());
+        client.setPetNumbers(ownerEntity.getAnimalList().size());
         client.setWholePrice(getWholePriceAfterDiscount(ownerEntity));
         return client;
     }
 
 
     private BigDecimal getWholePriceAfterDiscount(OwnerEntity ownerEntity) {
-        BigDecimal generalPrice = countWholePrice(ownerEntity.getPetList());
+        BigDecimal generalPrice = countWholePrice(ownerEntity.getAnimalList());
         BigDecimal priceOfDiscount = generalPrice.multiply(new BigDecimal(ownerEntity.getDiscount()));
         BigDecimal finalPrice = generalPrice.subtract(priceOfDiscount);
         return finalPrice;

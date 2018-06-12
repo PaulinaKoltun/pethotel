@@ -1,7 +1,6 @@
 package org.pethotel.HeavenForPets.entity;
 
 import org.pethotel.HeavenForPets.enums.OwnerCategory;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -38,7 +37,17 @@ public class OwnerEntity {
             inverseJoinColumns = @JoinColumn(name="pet_list", referencedColumnName="id",
                     foreignKey = @ForeignKey(name = "FK_OWNER_AND_PET_ID"))
     )
-    private List<PetEntity> petList = new ArrayList<>();
+    private List<PetEntity> animalList = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(
+            name="OWNER_PLANT_LIST",
+            joinColumns = @JoinColumn(name="owner_entity", referencedColumnName="id",
+                    foreignKey = @ForeignKey(name = "FK_OWNER_AND_PLANT")),
+            inverseJoinColumns = @JoinColumn(name="plant_list", referencedColumnName="id",
+                    foreignKey = @ForeignKey(name = "FK_OWNER_AND_PLANT_ID"))
+    )
+    private List<PetEntity> plantList = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="address_entity", referencedColumnName="id",
@@ -76,12 +85,12 @@ public class OwnerEntity {
         this.ownerCategory = ownerCategory;
     }
 
-    public List<PetEntity> getPetList() {
-        return petList;
+    public List<PetEntity> getAnimalList() {
+        return animalList;
     }
 
-    public void setPetList(List<PetEntity> petList) {
-        this.petList = petList;
+    public void setAnimalList(List<PetEntity> animalList) {
+        this.animalList = animalList;
     }
 
     public AddressEntity getAddressEntity() {
@@ -100,6 +109,14 @@ public class OwnerEntity {
         this.discount = discount;
     }
 
+    public List<PetEntity> getPlantList() {
+        return plantList;
+    }
+
+    public void setPlantList(List<PetEntity> plantList) {
+        this.plantList = plantList;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -111,7 +128,8 @@ public class OwnerEntity {
         if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
         if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
         if (ownerCategory != that.ownerCategory) return false;
-        if (petList != null ? !petList.equals(that.petList) : that.petList != null) return false;
+        if (animalList != null ? !animalList.equals(that.animalList) : that.animalList != null) return false;
+        if (plantList != null ? !plantList.equals(that.plantList) : that.plantList != null) return false;
         return addressEntity != null ? addressEntity.equals(that.addressEntity) : that.addressEntity == null;
     }
 
@@ -121,7 +139,8 @@ public class OwnerEntity {
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (ownerCategory != null ? ownerCategory.hashCode() : 0);
         result = 31 * result + discount;
-        result = 31 * result + (petList != null ? petList.hashCode() : 0);
+        result = 31 * result + (animalList != null ? animalList.hashCode() : 0);
+        result = 31 * result + (plantList != null ? plantList.hashCode() : 0);
         result = 31 * result + (addressEntity != null ? addressEntity.hashCode() : 0);
         return result;
     }
@@ -133,7 +152,8 @@ public class OwnerEntity {
                 ", lastName='" + lastName + '\'' +
                 ", ownerCategory=" + ownerCategory +
                 ", discount=" + discount +
-                ", petList=" + petList +
+                ", animalList=" + animalList +
+                ", plantList=" + plantList +
                 ", addressEntity=" + addressEntity +
                 '}';
     }

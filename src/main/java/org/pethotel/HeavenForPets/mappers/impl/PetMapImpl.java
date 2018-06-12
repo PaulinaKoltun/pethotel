@@ -1,6 +1,8 @@
 package org.pethotel.HeavenForPets.mappers.impl;
 
-import org.pethotel.HeavenForPets.domein.Pet;
+import org.pethotel.HeavenForPets.domein.Pet.Animal;
+import org.pethotel.HeavenForPets.domein.Pet.Pet;
+import org.pethotel.HeavenForPets.domein.Pet.Plant;
 import org.pethotel.HeavenForPets.entity.PetEntity;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.pethotel.HeavenForPets.mappers.PetMap;
@@ -20,41 +22,58 @@ public class PetMapImpl implements PetMap {
     @Override
     public PetEntity map(Pet pet, RoomEntity roomByNumber) {
         PetEntity petEntity = new PetEntity();
+        if (pet instanceof Animal){
+            petEntity.setPetType(((Animal) pet).getPetType());
+            petEntity.setBreakfast(foodService.getFoodById(((Animal) pet).getBreakfast()));
+            petEntity.setDinner(foodService.getFoodById(((Animal) pet).getDinner()));
+            petEntity.setSupper(foodService.getFoodById(((Animal) pet).getSupper()));
+        }else{
+            petEntity.setShelf(((Plant) pet).getShelf());
+            petEntity.setToWater(((Plant) pet).getToWater());
+        }
         petEntity.setName(pet.getName());
         petEntity.setComment(pet.getComment());
-        petEntity.setPetType(pet.getPetType());
         petEntity.setDateIn(pet.getDateIn());
         petEntity.setDateOut(pet.getDateOut());
-        petEntity.setBreakfast(foodService.getFoodById(pet.getBreakfast()));
-        petEntity.setDinner(foodService.getFoodById(pet.getDinner()));
-        petEntity.setSupper(foodService.getFoodById(pet.getSupper()));
         petEntity.setRoomEntity(roomByNumber);
         return petEntity;
     }
 
     @Override
     public PetEntity map(Pet pet, PetEntity petEntity, RoomEntity roomByNumber) {
+        if (pet instanceof Animal){
+            petEntity.setBreakfast(foodService.getFoodById(((Animal) pet).getBreakfast()));
+            petEntity.setDinner(foodService.getFoodById(((Animal) pet).getDinner()));
+            petEntity.setSupper(foodService.getFoodById(((Animal) pet).getSupper()));
+        }else {
+            petEntity.setShelf(((Plant) pet).getShelf());
+            petEntity.setToWater(((Plant) pet).getToWater());
+        }
         petEntity.setComment(pet.getComment());
         petEntity.setDateIn(pet.getDateIn());
         petEntity.setDateOut(pet.getDateOut());
-        petEntity.setBreakfast(foodService.getFoodById(pet.getBreakfast()));
-        petEntity.setDinner(foodService.getFoodById(pet.getDinner()));
-        petEntity.setSupper(foodService.getFoodById(pet.getSupper()));
         petEntity.setRoomEntity(roomByNumber);
         return petEntity;
     }
 
     @Override
     public Pet map(PetEntity e) {
-        Pet pet = new Pet();
+        Pet pet;
+        if (e.getPetType() != null){
+            pet = new Animal();
+            ((Animal) pet).setPetType(e.getPetType());
+            ((Animal) pet).setDinner((int) e.getDinner().getId());
+            ((Animal) pet).setSupper((int) e.getSupper().getId());
+            ((Animal) pet).setBreakfast((int) e.getBreakfast().getId());
+        }else{
+            pet = new Plant();
+            ((Plant) pet).setShelf(e.getShelf());
+            ((Plant) pet).setToWater(e.getToWater());
+        }
         pet.setName(e.getName());
         pet.setComment(e.getComment());
-        pet.setPetType(e.getPetType());
         pet.setDateIn(e.getDateIn());
         pet.setDateOut(e.getDateOut());
-        pet.setDinner((int) e.getDinner().getId());
-        pet.setSupper((int) e.getSupper().getId());
-        pet.setBreakfast((int) e.getBreakfast().getId());
 
         RoomEntity roomEntity = e.getRoomEntity();
         pet.setRoomNumber(roomEntity != null ? roomEntity.getRoomNumber() : 0);

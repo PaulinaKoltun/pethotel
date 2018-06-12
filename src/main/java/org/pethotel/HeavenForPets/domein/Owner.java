@@ -1,6 +1,8 @@
 package org.pethotel.HeavenForPets.domein;
 
 
+import org.pethotel.HeavenForPets.domein.Pet.Pet;
+import org.pethotel.HeavenForPets.domein.Pet.Plant;
 import org.pethotel.HeavenForPets.enums.OwnerCategory;
 
 import java.io.Serializable;
@@ -16,17 +18,20 @@ public class Owner implements Serializable {
     private OwnerCategory ownerCategory;
     private int discount;
     private List<Pet> petList = new ArrayList<>();
+    private List<Plant> plantList = new ArrayList<>();
     private Address address;
-        //szukac ownera po czyms unikalnym i dodac zwierze do hotelu jedno lub kilka sposrod jego zwierzat
+
+
     public Owner(){
 
     }
 
-    public Owner(String firstName, String lastName, OwnerCategory ownerCategory, List<Pet> petList, Address address) {
+    public Owner(String firstName, String lastName, OwnerCategory ownerCategory, List<Pet> petList, List<Plant> plantList, Address address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.ownerCategory = ownerCategory;
         this.petList = petList;
+        this.plantList = plantList;
         this.discount =ownerCategory.getDiscount();
         this.address = address;
     }
@@ -84,6 +89,14 @@ public class Owner implements Serializable {
         this.discount = discount;
     }
 
+    public List<Plant> getPlantList() {
+        return plantList;
+    }
+
+    public void setPlantList(List<Plant> plantList) {
+        this.plantList = plantList;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -96,6 +109,7 @@ public class Owner implements Serializable {
         if (lastName != null ? !lastName.equals(owner.lastName) : owner.lastName != null) return false;
         if (ownerCategory != owner.ownerCategory) return false;
         if (petList != null ? !petList.equals(owner.petList) : owner.petList != null) return false;
+        if (plantList != null ? !plantList.equals(owner.plantList) : owner.plantList != null) return false;
         return address != null ? address.equals(owner.address) : owner.address == null;
     }
 
@@ -104,8 +118,9 @@ public class Owner implements Serializable {
         int result = firstName != null ? firstName.hashCode() : 0;
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (ownerCategory != null ? ownerCategory.hashCode() : 0);
-        result = 31 * result + (petList != null ? petList.hashCode() : 0);
         result = 31 * result + discount;
+        result = 31 * result + (petList != null ? petList.hashCode() : 0);
+        result = 31 * result + (plantList != null ? plantList.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
         return result;
     }
@@ -116,8 +131,9 @@ public class Owner implements Serializable {
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", ownerCategory=" + ownerCategory +
-                ", petList=" + petList +
                 ", discount=" + discount +
+                ", petList=" + petList +
+                ", plantList=" + plantList +
                 ", address=" + address +
                 '}';
     }

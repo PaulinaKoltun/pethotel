@@ -3,7 +3,9 @@ package org.pethotel.HeavenForPets.controllers;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.pethotel.HeavenForPets.domein.Owner;
-import org.pethotel.HeavenForPets.domein.Pet;
+import org.pethotel.HeavenForPets.domein.Pet.Animal;
+import org.pethotel.HeavenForPets.domein.Pet.Pet;
+import org.pethotel.HeavenForPets.domein.Pet.Plant;
 import org.pethotel.HeavenForPets.domein.Rooms.Room;
 import org.pethotel.HeavenForPets.service.OwnerService;
 import org.pethotel.HeavenForPets.service.PetService;
@@ -46,15 +48,19 @@ public class HotelController implements ErrorController{
         ownerService.updateDiscountAtOwner(lastName, newDiscount);
     }
 
-
     @GetMapping("/getAllRoomsByType/{petType}")
     public List<Room> getAllRoomsByType(@PathVariable String petType){
         return roomService.getAllRoomsByType(petType);
     }
 
-    @GetMapping("/get")
-    public List<Pet> getPets(){
+    @GetMapping("/getAnimals")
+    public List<Animal> getPets(){
         return petService.getPets();
+    }
+
+    @GetMapping("/getPlants")
+    public List<Plant> getPlants() {
+        return petService.getPlants();
     }
 
     @RequestMapping(value = PATH)
