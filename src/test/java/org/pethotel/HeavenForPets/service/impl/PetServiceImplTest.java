@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.pethotel.HeavenForPets.domein.Pet.Animal;
 import org.pethotel.HeavenForPets.domein.Pet.Pet;
 import org.pethotel.HeavenForPets.entity.OwnerEntity;
 import org.pethotel.HeavenForPets.entity.PetEntity;
@@ -56,7 +57,7 @@ public class PetServiceImplTest {
 
     @Test
     public void checkIfBringPetAgainIsCalled() throws Exception{
-        Pet pet = new Pet();
+        Pet pet = new Animal();
         PetEntity petEntity = new PetEntity();
         RoomEntity roomEntity = new RoomEntity();
 
@@ -95,7 +96,9 @@ public class PetServiceImplTest {
     @Test
     public void checkIfPetWasAddedToOwner() throws Exception{
         Long id = 1l;
-        Pet pet = new Pet();
+        Pet pet = new Animal();
+        List<Pet> pets = new ArrayList<>();
+        pets.add(pet);
         OwnerEntity ownerEntity = new OwnerEntity();
         RoomEntity roomEntity = new RoomEntity();
         PetEntity petEntity = new PetEntity();
@@ -105,7 +108,7 @@ public class PetServiceImplTest {
         when(petMap.map(pet, roomService.getRoomByNumber(pet.getRoomNumber()))).thenReturn(petEntity);
         when(petRepository.save(petEntity)).thenReturn(petEntity);
 
-        petService.addPetToOwner(id, pet);
+        petService.addPetToOwner(id, pets);
 
         verify(petRepository, times(1)).save(petEntity);
     }
