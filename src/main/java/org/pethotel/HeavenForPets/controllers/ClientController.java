@@ -37,8 +37,8 @@ public class ClientController implements ErrorController {
     }
 
     @PostMapping("addPetToOwner/{id}")
-    public void addPetToOwner(@PathVariable Long id, @RequestBody Pet pet){
-        petService.addPetToOwner(id, pet);
+    public void addPetToOwner(@PathVariable Long id, @RequestBody List<Pet> pets){
+        petService.addPetToOwner(id, pets);
     }
 
     @PostMapping("/bringPetAgain")

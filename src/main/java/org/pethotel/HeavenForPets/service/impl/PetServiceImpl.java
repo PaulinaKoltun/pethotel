@@ -41,7 +41,7 @@ public class PetServiceImpl implements PetService {
 
     @Override
     public List<Animal> getPets() {
-        List<PetEntity> petEntityList = (List<PetEntity>) petRepository.findAll(); //query dla animals
+        List<PetEntity> petEntityList = petRepository.findAllPets(); //query dla animals
         List<Animal> pets = new ArrayList<>();
         for (PetEntity petEntity : petEntityList) {
             Pet pet = new Animal();
@@ -104,25 +104,35 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public void addPetToOwner(Long id, Pet pet) {
+    public void addPetToOwner(Long id, List<Pet> pets) {
         OwnerEntity ownerEntity = ownerService.getOwnerById(id);
-        List<PetEntity> pets = ownerEntity.getAnimalList();
-        PetEntity petEntity = petMap.map(pet, roomService.getRoomByNumber(pet.getRoomNumber()));
-        pets.add(petEntity);
-        ownerEntity.setAnimalList(pets);
-        petRepository.save(petEntity);
+        List<PetEntity> animals = ownerEntity.getAnimalList();
+        List<PetEntity> plants = ownerEntity.getPlantList();
+
+        for (Pet pet : pets) {
+            PetEntity petEntity = petMap.map(pet, roomService.getRoomByNumber(pet.getRoomNumber()));
+            petRepository.save(petEntity);
+            if (pet instanceof Animal){
+                animals.add(petEntity);
+            }else{
+                plants.add(petEntity);
+            }
+        }
+
+        ownerEntity.setAnimalList(animals);
+        ownerEntity.setPlantList(plants);
     }
 
     @Override
     public List<Plant> getPlants() {
-        List<PetEntity> petEntityList = (List<PetEntity>) petRepository.findAll(); //query dla plants
-        List<Plant> pets = new ArrayList<>();
-        for (PetEntity petEntity : petEntityList) {
+        List<PetEntity> plantsEntityList = petRepository.findAllPlants(); //query dla plants
+        List<Plant> plants = new ArrayList<>();
+        for (PetEntity petEntity : plantsEntityList) {
             Pet pet = new Plant();
             pet.setName(petEntity.getName());
             pet.setComment(petEntity.getComment());
-            pets.add((Plant) pet);
+            plants.add((Plant) pet);
         }
-        return pets;
+        return plants;
     }
 }

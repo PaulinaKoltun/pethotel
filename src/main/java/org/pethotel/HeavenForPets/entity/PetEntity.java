@@ -4,7 +4,6 @@ import org.pethotel.HeavenForPets.enums.PetType;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * Created by Paulina on 2017-09-30.
@@ -25,8 +24,9 @@ public class PetEntity {
     @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     @JoinColumn(name="room_entity", referencedColumnName="id", foreignKey = @ForeignKey(name = "FK_ROOM_TO_PET"))
     private RoomEntity roomEntity;
-    @Column(name = "shelf")
-    private int shelf;
+    @OneToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @JoinColumn(name="shelf_entity", referencedColumnName="id", foreignKey = @ForeignKey(name = "FK_SHELF_TO_PET"))
+    private int shelfEntity;
     @Column(name = "toWater")
     private int toWater;
     @Column(name = "date_in")
@@ -129,12 +129,12 @@ public class PetEntity {
         this.present = present;
     }
 
-    public int getShelf() {
-        return shelf;
+    public int getShelfEntity() {
+        return shelfEntity;
     }
 
-    public void setShelf(int shelf) {
-        this.shelf = shelf;
+    public void setShelfEntity(int shelfEntity) {
+        this.shelfEntity = shelfEntity;
     }
 
     public int getToWater() {
@@ -152,7 +152,7 @@ public class PetEntity {
                 ", comment='" + comment + '\'' +
                 ", petType=" + petType +
                 ", roomEntity=" + roomEntity +
-                ", shelf=" + shelf +
+                ", shelfEntity=" + shelfEntity +
                 ", toWater=" + toWater +
                 ", dateIn=" + dateIn +
                 ", dateOut=" + dateOut +
@@ -170,7 +170,7 @@ public class PetEntity {
 
         PetEntity petEntity = (PetEntity) o;
 
-        if (shelf != petEntity.shelf) return false;
+        if (shelfEntity != petEntity.shelfEntity) return false;
         if (toWater != petEntity.toWater) return false;
         if (name != null ? !name.equals(petEntity.name) : petEntity.name != null) return false;
         if (comment != null ? !comment.equals(petEntity.comment) : petEntity.comment != null) return false;
@@ -190,7 +190,7 @@ public class PetEntity {
         result = 31 * result + (comment != null ? comment.hashCode() : 0);
         result = 31 * result + (petType != null ? petType.hashCode() : 0);
         result = 31 * result + (roomEntity != null ? roomEntity.hashCode() : 0);
-        result = 31 * result + shelf;
+        result = 31 * result + shelfEntity;
         result = 31 * result + toWater;
         result = 31 * result + (dateIn != null ? dateIn.hashCode() : 0);
         result = 31 * result + (dateOut != null ? dateOut.hashCode() : 0);

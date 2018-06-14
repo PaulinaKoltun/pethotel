@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <changeSet id="140620181000" author="paulina">
+        <addColumn tableName="PET">
+            <column name="shelf_entity" type="int"></column>
+            <column name="to_water" type="int(11)"></column>
+        </addColumn>
+
+        <addForeignKeyConstraint constraintName="FK_SHELF_TO_PET"
+                                 baseTableName="PET" baseColumnNames="shelf_entity"
+                                 referencedTableName="SHELF" referencedColumnNames="id"
+        />
+    </changeSet>
+</databaseChangeLog>

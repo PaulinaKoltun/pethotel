@@ -28,7 +28,7 @@ public class PetMapImpl implements PetMap {
             petEntity.setDinner(foodService.getFoodById(((Animal) pet).getDinner()));
             petEntity.setSupper(foodService.getFoodById(((Animal) pet).getSupper()));
         }else{
-            petEntity.setShelf(((Plant) pet).getShelf());
+            petEntity.setShelfEntity(((Plant) pet).getShelf());
             petEntity.setToWater(((Plant) pet).getToWater());
         }
         petEntity.setName(pet.getName());
@@ -46,7 +46,7 @@ public class PetMapImpl implements PetMap {
             petEntity.setDinner(foodService.getFoodById(((Animal) pet).getDinner()));
             petEntity.setSupper(foodService.getFoodById(((Animal) pet).getSupper()));
         }else {
-            petEntity.setShelf(((Plant) pet).getShelf());
+            petEntity.setShelfEntity(((Plant) pet).getShelf());
             petEntity.setToWater(((Plant) pet).getToWater());
         }
         petEntity.setComment(pet.getComment());
@@ -67,7 +67,7 @@ public class PetMapImpl implements PetMap {
             ((Animal) pet).setBreakfast((int) e.getBreakfast().getId());
         }else{
             pet = new Plant();
-            ((Plant) pet).setShelf(e.getShelf());
+            ((Plant) pet).setShelf(e.getShelfEntity());
             ((Plant) pet).setToWater(e.getToWater());
         }
         pet.setName(e.getName());

@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.pethotel.HeavenForPets.domein.Pet.Animal;
 import org.pethotel.HeavenForPets.domein.Pet.Pet;
 import org.pethotel.HeavenForPets.entity.FoodEntity;
 import org.pethotel.HeavenForPets.entity.PetEntity;
@@ -33,7 +34,7 @@ public class PetMapImplTest {
 
     @Test
     public void shouldCheckIfNameIsCorrectlyMappedToPetEntity(){
-        Pet pet = new Pet();
+        Pet pet = new Animal();
         pet.setName("Azor");
 
         PetEntity petEntity = petMap.map(pet, null);
@@ -43,7 +44,7 @@ public class PetMapImplTest {
 
     @Test
     public void shouldCheckIfCommentIsCorrectlyMappedToPetEntity(){
-        Pet pet = new Pet();
+        Pet pet = new Animal();
         pet.setComment("Je wszystko");
 
         PetEntity petEntity = petMap.map(pet, null);
@@ -52,7 +53,7 @@ public class PetMapImplTest {
 
     @Test
     public void shouldCheckIfPetTypeIsCorrectlyMappedToPetEntity(){
-        Pet pet = new Pet();
+        Animal pet = new Animal();
         pet.setPetType(PetType.MAMMAL);
 
         PetEntity petEntity = petMap.map(pet, null);
@@ -61,7 +62,7 @@ public class PetMapImplTest {
 
     @Test
     public void shouldCheckIfDateInIsCorrectlyMappedToPetEntity(){
-        Pet pet = new Pet();
+        Pet pet = new Animal();
         pet.setDateIn(new Date(12,12,2017));
 
         PetEntity petEntity = petMap.map(pet, null);
@@ -70,7 +71,7 @@ public class PetMapImplTest {
 
     @Test
     public void shouldCheckIfDateOutIsCorrectlyMappedToPetEntity(){
-        Pet pet = new Pet();
+        Pet pet = new Animal();
         pet.setDateOut(new Date(13,12,2017));
 
         PetEntity petEntity = petMap.map(pet, null);
@@ -79,7 +80,7 @@ public class PetMapImplTest {
 
     @Test
     public void shouldCheckIfBreakfastIsCorrectlyMappedToPetEntity(){
-        Pet pet = new Pet();
+        Animal pet = new Animal();
         pet.setBreakfast(1);
 
         FoodEntity foodEntity = new FoodEntity();
@@ -92,7 +93,7 @@ public class PetMapImplTest {
 
     @Test
     public void shouldCheckIfDinnerIsCorrectlyMappedToPetEntity(){
-        Pet pet = new Pet();
+        Animal pet = new Animal();
         pet.setDinner(1);
 
         FoodEntity foodEntity = new FoodEntity();
@@ -105,7 +106,7 @@ public class PetMapImplTest {
 
     @Test
     public void shouldCheckIfSupperIsCorrectlyMappedToPetEntity(){
-        Pet pet = new Pet();
+        Animal pet = new Animal();
         pet.setSupper(1);
 
         Mockito.when(foodService.getFoodById(pet.getSupper())).thenReturn(new FoodEntity());
@@ -116,7 +117,7 @@ public class PetMapImplTest {
 
     @Test
     public void shouldCheckIfRoomIsCorrectlyMappedToPetEntity(){
-        Pet pet = new Pet();
+        Animal pet = new Animal();
         pet.setPetType(PetType.MAMMAL);
         pet.setRoomNumber(2);
 

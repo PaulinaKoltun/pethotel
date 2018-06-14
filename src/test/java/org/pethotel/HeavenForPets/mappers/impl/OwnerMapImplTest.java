@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.pethotel.HeavenForPets.domein.*;
+import org.pethotel.HeavenForPets.domein.Pet.Animal;
 import org.pethotel.HeavenForPets.domein.Pet.Pet;
 import org.pethotel.HeavenForPets.entity.*;
 import org.pethotel.HeavenForPets.enums.OwnerCategory;
@@ -42,7 +43,7 @@ public class OwnerMapImplTest {
     public void shouldThrowExceptionWhenThePetTypeInRoomIsDifferentThanReal() throws InvalidPetTypeException {
         // give
         Owner owner = new Owner();
-        Pet pet = new Pet();
+        Pet pet = new Animal();
         preparePet(pet, "Ara", PetType.BIRD);
         owner.setPetList(Arrays.asList(pet));
 
@@ -89,7 +90,7 @@ public class OwnerMapImplTest {
     public void checkIfOnePlaceIsFreeWhenPetIsAddToRoom() throws InvalidPetTypeException{
         // give
         Owner owner = new Owner();
-        Pet pet = new Pet();
+        Pet pet = new Animal();
         preparePet(pet, "Ara", PetType.BIRD);
 
         owner.setPetList(Arrays.asList(pet, pet));
@@ -120,7 +121,7 @@ public class OwnerMapImplTest {
 
     private void preparePet(final Pet pet, String name, PetType petType) {
         pet.setRoomNumber(1);
-        pet.setPetType(petType);
+        ((Animal) pet).setPetType(petType);
         pet.setName(name);
         pet.setComment("komentarz");
         pet.setDateIn(new Date(2017,02,12));

@@ -14,6 +14,6 @@ public interface PetService {
     List<Animal> getPets();
     void bringPetAgain(Pet pet);
     BigDecimal pickupPets(List<Integer> idList);
-    void addPetToOwner(Long id, Pet pet);
+    void addPetToOwner(Long id, List<Pet> pet);
     List<Plant> getPlants();
 }
