@@ -59,7 +59,7 @@ public class OwnerMapImplTest {
                 .thenReturn(roomEntity);
 
         OwnerEntity ownerEntity = ownerMap.map(owner);
-        System.out.println(ownerEntity.getAnimalList());
+        System.out.println(ownerEntity.getPetList());
         // then
         assertEquals(owner.getFirstName(),ownerEntity.getFirstName());
     }

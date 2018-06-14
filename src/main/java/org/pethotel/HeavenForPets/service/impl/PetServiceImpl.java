@@ -106,21 +106,17 @@ public class PetServiceImpl implements PetService {
     @Override
     public void addPetToOwner(Long id, List<Pet> pets) {
         OwnerEntity ownerEntity = ownerService.getOwnerById(id);
-        List<PetEntity> animals = ownerEntity.getAnimalList();
-        List<PetEntity> plants = ownerEntity.getPlantList();
+        List<PetEntity> ownerEntities = ownerEntity.getPetList();
 
         for (Pet pet : pets) {
-            PetEntity petEntity = petMap.map(pet, roomService.getRoomByNumber(pet.getRoomNumber()));
+            PetEntity petEntity =
+                    petMap.map(pet,
+                            roomService.getRoomByNumber(pet.getRoomNumber()));
             petRepository.save(petEntity);
-            if (pet instanceof Animal){
-                animals.add(petEntity);
-            }else{
-                plants.add(petEntity);
-            }
+            ownerEntities.add(petEntity);
         }
 
-        ownerEntity.setAnimalList(animals);
-        ownerEntity.setPlantList(plants);
+        ownerEntity.setPetList(ownerEntities);
     }
 
     @Override

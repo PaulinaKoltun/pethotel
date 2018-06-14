@@ -7,7 +7,7 @@
 
     <changeSet id="140620181000" author="paulina">
         <addColumn tableName="PET">
-            <column name="shelf_entity" type="int"></column>
+            <column name="shelf_entity" type="bigint(20)"></column>
             <column name="to_water" type="int(11)"></column>
         </addColumn>
 

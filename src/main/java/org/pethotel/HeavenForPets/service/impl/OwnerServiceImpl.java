@@ -67,7 +67,7 @@ public class OwnerServiceImpl implements OwnerService {
     @Override
     public List<Pet> showAllPets(int id) {
         OwnerEntity ownerEntity = ownerRepository.findOne(Long.valueOf(id));
-        List<PetEntity> petEntities = ownerEntity.getAnimalList();
+        List<PetEntity> petEntities = ownerEntity.getPetList();
 
         List<Pet> pets = petEntities.stream()
                 .map(e -> petMap.map(e))
@@ -80,7 +80,7 @@ public class OwnerServiceImpl implements OwnerService {
     @Transactional
     public void pickupAllPets(int id) {
         OwnerEntity ownerEntity = ownerRepository.findOne(Long.valueOf(id));
-        List<PetEntity> petEntities = ownerEntity.getAnimalList();
+        List<PetEntity> petEntities = ownerEntity.getPetList();
 
         for (PetEntity petEntity : petEntities) {
             petEntity.setPresent(0);

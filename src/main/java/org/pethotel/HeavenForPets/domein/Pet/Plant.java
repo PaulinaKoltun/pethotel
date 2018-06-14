@@ -1,5 +1,7 @@
 package org.pethotel.HeavenForPets.domein.Pet;
 
+import org.pethotel.HeavenForPets.domein.Shelf;
+
 public class Plant extends Pet{
     private int shelf;
     private int toWater;
@@ -41,6 +43,7 @@ public class Plant extends Pet{
     }
 
     @Override
+
     public String toString() {
         return "Plant{" +
                 "shelf=" + shelf +

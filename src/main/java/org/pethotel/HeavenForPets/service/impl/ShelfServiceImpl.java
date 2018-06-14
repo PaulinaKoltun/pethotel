@@ -4,6 +4,7 @@ import org.pethotel.HeavenForPets.domein.Shelf;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.pethotel.HeavenForPets.entity.ShelfEntity;
 import org.pethotel.HeavenForPets.mappers.ShelfMap;
+import org.pethotel.HeavenForPets.repository.ShelfRepository;
 import org.pethotel.HeavenForPets.service.RoomService;
 import org.pethotel.HeavenForPets.service.ShelfService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class ShelfServiceImpl implements ShelfService {
 
     @Autowired
     private RoomService roomService;
+
+    @Autowired
+    private ShelfRepository shelfRepository;
 
     @Override
     public void saveShelves(List<Shelf> shelves, int id) {
@@ -62,5 +66,10 @@ public class ShelfServiceImpl implements ShelfService {
         }
 
         return shelves;
+    }
+
+    @Override
+    public ShelfEntity findShelfById(int id){
+        return shelfRepository.findOne((long) id);
     }
 }

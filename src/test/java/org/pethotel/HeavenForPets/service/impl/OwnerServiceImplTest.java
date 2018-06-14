@@ -82,7 +82,7 @@ public class OwnerServiceImplTest {
         OwnerEntity ownerEntity = new OwnerEntity();
         PetEntity petEntity = new PetEntity();
         Pet pet = new Animal();
-        ownerEntity.setAnimalList(Arrays.asList(petEntity));
+        ownerEntity.setPetList(Arrays.asList(petEntity));
 
         when(ownerRepository.findOne((long)id)).thenReturn(ownerEntity);
         when(petMap.map(petEntity)).thenReturn(pet);
@@ -100,7 +100,7 @@ public class OwnerServiceImplTest {
         RoomEntity roomEntity = new RoomEntity();
         roomEntity.setFreePlaces(3);
         petEntity.setRoomEntity(roomEntity);
-        ownerEntity.setAnimalList(Arrays.asList(petEntity));
+        ownerEntity.setPetList(Arrays.asList(petEntity));
 
         when(ownerRepository.findOne(Long.valueOf(id))).thenReturn(ownerEntity);
 

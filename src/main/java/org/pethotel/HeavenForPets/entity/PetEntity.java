@@ -21,26 +21,26 @@ public class PetEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "pet_type")
     private PetType petType;
-    @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-    @JoinColumn(name="room_entity", referencedColumnName="id", foreignKey = @ForeignKey(name = "FK_ROOM_TO_PET"))
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "room_entity", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_ROOM_TO_PET"))
     private RoomEntity roomEntity;
-    @OneToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-    @JoinColumn(name="shelf_entity", referencedColumnName="id", foreignKey = @ForeignKey(name = "FK_SHELF_TO_PET"))
-    private int shelfEntity;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "shelf_entity", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_SHELF_TO_PET"))
+    private ShelfEntity shelfEntity;
     @Column(name = "toWater")
     private int toWater;
     @Column(name = "date_in")
     private Date dateIn;
     @Column(name = "date_out")
     private Date dateOut;
-    @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
-    @JoinColumn(name="breakfast", referencedColumnName="id", foreignKey = @ForeignKey(name = "FK_BREAKFAST_TO_PET"))
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "breakfast", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_BREAKFAST_TO_PET"))
     private FoodEntity breakfast;
-    @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
-    @JoinColumn(name="dinner", referencedColumnName="id", foreignKey = @ForeignKey(name = "FK_DINNER_TO_PET"))
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "dinner", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_DINNER_TO_PET"))
     private FoodEntity dinner;
-    @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
-    @JoinColumn(name="supper", referencedColumnName="id", foreignKey = @ForeignKey(name = "FK_SUPPER_TO_PET"))
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "supper", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_SUPPER_TO_PET"))
     private FoodEntity supper;
     @Column(name = "presence")
     private Integer present = 1;
@@ -129,20 +129,20 @@ public class PetEntity {
         this.present = present;
     }
 
-    public int getShelfEntity() {
-        return shelfEntity;
-    }
-
-    public void setShelfEntity(int shelfEntity) {
-        this.shelfEntity = shelfEntity;
-    }
-
     public int getToWater() {
         return toWater;
     }
 
     public void setToWater(int toWater) {
         this.toWater = toWater;
+    }
+
+    public ShelfEntity getShelfEntity() {
+        return shelfEntity;
+    }
+
+    public void setShelfEntity(ShelfEntity shelfEntity) {
+        this.shelfEntity = shelfEntity;
     }
 
     @Override
@@ -170,12 +170,14 @@ public class PetEntity {
 
         PetEntity petEntity = (PetEntity) o;
 
-        if (shelfEntity != petEntity.shelfEntity) return false;
         if (toWater != petEntity.toWater) return false;
+        if (id != null ? !id.equals(petEntity.id) : petEntity.id != null) return false;
         if (name != null ? !name.equals(petEntity.name) : petEntity.name != null) return false;
         if (comment != null ? !comment.equals(petEntity.comment) : petEntity.comment != null) return false;
         if (petType != petEntity.petType) return false;
         if (roomEntity != null ? !roomEntity.equals(petEntity.roomEntity) : petEntity.roomEntity != null) return false;
+        if (shelfEntity != null ? !shelfEntity.equals(petEntity.shelfEntity) : petEntity.shelfEntity != null)
+            return false;
         if (dateIn != null ? !dateIn.equals(petEntity.dateIn) : petEntity.dateIn != null) return false;
         if (dateOut != null ? !dateOut.equals(petEntity.dateOut) : petEntity.dateOut != null) return false;
         if (breakfast != null ? !breakfast.equals(petEntity.breakfast) : petEntity.breakfast != null) return false;
@@ -190,7 +192,7 @@ public class PetEntity {
         result = 31 * result + (comment != null ? comment.hashCode() : 0);
         result = 31 * result + (petType != null ? petType.hashCode() : 0);
         result = 31 * result + (roomEntity != null ? roomEntity.hashCode() : 0);
-        result = 31 * result + shelfEntity;
+        result = 31 * result + (shelfEntity != null ? shelfEntity.hashCode() : 0);
         result = 31 * result + toWater;
         result = 31 * result + (dateIn != null ? dateIn.hashCode() : 0);
         result = 31 * result + (dateOut != null ? dateOut.hashCode() : 0);

@@ -13,6 +13,14 @@ public class ShelfEntity {
     @Column(name = "free")
     private boolean free;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public int getNumber() {
         return number;
     }
