@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface RoomRepository extends PagingAndSortingRepository<RoomEntity, Long> {
     @Query("SELECT e FROM RoomEntity e WHERE e.roomNumber = :number")
-    RoomEntity getRoomByNumber(@Param("number") int roomNumber);
+    RoomEntity getRoomByNumber(@Param("number") long roomNumber);
 
     @Query("SELECT r FROM RoomEntity r ORDER BY r.roomNumber ASC")
     List<RoomEntity> sortedRoomEntitiesASC();

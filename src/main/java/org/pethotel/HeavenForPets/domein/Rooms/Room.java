@@ -18,7 +18,7 @@ import java.math.BigDecimal;
         @JsonSubTypes.Type(value = PetRoom.class, name = "PetRoom") }
 )
 public abstract class Room implements Serializable {
-    private int roomNumber;
+    private long roomNumber;
     private int numberOfPlaces;
     private int freePlaces;
     private BigDecimal price;
@@ -34,11 +34,11 @@ public abstract class Room implements Serializable {
         this.price = price;
     }
 
-    public int getRoomNumber() {
+    public long getRoomNumber() {
         return roomNumber;
     }
 
-    public void setRoomNumber(int roomNumber) {
+    public void setRoomNumber(long roomNumber) {
         this.roomNumber = roomNumber;
     }
 
@@ -73,7 +73,7 @@ public abstract class Room implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = roomNumber;
+        int result = (int) (roomNumber ^ (roomNumber >>> 32));
         result = 31 * result + numberOfPlaces;
         result = 31 * result + freePlaces;
         result = 31 * result + (price != null ? price.hashCode() : 0);

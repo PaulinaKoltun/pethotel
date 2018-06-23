@@ -40,7 +40,7 @@ public class RoomController {
     }
 
     @GetMapping("/getAllNumbers")
-    public List<Integer> getAllNumbers(){
+    public List<Long> getAllNumbers(){
         return roomService.getAllNumbers();
     }
 

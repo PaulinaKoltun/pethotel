@@ -3,9 +3,6 @@ package org.pethotel.HeavenForPets.domein.Pet;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import org.pethotel.HeavenForPets.domein.Rooms.PetRoom;
-import org.pethotel.HeavenForPets.domein.Rooms.PlantRoom;
-import org.pethotel.HeavenForPets.enums.PetType;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -24,7 +21,7 @@ public abstract class Pet implements Serializable {
     private long id;
     private String name;
     private String comment;
-    private int roomNumber;
+    private long roomNumber;
     private Date dateIn;
     private Date dateOut;
 
@@ -38,11 +35,11 @@ public abstract class Pet implements Serializable {
         this.id = id;
     }
 
-    public int getRoomNumber() {
+    public long getRoomNumber() {
         return roomNumber;
     }
 
-    public void setRoomNumber(int roomNumber) {
+    public void setRoomNumber(long roomNumber) {
         this.roomNumber = roomNumber;
     }
 
@@ -98,7 +95,7 @@ public abstract class Pet implements Serializable {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (comment != null ? comment.hashCode() : 0);
-        result = 31 * result + roomNumber;
+        result = 31 * result + (int) (roomNumber ^ (roomNumber >>> 32));
         result = 31 * result + (dateIn != null ? dateIn.hashCode() : 0);
         result = 31 * result + (dateOut != null ? dateOut.hashCode() : 0);
         return result;

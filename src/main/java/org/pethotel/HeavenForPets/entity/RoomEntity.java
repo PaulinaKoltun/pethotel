@@ -7,7 +7,6 @@ package org.pethotel.HeavenForPets.entity;
 import org.pethotel.HeavenForPets.enums.PetType;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class RoomEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @Column(name = "room_number")
-    private int roomNumber;
+    private long roomNumber;
     @Column(name = "number_of_places")
     private int numberOfPlaces;
     @Column(name = "free_places")
@@ -49,11 +48,11 @@ public class RoomEntity {
         this.price = price;
     }
 
-    public int getRoomNumber() {
+    public long getRoomNumber() {
         return roomNumber;
     }
 
-    public void setRoomNumber(int roomNumber) {
+    public void setRoomNumber(long roomNumber) {
         this.roomNumber = roomNumber;
     }
 
@@ -106,7 +105,7 @@ public class RoomEntity {
 
     @Override
     public int hashCode() {
-        int result = roomNumber;
+        int result = (int) (roomNumber ^ (roomNumber >>> 32));
         result = 31 * result + numberOfPlaces;
         result = 31 * result + freePlaces;
         result = 31 * result + (petType != null ? petType.hashCode() : 0);

@@ -15,7 +15,7 @@ import java.util.Map;
 public interface RoomService {
     void saveRoom(Room room);
     void saveRoomEntity(RoomEntity roomEntity);
-    List<Integer> getAllNumbers();
+    List<Long> getAllNumbers();
     List getAllRooms(String type, Pageable pageable);
     RoomEntity findByRoomNumber(int roomNumber);
     void deleteRoom(int roomNumber);
@@ -23,6 +23,6 @@ public interface RoomService {
     List<Room> getAllRoomsByType(String petType);
     Map<PetType, Integer> freePlacesForPetType();
     int getNumberOfRooms();
-    RoomEntity getRoomByNumber(int number);
+    RoomEntity getRoomByNumber(long number);
     int getNumberOfRoomsFromQuery();
 }
