@@ -16,7 +16,7 @@ import java.util.List;
 public class RoomEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
     @Column(name = "room_number")
     private int roomNumber;
     @Column(name = "number_of_places")

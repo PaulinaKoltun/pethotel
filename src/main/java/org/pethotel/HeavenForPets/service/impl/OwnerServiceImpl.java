@@ -66,7 +66,7 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public List<Pet> showAllPets(int id) {
-        OwnerEntity ownerEntity = ownerRepository.findOne(Long.valueOf(id));
+        OwnerEntity ownerEntity = ownerRepository.findOne((long) id);
         List<PetEntity> petEntities = ownerEntity.getPetList();
 
         List<Pet> pets = petEntities.stream()

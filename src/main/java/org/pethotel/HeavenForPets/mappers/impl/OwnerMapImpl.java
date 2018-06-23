@@ -14,6 +14,7 @@ import org.pethotel.HeavenForPets.mappers.AddressMap;
 import org.pethotel.HeavenForPets.mappers.OwnerMap;
 import org.pethotel.HeavenForPets.mappers.PetMap;
 import org.pethotel.HeavenForPets.repository.RoomRepository;
+import org.pethotel.HeavenForPets.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +36,8 @@ public class OwnerMapImpl implements OwnerMap {
     private AddressMap addressMap;
 
     @Autowired
-    private RoomRepository roomRepository; //zmienić
+    private RoomService roomService;
+
 
     @Override
     public OwnerEntity map(Owner owner) throws InvalidPetTypeException {
@@ -44,7 +46,7 @@ public class OwnerMapImpl implements OwnerMap {
 
         for (Pet pet : owner.getPetList()) {
             RoomEntity roomByNumber =
-                    roomRepository.getRoomByNumber(pet.getRoomNumber());
+                    roomService.getRoomByNumber(pet.getRoomNumber());
             validatePetType(pet, roomByNumber);
 
             PetEntity petEntity = petMap.map(pet, roomByNumber);
@@ -104,7 +106,7 @@ public class OwnerMapImpl implements OwnerMap {
             Integer newValue = oldValue - roomEntityIntegerEntry.getValue();
             roomEntity.setFreePlaces(newValue);
 
-            roomRepository.save(roomEntity);
+            roomService.saveRoomEntity(roomEntity);
         }
     }
 

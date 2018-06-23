@@ -3,14 +3,14 @@ package org.pethotel.HeavenForPets.domein.Pet;
 import org.pethotel.HeavenForPets.domein.Shelf;
 
 public class Plant extends Pet{
-    private int shelf;
+    private long shelf;
     private int toWater;
 
-    public int getShelf() {
+    public long getShelf() {
         return shelf;
     }
 
-    public void setShelf(int shelf) {
+    public void setShelf(long shelf) {
         this.shelf = shelf;
     }
 
@@ -37,7 +37,7 @@ public class Plant extends Pet{
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + shelf;
+        result = 31 * result + (int) (shelf ^ (shelf >>> 32));
         result = 31 * result + toWater;
         return result;
     }

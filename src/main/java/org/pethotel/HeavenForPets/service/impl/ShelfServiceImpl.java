@@ -69,7 +69,7 @@ public class ShelfServiceImpl implements ShelfService {
     }
 
     @Override
-    public ShelfEntity findShelfById(int id){
+    public ShelfEntity findShelfById(long id){
         return shelfRepository.findOne((long) id);
     }
 }

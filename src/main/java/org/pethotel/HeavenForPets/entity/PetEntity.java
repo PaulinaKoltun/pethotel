@@ -13,7 +13,7 @@ import java.util.Date;
 public class PetEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
     @Column(name = "name")
     private String name;
     @Column(name = "comment")
@@ -171,7 +171,6 @@ public class PetEntity {
         PetEntity petEntity = (PetEntity) o;
 
         if (toWater != petEntity.toWater) return false;
-        if (id != null ? !id.equals(petEntity.id) : petEntity.id != null) return false;
         if (name != null ? !name.equals(petEntity.name) : petEntity.name != null) return false;
         if (comment != null ? !comment.equals(petEntity.comment) : petEntity.comment != null) return false;
         if (petType != petEntity.petType) return false;

@@ -11,5 +11,5 @@ public interface ShelfService {
     List<Shelf> getShelvesFromRoom(int id);
     List<Shelf> getFreeShelves(int id);
 
-    ShelfEntity findShelfById(int id);
+    ShelfEntity findShelfById(long id);
 }

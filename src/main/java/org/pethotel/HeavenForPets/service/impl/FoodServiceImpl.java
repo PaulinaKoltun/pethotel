@@ -99,7 +99,7 @@ public class FoodServiceImpl implements FoodService{
     }
 
     @Override
-    public FoodEntity getFoodById(Integer id) {
+    public FoodEntity getFoodById(long id) {
         return foodRepository.findOne((long) id);
     }
 }

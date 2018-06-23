@@ -78,6 +78,11 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
+    public void saveRoomEntity(RoomEntity roomEntity) {
+        roomRepository.save(roomEntity);
+    }
+
+    @Override
     public List<Integer> getAllNumbers() {
         List<RoomEntity> rooms = (List<RoomEntity>) roomRepository.findAll();
         return rooms.stream()
@@ -170,5 +175,10 @@ public class RoomServiceImpl implements RoomService {
     public RoomEntity getRoomByNumber(int number){
         return roomRepository.getRoomByNumber(number);
 
+    }
+
+    @Override
+    public int getNumberOfRoomsFromQuery() {
+        return roomRepository.getNumberOfRoomsFromQuery();
     }
 }
