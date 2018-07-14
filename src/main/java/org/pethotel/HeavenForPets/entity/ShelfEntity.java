@@ -8,8 +8,10 @@ public class ShelfEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
     @Column(name = "number")
     private int number;
+
     @Column(name = "free")
     private boolean free;
 

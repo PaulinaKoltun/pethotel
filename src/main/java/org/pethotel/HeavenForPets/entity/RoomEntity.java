@@ -16,17 +16,23 @@ public class RoomEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
     @Column(name = "room_number")
     private long roomNumber;
+
     @Column(name = "number_of_places")
     private int numberOfPlaces;
+
     @Column(name = "free_places")
     private int freePlaces;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "pet_type")
     private PetType petType;
+
     @Column(name = "price")
     private BigDecimal price;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name="SHELVES_ROOMS_LIST",
