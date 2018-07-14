@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.pethotel.HeavenForPets.domein.Owner;
 import org.pethotel.HeavenForPets.domein.Pet.Animal;
-import org.pethotel.HeavenForPets.domein.Pet.Pet;
 import org.pethotel.HeavenForPets.domein.Pet.Plant;
 import org.pethotel.HeavenForPets.domein.Rooms.Room;
 import org.pethotel.HeavenForPets.service.OwnerService;
@@ -55,7 +54,7 @@ public class HotelController implements ErrorController{
 
     @GetMapping("/getAnimals")
     public List<Animal> getPets(){
-        return petService.getPets();
+        return petService.getAnimals();
     }
 
     @GetMapping("/getPlants")

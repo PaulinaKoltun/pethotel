@@ -14,34 +14,46 @@ public class PetEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "comment")
     private String comment;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "pet_type")
     private PetType petType;
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "room_entity", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_ROOM_TO_PET"))
     private RoomEntity roomEntity;
+
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "shelf_entity", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_SHELF_TO_PET"))
     private ShelfEntity shelfEntity;
+
     @Column(name = "toWater")
     private int toWater;
+
     @Column(name = "date_in")
     private Date dateIn;
+
     @Column(name = "date_out")
     private Date dateOut;
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "breakfast", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_BREAKFAST_TO_PET"))
     private FoodEntity breakfast;
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "dinner", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_DINNER_TO_PET"))
     private FoodEntity dinner;
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "supper", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_SUPPER_TO_PET"))
     private FoodEntity supper;
+
     @Column(name = "presence")
     private Integer present = 1;
 

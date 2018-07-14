@@ -11,9 +11,9 @@ import java.util.List;
  * Created by Paulina on 2017-10-04.
  */
 public interface PetService {
-    List<Animal> getPets();
+    List<Animal> getAnimals();
     void bringPetAgain(Pet pet);
     BigDecimal pickupPets(List<Integer> idList);
-    void addPetToOwner(Long id, List<Pet> pet);
+    void addPetsToOwner(Long id, List<Pet> pet);
     List<Plant> getPlants();
 }

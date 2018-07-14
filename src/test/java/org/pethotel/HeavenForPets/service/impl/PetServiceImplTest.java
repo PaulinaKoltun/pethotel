@@ -50,7 +50,7 @@ public class PetServiceImplTest {
 
         when(petRepository.findAll()).thenReturn(petEntities);
 
-        petService.getPets();
+        petService.getAnimals();
 
         verify(petRepository, times(1)).findAll();
     }
@@ -108,7 +108,7 @@ public class PetServiceImplTest {
         when(petMap.map(pet, roomService.getRoomByNumber(pet.getRoomNumber()))).thenReturn(petEntity);
         when(petRepository.save(petEntity)).thenReturn(petEntity);
 
-        petService.addPetToOwner(id, pets);
+        petService.addPetsToOwner(id, pets);
 
         verify(petRepository, times(1)).save(petEntity);
     }

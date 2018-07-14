@@ -40,8 +40,8 @@ public class PetServiceImpl implements PetService {
     private PetMap petMap;
 
     @Override
-    public List<Animal> getPets() {
-        List<PetEntity> petEntityList = petRepository.findAllPets(); //query dla animals
+    public List<Animal> getAnimals() {
+        List<PetEntity> petEntityList = petRepository.findAllAnimals(); //query dla animals
         List<Animal> pets = new ArrayList<>();
         for (PetEntity petEntity : petEntityList) {
             Pet pet = new Animal();
@@ -104,7 +104,7 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public void addPetToOwner(Long id, List<Pet> pets) {
+    public void addPetsToOwner(Long id, List<Pet> pets) {
         OwnerEntity ownerEntity = ownerService.getOwnerById(id);
         List<PetEntity> ownerEntities = ownerEntity.getPetList();
 

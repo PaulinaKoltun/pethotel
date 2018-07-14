@@ -18,5 +18,5 @@ public interface PetRepository extends CrudRepository<PetEntity, Long> {
     List<PetEntity> findAllPlants();
 
     @Query("SELECT e FROM PetEntity e WHERE e.petType is not null")
-    List<PetEntity> findAllPets();
+    List<PetEntity> findAllAnimals();
 }
