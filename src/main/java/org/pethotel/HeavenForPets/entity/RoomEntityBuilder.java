@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public final class RoomEntityBuilder {
-    private int roomNumber;
+    private long roomNumber;
     private int numberOfPlaces;
     private int freePlaces;
     private PetType petType;
@@ -54,7 +54,7 @@ public final class RoomEntityBuilder {
         return new RoomEntityBuilder();
     }
 
-    public RoomEntityBuilder withRoomNumber(int roomNumber) {
+    public RoomEntityBuilder withRoomNumber(long roomNumber) {
         this.roomNumber = roomNumber;
         return this;
     }

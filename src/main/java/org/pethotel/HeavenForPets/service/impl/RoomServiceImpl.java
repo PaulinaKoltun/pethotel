@@ -18,7 +18,6 @@ import org.pethotel.HeavenForPets.repository.ShelfRepository;
 import org.pethotel.HeavenForPets.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -78,7 +77,12 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<Integer> getAllNumbers() {
+    public void saveRoomEntity(RoomEntity roomEntity) {
+        roomRepository.save(roomEntity);
+    }
+
+    @Override
+    public List<Long> getAllNumbers() {
         List<RoomEntity> rooms = (List<RoomEntity>) roomRepository.findAll();
         return rooms.stream()
                 .filter(r -> r.getFreePlaces() > 0)
@@ -167,8 +171,13 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public RoomEntity getRoomByNumber(int number){
+    public RoomEntity getRoomByNumber(long number){
         return roomRepository.getRoomByNumber(number);
 
+    }
+
+    @Override
+    public int getNumberOfRoomsFromQuery() {
+        return roomRepository.getNumberOfRoomsFromQuery();
     }
 }

@@ -1,7 +1,6 @@
 package org.pethotel.HeavenForPets.entity;
 
 import org.pethotel.HeavenForPets.enums.OwnerCategory;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ import java.util.List;
 public class OwnerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
 
     @Column(name = "first_name")
     private String firstName;

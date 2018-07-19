@@ -1,6 +1,8 @@
 package org.pethotel.HeavenForPets.service.impl;
 
-import org.pethotel.HeavenForPets.domein.Pet;
+import org.pethotel.HeavenForPets.domein.Pet.Animal;
+import org.pethotel.HeavenForPets.domein.Pet.Pet;
+import org.pethotel.HeavenForPets.domein.Pet.Plant;
 import org.pethotel.HeavenForPets.entity.OwnerEntity;
 import org.pethotel.HeavenForPets.entity.PetEntity;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
@@ -38,14 +40,14 @@ public class PetServiceImpl implements PetService {
     private PetMap petMap;
 
     @Override
-    public List<Pet> getPets() {
-        List<PetEntity> petEntityList = (List<PetEntity>) petRepository.findAll();
-        List<Pet> pets = new ArrayList<>();
+    public List<Animal> getAnimals() {
+        List<PetEntity> petEntityList = petRepository.findAllAnimals(); //query dla animals
+        List<Animal> pets = new ArrayList<>();
         for (PetEntity petEntity : petEntityList) {
-            Pet pet = new Pet();
+            Pet pet = new Animal();
             pet.setName(petEntity.getName());
             pet.setComment(petEntity.getComment());
-            pets.add(pet);
+            pets.add((Animal) pet);
         }
         return pets;
     }
@@ -102,12 +104,31 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public void addPetToOwner(Long id, Pet pet) {
+    public void addPetsToOwner(Long id, List<Pet> pets) {
         OwnerEntity ownerEntity = ownerService.getOwnerById(id);
-        List<PetEntity> pets = ownerEntity.getPetList();
-        PetEntity petEntity = petMap.map(pet, roomService.getRoomByNumber(pet.getRoomNumber()));
-        pets.add(petEntity);
-        ownerEntity.setPetList(pets);
-        petRepository.save(petEntity);
+        List<PetEntity> ownerEntities = ownerEntity.getPetList();
+
+        for (Pet pet : pets) {
+            PetEntity petEntity =
+                    petMap.map(pet,
+                            roomService.getRoomByNumber(pet.getRoomNumber()));
+            petRepository.save(petEntity);
+            ownerEntities.add(petEntity);
+        }
+
+        ownerEntity.setPetList(ownerEntities);
+    }
+
+    @Override
+    public List<Plant> getPlants() {
+        List<PetEntity> plantsEntityList = petRepository.findAllPlants(); //query dla plants
+        List<Plant> plants = new ArrayList<>();
+        for (PetEntity petEntity : plantsEntityList) {
+            Pet pet = new Plant();
+            pet.setName(petEntity.getName());
+            pet.setComment(petEntity.getComment());
+            plants.add((Plant) pet);
+        }
+        return plants;
     }
 }

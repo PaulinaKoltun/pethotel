@@ -1,25 +1,29 @@
-package org.pethotel.HeavenForPets.domein;
+package org.pethotel.HeavenForPets.domein.Pet;
 
-import org.pethotel.HeavenForPets.enums.PetType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * Created by Paulina on 2017-09-27.
  */
-public class Pet implements Serializable {
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Animal.class, name = "animal"),
+
+        @JsonSubTypes.Type(value = Plant.class, name = "plant") }
+)
+public abstract class Pet implements Serializable {
     private long id;
     private String name;
     private String comment;
-    private PetType petType;
-    private int roomNumber;
+    private long roomNumber;
     private Date dateIn;
     private Date dateOut;
-    private int breakfast;
-    private int dinner;
-    private int supper;
 
     public Pet(){}
 
@@ -31,11 +35,11 @@ public class Pet implements Serializable {
         this.id = id;
     }
 
-    public int getRoomNumber() {
+    public long getRoomNumber() {
         return roomNumber;
     }
 
-    public void setRoomNumber(int roomNumber) {
+    public void setRoomNumber(long roomNumber) {
         this.roomNumber = roomNumber;
     }
 
@@ -55,14 +59,6 @@ public class Pet implements Serializable {
         this.comment = comment;
     }
 
-    public PetType getPetType() {
-        return petType;
-    }
-
-    public void setPetType(PetType petType) {
-        this.petType = petType;
-    }
-
     public Date getDateIn() {
         return dateIn;
     }
@@ -79,46 +75,6 @@ public class Pet implements Serializable {
         this.dateOut = dateOut;
     }
 
-    public int getBreakfast() {
-        return breakfast;
-    }
-
-    public void setBreakfast(int breakfast) {
-        this.breakfast = breakfast;
-    }
-
-    public int getDinner() {
-        return dinner;
-    }
-
-    public void setDinner(int dinner) {
-        this.dinner = dinner;
-    }
-
-    public int getSupper() {
-        return supper;
-    }
-
-    public void setSupper(int supper) {
-        this.supper = supper;
-    }
-
-    @Override
-    public String toString() {
-        return "Pet{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", comment='" + comment + '\'' +
-                ", petType=" + petType +
-                ", roomNumber=" + roomNumber +
-                ", dateIn=" + dateIn +
-                ", dateOut=" + dateOut +
-                ", breakfast=" + breakfast +
-                ", dinner=" + dinner +
-                ", supper=" + supper +
-                '}';
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -128,12 +84,8 @@ public class Pet implements Serializable {
 
         if (id != pet.id) return false;
         if (roomNumber != pet.roomNumber) return false;
-        if (breakfast != pet.breakfast) return false;
-        if (dinner != pet.dinner) return false;
-        if (supper != pet.supper) return false;
         if (name != null ? !name.equals(pet.name) : pet.name != null) return false;
         if (comment != null ? !comment.equals(pet.comment) : pet.comment != null) return false;
-        if (petType != pet.petType) return false;
         if (dateIn != null ? !dateIn.equals(pet.dateIn) : pet.dateIn != null) return false;
         return dateOut != null ? dateOut.equals(pet.dateOut) : pet.dateOut == null;
     }
@@ -143,13 +95,22 @@ public class Pet implements Serializable {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (comment != null ? comment.hashCode() : 0);
-        result = 31 * result + (petType != null ? petType.hashCode() : 0);
-        result = 31 * result + roomNumber;
+        result = 31 * result + (int) (roomNumber ^ (roomNumber >>> 32));
         result = 31 * result + (dateIn != null ? dateIn.hashCode() : 0);
         result = 31 * result + (dateOut != null ? dateOut.hashCode() : 0);
-        result = 31 * result + breakfast;
-        result = 31 * result + dinner;
-        result = 31 * result + supper;
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Pet{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", comment='" + comment + '\'' +
+                ", roomNumber=" + roomNumber +
+                ", dateIn=" + dateIn +
+                ", dateOut=" + dateOut +
+                '}';
+    }
+
 }

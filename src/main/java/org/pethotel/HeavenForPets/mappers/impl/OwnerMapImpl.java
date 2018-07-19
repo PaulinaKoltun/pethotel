@@ -2,7 +2,9 @@ package org.pethotel.HeavenForPets.mappers.impl;
 
 import org.pethotel.HeavenForPets.domein.Address;
 import org.pethotel.HeavenForPets.domein.Owner;
-import org.pethotel.HeavenForPets.domein.Pet;
+import org.pethotel.HeavenForPets.domein.Pet.Animal;
+import org.pethotel.HeavenForPets.domein.Pet.Pet;
+import org.pethotel.HeavenForPets.domein.Pet.Plant;
 import org.pethotel.HeavenForPets.entity.AddressEntity;
 import org.pethotel.HeavenForPets.entity.OwnerEntity;
 import org.pethotel.HeavenForPets.entity.PetEntity;
@@ -12,6 +14,7 @@ import org.pethotel.HeavenForPets.mappers.AddressMap;
 import org.pethotel.HeavenForPets.mappers.OwnerMap;
 import org.pethotel.HeavenForPets.mappers.PetMap;
 import org.pethotel.HeavenForPets.repository.RoomRepository;
+import org.pethotel.HeavenForPets.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,29 +36,30 @@ public class OwnerMapImpl implements OwnerMap {
     private AddressMap addressMap;
 
     @Autowired
-    private RoomRepository roomRepository;
+    private RoomService roomService;
+
 
     @Override
     public OwnerEntity map(Owner owner) throws InvalidPetTypeException {
         Map<RoomEntity, Integer> roomMap = new HashMap<>();
-        List<PetEntity> petEntitys = new ArrayList<>();
+        List<PetEntity> petEntities = new ArrayList<>();
 
         for (Pet pet : owner.getPetList()) {
             RoomEntity roomByNumber =
-                    roomRepository.getRoomByNumber(pet.getRoomNumber());
+                    roomService.getRoomByNumber(pet.getRoomNumber());
             validatePetType(pet, roomByNumber);
 
             PetEntity petEntity = petMap.map(pet, roomByNumber);
 
-            countPetsInRoom(roomMap, roomByNumber);
+            countPetsInRoom(roomMap, roomByNumber); //zmienić
 
-            petEntitys.add(petEntity);
+            petEntities.add(petEntity);
         }
 
         updateFreeRoomsInDB(roomMap);
 
         OwnerEntity ownerEntity = getOwnerEntity(owner);
-        ownerEntity.setPetList(petEntitys);
+        ownerEntity.setPetList(petEntities);
 
         Address address = owner.getAddress();
         AddressEntity addressEntity = addressMap.mapAddress(address);
@@ -83,7 +87,8 @@ public class OwnerMapImpl implements OwnerMap {
     }
 
     private void validatePetType(Pet pet, RoomEntity roomByNumber) throws InvalidPetTypeException {
-        if (roomByNumber.getPetType() != pet.getPetType()){
+        if (roomByNumber.getPetType() != null &&
+                roomByNumber.getPetType() != ((Animal) pet).getPetType()){
             throw new InvalidPetTypeException();
         }
     }
@@ -101,7 +106,7 @@ public class OwnerMapImpl implements OwnerMap {
             Integer newValue = oldValue - roomEntityIntegerEntry.getValue();
             roomEntity.setFreePlaces(newValue);
 
-            roomRepository.save(roomEntity);
+            roomService.saveRoomEntity(roomEntity);
         }
     }
 

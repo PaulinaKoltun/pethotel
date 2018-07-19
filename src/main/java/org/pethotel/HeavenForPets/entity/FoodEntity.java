@@ -12,23 +12,31 @@ import java.util.Date;
 public class FoodEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    long id;
+
     @Column(name = "name")
     private String name;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "food_type")
     private FoodType foodType;
+
     @Column(name = "amount")
     private int amount;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "pet_type")
     private PetType petType;
+
     @Column(name = "taste")
     private String taste;
+
     @Column(name = "price")
     private BigDecimal price;
+
     @Column(name = "delivery_date")
     private Date deliveryDate;
+
     @Column(name = "delivery_amount")
     private int deliveryAmount;
 

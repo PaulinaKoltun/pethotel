@@ -12,7 +12,7 @@ public class Food {
     private PetType petType;
     private String taste;
     private BigDecimal price;
-    private Integer id;
+    private long id;
 
     public Food() {
     }
@@ -65,11 +65,11 @@ public class Food {
         this.price = price;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 

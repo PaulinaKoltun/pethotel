@@ -14,16 +14,15 @@ import java.util.Map;
  */
 public interface RoomService {
     void saveRoom(Room room);
-    List<Integer> getAllNumbers();
+    void saveRoomEntity(RoomEntity roomEntity);
+    List<Long> getAllNumbers();
     List getAllRooms(String type, Pageable pageable);
     RoomEntity findByRoomNumber(int roomNumber);
     void deleteRoom(int roomNumber);
     void updateRoom(PetRoom room);
-
     List<Room> getAllRoomsByType(String petType);
-
     Map<PetType, Integer> freePlacesForPetType();
-
     int getNumberOfRooms();
-    RoomEntity getRoomByNumber(int number);
+    RoomEntity getRoomByNumber(long number);
+    int getNumberOfRoomsFromQuery();
 }

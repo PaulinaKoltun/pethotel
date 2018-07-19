@@ -24,9 +24,6 @@ public class RoomController {
     @Autowired
     private RoomService roomService;
 
-    @Autowired
-    private RoomRepository roomRepository;
-
     @PostMapping("/add")
     public void addRoom(@RequestBody Room room){
         roomService.saveRoom(room);
@@ -39,11 +36,11 @@ public class RoomController {
 
     @GetMapping("/getNumberOfRoomsFromQuery")
     public int getNumberOfRoomsFromQuery(){
-        return roomRepository.getNumberOfRoomsFromQuery();
+        return roomService.getNumberOfRoomsFromQuery();
     }
 
     @GetMapping("/getAllNumbers")
-    public List<Integer> getAllNumbers(){
+    public List<Long> getAllNumbers(){
         return roomService.getAllNumbers();
     }
 

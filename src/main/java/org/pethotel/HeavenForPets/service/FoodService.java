@@ -1,6 +1,5 @@
 package org.pethotel.HeavenForPets.service;
 
-import com.itextpdf.text.Document;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.pethotel.HeavenForPets.domein.Food;
 import org.pethotel.HeavenForPets.domein.FoodDetails;
@@ -19,5 +18,5 @@ public interface FoodService {
                  Integer id,
                  String file);
 
-    FoodEntity getFoodById(Integer id);
+    FoodEntity getFoodById(long id);
 }

@@ -7,7 +7,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.pethotel.HeavenForPets.domein.Client;
 import org.pethotel.HeavenForPets.domein.Owner;
-import org.pethotel.HeavenForPets.domein.Pet;
+import org.pethotel.HeavenForPets.domein.Pet.Animal;
+import org.pethotel.HeavenForPets.domein.Pet.Pet;
 import org.pethotel.HeavenForPets.entity.OwnerEntity;
 import org.pethotel.HeavenForPets.entity.PetEntity;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
@@ -16,8 +17,6 @@ import org.pethotel.HeavenForPets.mappers.OwnerMap;
 import org.pethotel.HeavenForPets.mappers.PetMap;
 import org.pethotel.HeavenForPets.repository.OwnerRepository;
 import org.pethotel.HeavenForPets.service.AddressService;
-import org.pethotel.HeavenForPets.service.OwnerService;
-import org.springframework.jmx.export.annotation.ManagedOperation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -82,7 +81,7 @@ public class OwnerServiceImplTest {
         Integer id = 1;
         OwnerEntity ownerEntity = new OwnerEntity();
         PetEntity petEntity = new PetEntity();
-        Pet pet = new Pet();
+        Pet pet = new Animal();
         ownerEntity.setPetList(Arrays.asList(petEntity));
 
         when(ownerRepository.findOne((long)id)).thenReturn(ownerEntity);
