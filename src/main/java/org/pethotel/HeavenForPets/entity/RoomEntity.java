@@ -43,6 +43,9 @@ public class RoomEntity {
     )
     private List<ShelfEntity> shelfEntities;
 
+    @Column(name = "temperature")
+    private int temperature;
+
     public RoomEntity() {
     }
 
@@ -94,6 +97,14 @@ public class RoomEntity {
         this.shelfEntities = shelfEntities;
     }
 
+    public int getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(int temperature) {
+        this.temperature = temperature;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -104,6 +115,7 @@ public class RoomEntity {
         if (roomNumber != that.roomNumber) return false;
         if (numberOfPlaces != that.numberOfPlaces) return false;
         if (freePlaces != that.freePlaces) return false;
+        if (temperature != that.temperature) return false;
         if (petType != that.petType) return false;
         if (price != null ? !price.equals(that.price) : that.price != null) return false;
         return shelfEntities != null ? shelfEntities.equals(that.shelfEntities) : that.shelfEntities == null;
@@ -117,6 +129,7 @@ public class RoomEntity {
         result = 31 * result + (petType != null ? petType.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + (shelfEntities != null ? shelfEntities.hashCode() : 0);
+        result = 31 * result + temperature;
         return result;
     }
 
@@ -129,6 +142,7 @@ public class RoomEntity {
                 ", petType=" + petType +
                 ", price=" + price +
                 ", shelfEntities=" + shelfEntities +
+                ", temperature=" + temperature +
                 '}';
     }
 

@@ -131,4 +131,9 @@ public class PetServiceImpl implements PetService {
         }
         return plants;
     }
+
+    @Override
+    public PetEntity getPetById(Long id) {
+        return petRepository.findOne(id);
+    }
 }

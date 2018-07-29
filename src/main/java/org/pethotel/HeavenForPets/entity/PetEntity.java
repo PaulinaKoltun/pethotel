@@ -1,5 +1,6 @@
 package org.pethotel.HeavenForPets.entity;
 
+import org.hibernate.annotations.CollectionId;
 import org.pethotel.HeavenForPets.enums.PetType;
 
 import javax.persistence.*;
@@ -33,7 +34,7 @@ public class PetEntity {
     @JoinColumn(name = "shelf_entity", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_SHELF_TO_PET"))
     private ShelfEntity shelfEntity;
 
-    @Column(name = "toWater")
+    @Column(name = "to_water")
     private int toWater;
 
     @Column(name = "date_in")
@@ -56,6 +57,12 @@ public class PetEntity {
 
     @Column(name = "presence")
     private Integer present = 1;
+
+    @Column(name = "min_temperature")
+    private int minTemperature;
+
+    @Column(name = "max_temperature")
+    private  int maxTemperature;
 
     public PetEntity() {
     }
@@ -157,22 +164,20 @@ public class PetEntity {
         this.shelfEntity = shelfEntity;
     }
 
-    @Override
-    public String toString() {
-        return "PetEntity{" +
-                "name='" + name + '\'' +
-                ", comment='" + comment + '\'' +
-                ", petType=" + petType +
-                ", roomEntity=" + roomEntity +
-                ", shelfEntity=" + shelfEntity +
-                ", toWater=" + toWater +
-                ", dateIn=" + dateIn +
-                ", dateOut=" + dateOut +
-                ", breakfast=" + breakfast +
-                ", dinner=" + dinner +
-                ", supper=" + supper +
-                ", present=" + present +
-                '}';
+    public int getMinTemperature() {
+        return minTemperature;
+    }
+
+    public void setMinTemperature(int minTemperature) {
+        this.minTemperature = minTemperature;
+    }
+
+    public int getMaxTemperature() {
+        return maxTemperature;
+    }
+
+    public void setMaxTemperature(int maxTemperature) {
+        this.maxTemperature = maxTemperature;
     }
 
     @Override
@@ -183,6 +188,8 @@ public class PetEntity {
         PetEntity petEntity = (PetEntity) o;
 
         if (toWater != petEntity.toWater) return false;
+        if (minTemperature != petEntity.minTemperature) return false;
+        if (maxTemperature != petEntity.maxTemperature) return false;
         if (name != null ? !name.equals(petEntity.name) : petEntity.name != null) return false;
         if (comment != null ? !comment.equals(petEntity.comment) : petEntity.comment != null) return false;
         if (petType != petEntity.petType) return false;
@@ -211,6 +218,29 @@ public class PetEntity {
         result = 31 * result + (dinner != null ? dinner.hashCode() : 0);
         result = 31 * result + (supper != null ? supper.hashCode() : 0);
         result = 31 * result + (present != null ? present.hashCode() : 0);
+        result = 31 * result + minTemperature;
+        result = 31 * result + maxTemperature;
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "PetEntity{" +
+                "name='" + name + '\'' +
+                ", comment='" + comment + '\'' +
+                ", petType=" + petType +
+                ", roomEntity=" + roomEntity +
+                ", shelfEntity=" + shelfEntity +
+                ", toWater=" + toWater +
+                ", dateIn=" + dateIn +
+                ", dateOut=" + dateOut +
+                ", breakfast=" + breakfast +
+                ", dinner=" + dinner +
+                ", supper=" + supper +
+                ", present=" + present +
+                ", minTemperature=" + minTemperature +
+                ", maxTemperature=" + maxTemperature +
+                '}';
+    }
+
 }

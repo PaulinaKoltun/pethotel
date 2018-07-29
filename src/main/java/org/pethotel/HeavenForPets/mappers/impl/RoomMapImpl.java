@@ -31,6 +31,7 @@ public class RoomMapImpl implements RoomMap {
             room = new PlantRoom();
             List<Shelf> shelves = shelfMap.mapToDto(roomEntity.getShelfEntities());
             ((PlantRoom)room).setShelves(shelves);
+            ((PlantRoom) room).setTemperature(roomEntity.getTemperature());
         }
         room.setFreePlaces(roomEntity.getFreePlaces());
         room.setNumberOfPlaces(roomEntity.getNumberOfPlaces());

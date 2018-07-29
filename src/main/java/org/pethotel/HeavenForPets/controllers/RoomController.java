@@ -68,4 +68,9 @@ public class RoomController {
     public void deleteRoom(@PathVariable int roomNumber){
         roomService.deleteRoom(roomNumber);
     }
+
+    @GetMapping("/getAllRoomsInTheTemperatureRange/{id}")
+    public List<Room> getAllRoomsInTheRangeForPlant(@PathVariable int id){
+        return roomService.getAllRoomsInTheRangeForPlant(id);
+    }
 }

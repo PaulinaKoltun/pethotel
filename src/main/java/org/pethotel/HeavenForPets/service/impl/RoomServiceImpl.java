@@ -3,9 +3,12 @@ package org.pethotel.HeavenForPets.service.impl;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.pethotel.HeavenForPets.domein.Pet.Pet;
+import org.pethotel.HeavenForPets.domein.Pet.Plant;
 import org.pethotel.HeavenForPets.domein.Rooms.PetRoom;
 import org.pethotel.HeavenForPets.domein.Rooms.PlantRoom;
 import org.pethotel.HeavenForPets.domein.Rooms.Room;
+import org.pethotel.HeavenForPets.entity.PetEntity;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.pethotel.HeavenForPets.entity.RoomEntityBuilder;
 import org.pethotel.HeavenForPets.entity.ShelfEntity;
@@ -15,16 +18,14 @@ import org.pethotel.HeavenForPets.mappers.RoomMap;
 import org.pethotel.HeavenForPets.mappers.ShelfMap;
 import org.pethotel.HeavenForPets.repository.RoomRepository;
 import org.pethotel.HeavenForPets.repository.ShelfRepository;
+import org.pethotel.HeavenForPets.service.PetService;
 import org.pethotel.HeavenForPets.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static junit.framework.TestCase.assertNull;
@@ -42,6 +43,9 @@ public class RoomServiceImpl implements RoomService {
 
     @Autowired
     ShelfRepository shelfRepository;
+
+    @Autowired
+    PetService petService;
 
     @Autowired
     RoomMap roomMap;
@@ -179,5 +183,21 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public int getNumberOfRoomsFromQuery() {
         return roomRepository.getNumberOfRoomsFromQuery();
+    }
+
+    @Override
+    public List<Room> getAllRoomsInTheRangeForPlant(int id) {
+        PetEntity petEntity = petService.getPetById((long) id);
+
+        Iterable<RoomEntity> roomEntityList = roomRepository.findAllPlantRooms(null);
+        List<Room> rooms = new ArrayList<>();
+
+        for (RoomEntity roomEntity : roomEntityList) {
+            if (petEntity.getMinTemperature() <= roomEntity.getTemperature()
+                    && petEntity.getMaxTemperature() >= roomEntity.getTemperature()){
+                rooms.add(roomMap.map(roomEntity));
+            }
+        }
+        return rooms;
     }
 }

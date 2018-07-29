@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.pethotel.HeavenForPets.domein.Pet.Plant;
 import org.pethotel.HeavenForPets.domein.Rooms.PetRoom;
 import org.pethotel.HeavenForPets.domein.Rooms.PlantRoom;
 import org.pethotel.HeavenForPets.domein.Rooms.Room;
@@ -228,4 +229,27 @@ public class RoomServiceImplTest{
 
     }
 
+    @Test
+    public void checkIfListOfRoomsWithTemperatureIsViewed() throws Exception{
+        Plant plant = new Plant();
+        int id = 1;
+        plant.setId(id);
+        plant.setMinTemperature(10);
+        plant.setMaxTemperature(20);
+
+        List<RoomEntity> roomEntityList = new ArrayList<>();
+        RoomEntity roomEntity = new RoomEntity();
+        roomEntity.setTemperature(15);
+        roomEntityList.add(roomEntity);
+
+        PlantRoom room = new PlantRoom();
+        room.setTemperature(15);
+
+        when(roomRepository.findAll()).thenReturn(roomEntityList);
+        when(roomMap.map(roomEntity)).thenReturn(room);
+
+        roomService.getAllRoomsInTheRangeForPlant(id);
+
+        verify(roomMap, times(1)).map(roomEntity);
+    }
 }

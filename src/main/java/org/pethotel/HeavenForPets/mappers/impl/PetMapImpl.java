@@ -44,6 +44,8 @@ public class PetMapImpl implements PetMap {
             ShelfEntity shelf = shelfService.findShelfById(shelfId);
             petEntity.setShelfEntity(shelf);
             petEntity.setToWater(((Plant) pet).getToWater());
+            petEntity.setMinTemperature(((Plant) pet).getMinTemperature());
+            petEntity.setMaxTemperature(((Plant) pet).getMaxTemperature());
         }
 
         petEntity.setName(pet.getName());
@@ -66,6 +68,8 @@ public class PetMapImpl implements PetMap {
             ShelfEntity shelf = shelfService.findShelfById(shelfId);
             petEntity.setShelfEntity(shelf);
             petEntity.setToWater(((Plant) pet).getToWater());
+            petEntity.setMinTemperature(((Plant) pet).getMinTemperature());
+            petEntity.setMaxTemperature(((Plant) pet).getMaxTemperature());
         }
 
         petEntity.setComment(pet.getComment());
@@ -90,6 +94,8 @@ public class PetMapImpl implements PetMap {
             pet = new Plant();
             ((Plant) pet).setShelf(e.getShelfEntity().getId());
             ((Plant) pet).setToWater(e.getToWater());
+            ((Plant) pet).setMinTemperature(e.getMinTemperature());
+            ((Plant) pet).setMaxTemperature(e.getMaxTemperature());
         }
 
         pet.setName(e.getName());
