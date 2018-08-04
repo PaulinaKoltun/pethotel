@@ -4,6 +4,7 @@ import org.pethotel.HeavenForPets.domein.Rooms.PetRoom;
 import org.pethotel.HeavenForPets.domein.Rooms.Room;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.pethotel.HeavenForPets.enums.PetType;
+import org.pethotel.HeavenForPets.exceptions.TemperatureWrongRangeException;
 import org.pethotel.HeavenForPets.repository.RoomRepository;
 import org.pethotel.HeavenForPets.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,5 +68,10 @@ public class RoomController {
     @DeleteMapping("/{roomNumber}")
     public void deleteRoom(@PathVariable int roomNumber){
         roomService.deleteRoom(roomNumber);
+    }
+
+    @GetMapping("/getAllRoomsInTheTemperatureRange/{id}")
+    public List<Room> getAllRoomsInTheRangeForPlant(@PathVariable int id) throws TemperatureWrongRangeException {
+        return roomService.getAllRoomsInTheRangeForPlant(id);
     }
 }

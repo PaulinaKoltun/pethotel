@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <changeSet id="180029072018" author="paulina">
+        <addColumn tableName="PET">
+            <column name="min_temperature" type="int(11)"></column>
+            <column name="max_temperature" type="int(11)"></column>
+        </addColumn>
+
+        <addColumn tableName="ROOM">
+            <column name="temperature" type="int(11)" defaultValue="15"></column>
+        </addColumn>
+
+    </changeSet>
+</databaseChangeLog>

@@ -1,10 +1,10 @@
 package org.pethotel.HeavenForPets.domein.Pet;
 
-import org.pethotel.HeavenForPets.domein.Shelf;
-
 public class Plant extends Pet{
     private long shelf;
     private int toWater;
+    private int minTemperature;
+    private int maxTemperature;
 
     public long getShelf() {
         return shelf;
@@ -22,6 +22,22 @@ public class Plant extends Pet{
         this.toWater = toWater;
     }
 
+    public int getMinTemperature() {
+        return minTemperature;
+    }
+
+    public void setMinTemperature(int minTemperature) {
+        this.minTemperature = minTemperature;
+    }
+
+    public int getMaxTemperature() {
+        return maxTemperature;
+    }
+
+    public void setMaxTemperature(int maxTemperature) {
+        this.maxTemperature = maxTemperature;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -31,7 +47,9 @@ public class Plant extends Pet{
         Plant plant = (Plant) o;
 
         if (shelf != plant.shelf) return false;
-        return toWater == plant.toWater;
+        if (toWater != plant.toWater) return false;
+        if (minTemperature != plant.minTemperature) return false;
+        return maxTemperature == plant.maxTemperature;
     }
 
     @Override
@@ -39,15 +57,18 @@ public class Plant extends Pet{
         int result = super.hashCode();
         result = 31 * result + (int) (shelf ^ (shelf >>> 32));
         result = 31 * result + toWater;
+        result = 31 * result + minTemperature;
+        result = 31 * result + maxTemperature;
         return result;
     }
 
     @Override
-
     public String toString() {
         return "Plant{" +
                 "shelf=" + shelf +
                 ", toWater=" + toWater +
+                ", minTemperature=" + minTemperature +
+                ", maxTemperature=" + maxTemperature +
                 '}';
     }
 }
