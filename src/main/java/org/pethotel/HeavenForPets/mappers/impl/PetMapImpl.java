@@ -46,6 +46,7 @@ public class PetMapImpl implements PetMap {
             petEntity.setToWater(((Plant) pet).getToWater());
             petEntity.setMinTemperature(((Plant) pet).getMinTemperature());
             petEntity.setMaxTemperature(((Plant) pet).getMaxTemperature());
+            petEntity.setPlantInsolation(((Plant) pet).getPlantInsolation());
         }
 
         petEntity.setName(pet.getName());
@@ -70,6 +71,7 @@ public class PetMapImpl implements PetMap {
             petEntity.setToWater(((Plant) pet).getToWater());
             petEntity.setMinTemperature(((Plant) pet).getMinTemperature());
             petEntity.setMaxTemperature(((Plant) pet).getMaxTemperature());
+            petEntity.setPlantInsolation(((Plant)pet).getPlantInsolation());
         }
 
         petEntity.setComment(pet.getComment());
@@ -96,6 +98,7 @@ public class PetMapImpl implements PetMap {
             ((Plant) pet).setToWater(e.getToWater());
             ((Plant) pet).setMinTemperature(e.getMinTemperature());
             ((Plant) pet).setMaxTemperature(e.getMaxTemperature());
+            ((Plant) pet).setPlantInsolation(e.getPlantInsolation());
         }
 
         pet.setName(e.getName());

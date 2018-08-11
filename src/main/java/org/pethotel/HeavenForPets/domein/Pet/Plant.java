@@ -1,10 +1,13 @@
 package org.pethotel.HeavenForPets.domein.Pet;
 
+import org.pethotel.HeavenForPets.enums.PlantInsolation;
+
 public class Plant extends Pet{
     private long shelf;
     private int toWater;
     private int minTemperature;
     private int maxTemperature;
+    private PlantInsolation plantInsolation;
 
     public long getShelf() {
         return shelf;
@@ -38,6 +41,14 @@ public class Plant extends Pet{
         this.maxTemperature = maxTemperature;
     }
 
+    public PlantInsolation getPlantInsolation() {
+        return plantInsolation;
+    }
+
+    public void setPlantInsolation(PlantInsolation plantInsolation) {
+        this.plantInsolation = plantInsolation;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -49,7 +60,8 @@ public class Plant extends Pet{
         if (shelf != plant.shelf) return false;
         if (toWater != plant.toWater) return false;
         if (minTemperature != plant.minTemperature) return false;
-        return maxTemperature == plant.maxTemperature;
+        if (maxTemperature != plant.maxTemperature) return false;
+        return plantInsolation == plant.plantInsolation;
     }
 
     @Override
@@ -59,6 +71,7 @@ public class Plant extends Pet{
         result = 31 * result + toWater;
         result = 31 * result + minTemperature;
         result = 31 * result + maxTemperature;
+        result = 31 * result + (plantInsolation != null ? plantInsolation.hashCode() : 0);
         return result;
     }
 
@@ -69,6 +82,7 @@ public class Plant extends Pet{
                 ", toWater=" + toWater +
                 ", minTemperature=" + minTemperature +
                 ", maxTemperature=" + maxTemperature +
+                ", plantInsolation=" + plantInsolation +
                 '}';
     }
 }

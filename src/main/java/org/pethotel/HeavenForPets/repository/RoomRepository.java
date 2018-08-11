@@ -1,5 +1,6 @@
 package org.pethotel.HeavenForPets.repository;
 
+import org.pethotel.HeavenForPets.domein.Rooms.Room;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,4 +34,7 @@ public interface RoomRepository extends PagingAndSortingRepository<RoomEntity, L
 
     @Query("SELECT e FROM RoomEntity e WHERE e.petType is null")
     List<RoomEntity> findAllPlantRooms();
+
+    @Query("SELECT e FROM RoomEntity e JOIN ShelfEntity a ")
+    List<RoomEntity> getAllRoomsWithProperShelves();
 }

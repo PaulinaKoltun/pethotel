@@ -1,8 +1,11 @@
 package org.pethotel.HeavenForPets.domein;
 
+import org.pethotel.HeavenForPets.enums.PlantInsolation;
+
 public class Shelf {
     private int number;
     private boolean free;
+    private PlantInsolation plantInsolation;
 
     public int getNumber() {
         return number;
@@ -20,6 +23,14 @@ public class Shelf {
         this.free = free;
     }
 
+    public PlantInsolation getPlantInsolation() {
+        return plantInsolation;
+    }
+
+    public void setPlantInsolation(PlantInsolation plantInsolation) {
+        this.plantInsolation = plantInsolation;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -28,13 +39,15 @@ public class Shelf {
         Shelf shelf = (Shelf) o;
 
         if (number != shelf.number) return false;
-        return free == shelf.free;
+        if (free != shelf.free) return false;
+        return plantInsolation == shelf.plantInsolation;
     }
 
     @Override
     public int hashCode() {
         int result = number;
         result = 31 * result + (free ? 1 : 0);
+        result = 31 * result + (plantInsolation != null ? plantInsolation.hashCode() : 0);
         return result;
     }
 
@@ -43,6 +56,9 @@ public class Shelf {
         return "Shelf{" +
                 "number=" + number +
                 ", free=" + free +
+                ", plantInsolation=" + plantInsolation +
                 '}';
     }
 }
+
+

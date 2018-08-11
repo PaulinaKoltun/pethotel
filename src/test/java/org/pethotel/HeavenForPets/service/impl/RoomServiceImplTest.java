@@ -155,7 +155,7 @@ public class RoomServiceImplTest{
 
         when(roomRepository.getRoomByNumber(roomNumber)).thenReturn(roomEntity);
 
-        roomService.findByRoomNumber(roomNumber);
+        roomService.getRoomByNumber(roomNumber);
 
         verify(roomRepository, times(1)).getRoomByNumber(roomNumber);
     }

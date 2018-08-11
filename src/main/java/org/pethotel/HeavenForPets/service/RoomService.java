@@ -19,7 +19,7 @@ public interface RoomService {
     void saveRoomEntity(RoomEntity roomEntity);
     List<Long> getAllNumbers();
     List getAllRooms(String type, Pageable pageable);
-    RoomEntity findByRoomNumber(int roomNumber);
+    RoomEntity findById(int id);
     void deleteRoom(int roomNumber);
     void updateRoom(PetRoom room);
     List<Room> getAllRoomsByType(String petType);
@@ -28,4 +28,5 @@ public interface RoomService {
     RoomEntity getRoomByNumber(long number);
     int getNumberOfRoomsFromQuery();
     List<Room> getAllRoomsInTheRangeForPlant(int id) throws TemperatureWrongRangeException;
+    List<RoomEntity> getAllPlantRooms();
 }

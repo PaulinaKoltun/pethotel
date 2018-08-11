@@ -99,14 +99,16 @@ public class RoomServiceImpl implements RoomService {
     public List<Room> getAllRooms(String type, Pageable pageable) {
         Page<RoomEntity> roomEntityList;
 
-        if (RoomType.PLANT.getStringType().equals(type.toLowerCase())) {
-            roomEntityList = roomRepository.findAllPlantRooms(pageable);
-        } else if (RoomType.PET.getStringType().equals(type.toLowerCase())){
-            roomEntityList = roomRepository.findAllPetRooms(pageable);
-        } else {
-            LOGGER.info("Wrong type");
-            return Collections.EMPTY_LIST;
-        }
+//        if (RoomType.PLANT.getStringType().equals(type.toLowerCase())) {
+//            roomEntityList = roomRepository.findAllPlantRooms(pageable);
+//        } else if (RoomType.PET.getStringType().equals(type.toLowerCase())){
+//            roomEntityList = roomRepository.findAllPetRooms(pageable);
+//        } else {
+//            LOGGER.info("Wrong type");
+//            return Collections.EMPTY_LIST;
+//        }
+
+        roomEntityList = roomRepository.findAllPlantRooms(pageable);
 
         return roomEntityList.getContent().stream()
                 .map(r -> roomMap.map(r))
@@ -114,8 +116,8 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public RoomEntity findByRoomNumber(int roomNumber) {
-        return roomRepository.getRoomByNumber(roomNumber);
+    public RoomEntity findById(int id) {
+        return roomRepository.findOne((long) id);
 
     }
 
@@ -194,7 +196,7 @@ public class RoomServiceImpl implements RoomService {
             throw new TemperatureWrongRangeException();
         }
 
-        List<RoomEntity> roomEntityList = roomRepository.findAllPlantRooms();
+        List<RoomEntity> roomEntityList = getAllPlantRooms();
         List<Room> rooms = new ArrayList<>();
 
         for (RoomEntity roomEntity : roomEntityList) {
@@ -204,5 +206,10 @@ public class RoomServiceImpl implements RoomService {
             }
         }
         return rooms;
+    }
+
+    @Override
+    public List<RoomEntity> getAllPlantRooms(){
+        return roomRepository.findAllPlantRooms();
     }
 }

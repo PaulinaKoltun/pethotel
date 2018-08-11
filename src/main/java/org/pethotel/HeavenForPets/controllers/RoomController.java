@@ -52,7 +52,7 @@ public class RoomController {
 
     @GetMapping("/findByRoomNumber/{roomNumber}")
     public RoomEntity findByRoomNumber(@PathVariable int roomNumber) {
-        return roomService.findByRoomNumber(roomNumber);
+        return roomService.getRoomByNumber(roomNumber);
     }
 
     @GetMapping("/freePlacesForPetType")

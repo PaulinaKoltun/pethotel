@@ -2,6 +2,7 @@ package org.pethotel.HeavenForPets.entity;
 
 import org.hibernate.annotations.CollectionId;
 import org.pethotel.HeavenForPets.enums.PetType;
+import org.pethotel.HeavenForPets.enums.PlantInsolation;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -63,6 +64,9 @@ public class PetEntity {
 
     @Column(name = "max_temperature")
     private  int maxTemperature;
+
+    @Column(name = "plant_insolation")
+    private PlantInsolation plantInsolation;
 
     public PetEntity() {
     }
@@ -180,6 +184,14 @@ public class PetEntity {
         this.maxTemperature = maxTemperature;
     }
 
+    public PlantInsolation getPlantInsolation() {
+        return plantInsolation;
+    }
+
+    public void setPlantInsolation(PlantInsolation plantInsolation) {
+        this.plantInsolation = plantInsolation;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -201,7 +213,8 @@ public class PetEntity {
         if (breakfast != null ? !breakfast.equals(petEntity.breakfast) : petEntity.breakfast != null) return false;
         if (dinner != null ? !dinner.equals(petEntity.dinner) : petEntity.dinner != null) return false;
         if (supper != null ? !supper.equals(petEntity.supper) : petEntity.supper != null) return false;
-        return present != null ? present.equals(petEntity.present) : petEntity.present == null;
+        if (present != null ? !present.equals(petEntity.present) : petEntity.present != null) return false;
+        return plantInsolation == petEntity.plantInsolation;
     }
 
     @Override
@@ -220,6 +233,7 @@ public class PetEntity {
         result = 31 * result + (present != null ? present.hashCode() : 0);
         result = 31 * result + minTemperature;
         result = 31 * result + maxTemperature;
+        result = 31 * result + (plantInsolation != null ? plantInsolation.hashCode() : 0);
         return result;
     }
 
@@ -240,6 +254,7 @@ public class PetEntity {
                 ", present=" + present +
                 ", minTemperature=" + minTemperature +
                 ", maxTemperature=" + maxTemperature +
+                ", plantInsolation=" + plantInsolation +
                 '}';
     }
 
