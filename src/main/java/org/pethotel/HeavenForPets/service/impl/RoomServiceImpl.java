@@ -3,8 +3,6 @@ package org.pethotel.HeavenForPets.service.impl;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.pethotel.HeavenForPets.domein.Pet.Pet;
-import org.pethotel.HeavenForPets.domein.Pet.Plant;
 import org.pethotel.HeavenForPets.domein.Rooms.PetRoom;
 import org.pethotel.HeavenForPets.domein.Rooms.PlantRoom;
 import org.pethotel.HeavenForPets.domein.Rooms.Room;
@@ -165,9 +163,15 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public int getNumberOfRooms() {
-        List<RoomEntity> roomEntityList = (List<RoomEntity>) roomRepository.findAll();
-        return roomEntityList.size();
+    public int getNumberOfRooms(String type) {
+        if (RoomType.PLANT.getStringType().equals(type.toLowerCase())) {
+            return roomRepository.countNumbersOfPlantRooms();
+        } else if (RoomType.PET.getStringType().equals(type.toLowerCase())){
+            return roomRepository.countNumbersOfPetRooms();
+        } else {
+            LOGGER.info("Wrong type");
+            return 0;
+        }
     }
 
     private boolean isProperRoomType(String petType, RoomEntity roomEntity) {
@@ -207,6 +211,9 @@ public class RoomServiceImpl implements RoomService {
         }
         return rooms;
     }
+
+
+
 
     @Override
     public List<RoomEntity> getAllPlantRooms(){

@@ -41,7 +41,7 @@ public class ShelfMapImpl implements ShelfMap {
     @Override
     public List<Shelf> mapToDto(List<ShelfEntity> shelfEntities) {
         List<Shelf> shelves = new ArrayList<>();
-        for (ShelfEntity shelfEntity : shelfEntities) {
+        for (ShelfEntity shelfEntity: shelfEntities) {
             Shelf shelf = map(shelfEntity);
             shelves.add(shelf);
         }

@@ -30,9 +30,9 @@ public class RoomController {
         roomService.saveRoom(room);
     }
 
-    @GetMapping("/getNumberOfRooms")
-    public int getNumberOfRooms(){
-        return roomService.getNumberOfRooms();
+    @GetMapping("/getNumberOfRooms/{type}")
+    public int getNumberOfRooms(@PathVariable String type){
+        return roomService.getNumberOfRooms(type);
     }
 
     @GetMapping("/getNumberOfRoomsFromQuery")

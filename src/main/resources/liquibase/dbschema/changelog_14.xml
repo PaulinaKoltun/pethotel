@@ -7,11 +7,11 @@
 
     <changeSet id="110820181400" author="paulina">
         <addColumn tableName="SHELF">
-            <column name="plant_insolation" type="varchar(20)" defaultValue="medium"></column>
+            <column name="plant_insolation" type="varchar(20)" defaultValue="MEDIUM"></column>
         </addColumn>
 
         <addColumn tableName="PET">
-            <column name="plant_insolation" type="varchar(20)" defaultValue="medium"></column>
+            <column name="plant_insolation" type="varchar(20)" defaultValue="MEDIUM"></column>
         </addColumn>
     </changeSet>
 </databaseChangeLog>

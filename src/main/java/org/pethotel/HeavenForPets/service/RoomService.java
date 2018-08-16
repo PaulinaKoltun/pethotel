@@ -1,6 +1,5 @@
 package org.pethotel.HeavenForPets.service;
 
-import org.pethotel.HeavenForPets.domein.Pet.Plant;
 import org.pethotel.HeavenForPets.domein.Rooms.PetRoom;
 import org.pethotel.HeavenForPets.domein.Rooms.Room;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
@@ -24,7 +23,7 @@ public interface RoomService {
     void updateRoom(PetRoom room);
     List<Room> getAllRoomsByType(String petType);
     Map<PetType, Integer> freePlacesForPetType();
-    int getNumberOfRooms();
+    int getNumberOfRooms(String type);
     RoomEntity getRoomByNumber(long number);
     int getNumberOfRoomsFromQuery();
     List<Room> getAllRoomsInTheRangeForPlant(int id) throws TemperatureWrongRangeException;

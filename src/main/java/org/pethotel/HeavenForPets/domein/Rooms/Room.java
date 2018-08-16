@@ -11,7 +11,7 @@ import java.math.BigDecimal;
  * Created by Paulina on 2017-10-07.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "orgin")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = PlantRoom.class, name = "PlantRoom"),
 

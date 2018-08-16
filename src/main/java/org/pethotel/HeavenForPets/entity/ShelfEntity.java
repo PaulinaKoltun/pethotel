@@ -17,6 +17,7 @@ public class ShelfEntity {
     @Column(name = "free")
     private boolean free;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "plant_insolation")
     private PlantInsolation plantInsolation;
 

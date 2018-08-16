@@ -1,5 +1,6 @@
 package org.pethotel.HeavenForPets.repository;
 
+import org.pethotel.HeavenForPets.domein.Owner;
 import org.pethotel.HeavenForPets.entity.AddressEntity;
 import org.pethotel.HeavenForPets.entity.OwnerEntity;
 import org.springframework.data.jpa.repository.Query;
