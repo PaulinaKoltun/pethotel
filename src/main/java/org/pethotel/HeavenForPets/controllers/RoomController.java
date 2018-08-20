@@ -55,6 +55,7 @@ public class RoomController {
         return roomService.getRoomByNumber(roomNumber);
     }
 
+    
     @GetMapping("/freePlacesForPetType")
     public Map<PetType,Integer> freePlacesForPetType(){
         return roomService.freePlacesForPetType();
