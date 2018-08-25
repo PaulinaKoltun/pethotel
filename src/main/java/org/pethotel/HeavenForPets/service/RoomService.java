@@ -4,6 +4,7 @@ import org.pethotel.HeavenForPets.domein.Rooms.PetRoom;
 import org.pethotel.HeavenForPets.domein.Rooms.Room;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.pethotel.HeavenForPets.enums.PetType;
+import org.pethotel.HeavenForPets.enums.PlantInsolation;
 import org.pethotel.HeavenForPets.exceptions.TemperatureWrongRangeException;
 import org.springframework.data.domain.Pageable;
 
@@ -27,5 +28,8 @@ public interface RoomService {
     RoomEntity getRoomByNumber(long number);
     int getNumberOfRoomsFromQuery();
     List<Room> getAllRoomsInTheRangeForPlant(int id) throws TemperatureWrongRangeException;
+
+    List<Room> getAllRoomsWithProperShelves(int id);
+
     List<RoomEntity> getAllPlantRooms();
 }

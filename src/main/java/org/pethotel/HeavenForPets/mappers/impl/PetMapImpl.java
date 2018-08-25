@@ -107,7 +107,7 @@ public class PetMapImpl implements PetMap {
         pet.setDateOut(e.getDateOut());
 
         RoomEntity roomEntity = e.getRoomEntity();
-        pet.setRoomNumber(roomEntity != null ? roomEntity.getRoomNumber() : 0);
+        pet.setRoomNumber(roomEntity != null ? (int) roomEntity.getRoomNumber() : 0);
 
         return pet;
     }

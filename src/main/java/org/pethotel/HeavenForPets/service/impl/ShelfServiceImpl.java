@@ -66,7 +66,7 @@ public class ShelfServiceImpl implements ShelfService {
     public List<Shelf> getFreeShelvesForPlant(int id) throws TemperatureWrongRangeException {
         PetEntity petEntity = petService.getPetById((long) id);
         PlantInsolation plantInsolation = petEntity.getPlantInsolation();
-        List<Room> roomList = roomService.getAllRoomsInTheRangeForPlant(id);
+        List<Room> roomList = roomService.getAllRoomsWithProperShelves(id);
         List<Shelf> properShelves = new ArrayList<>();
 
         for (Room room : roomList) {

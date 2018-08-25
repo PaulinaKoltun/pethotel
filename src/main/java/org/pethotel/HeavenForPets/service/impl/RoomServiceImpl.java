@@ -11,6 +11,7 @@ import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.pethotel.HeavenForPets.entity.RoomEntityBuilder;
 import org.pethotel.HeavenForPets.entity.ShelfEntity;
 import org.pethotel.HeavenForPets.enums.PetType;
+import org.pethotel.HeavenForPets.enums.PlantInsolation;
 import org.pethotel.HeavenForPets.enums.RoomType;
 import org.pethotel.HeavenForPets.exceptions.TemperatureWrongRangeException;
 import org.pethotel.HeavenForPets.mappers.RoomMap;
@@ -212,7 +213,18 @@ public class RoomServiceImpl implements RoomService {
         return rooms;
     }
 
+    @Override
+    public List<Room> getAllRoomsWithProperShelves(int id){
+        PetEntity petEntity = petService.getPetById((long) id);
 
+        List<RoomEntity> roomEntityList = roomRepository.getAllRoomsWithProperShelves(petEntity.getPlantInsolation(), petEntity.getMinTemperature(), petEntity.getMaxTemperature());
+        List<Room> rooms = new ArrayList<>();
+
+        for (RoomEntity roomEntity : roomEntityList) {
+            rooms.add(roomMap.map(roomEntity));
+        }
+        return rooms;
+    }
 
 
     @Override

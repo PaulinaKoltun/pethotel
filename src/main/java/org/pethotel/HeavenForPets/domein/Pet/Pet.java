@@ -21,7 +21,7 @@ public abstract class Pet implements Serializable {
     private long id;
     private String name;
     private String comment;
-    private long roomNumber;
+    private int roomNumber;
     private Date dateIn;
     private Date dateOut;
 
@@ -35,11 +35,11 @@ public abstract class Pet implements Serializable {
         this.id = id;
     }
 
-    public long getRoomNumber() {
+    public int getRoomNumber() {
         return roomNumber;
     }
 
-    public void setRoomNumber(long roomNumber) {
+    public void setRoomNumber(int roomNumber) {
         this.roomNumber = roomNumber;
     }
 

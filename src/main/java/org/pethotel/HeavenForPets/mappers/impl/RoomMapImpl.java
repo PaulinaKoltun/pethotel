@@ -35,7 +35,7 @@ public class RoomMapImpl implements RoomMap {
         }
         room.setFreePlaces(roomEntity.getFreePlaces());
         room.setNumberOfPlaces(roomEntity.getNumberOfPlaces());
-        room.setRoomNumber(roomEntity.getRoomNumber());
+        room.setRoomNumber((int) roomEntity.getRoomNumber());
         room.setPrice(roomEntity.getPrice());
         return room;
     }
