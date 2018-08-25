@@ -135,12 +135,18 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public List<Room> getAllRoomsByType(String petType) {
-        List<RoomEntity> roomEntityList = (List<RoomEntity>) roomRepository.findAll();
+        List<RoomEntity> roomEntityList = roomRepository.findAllPetRooms();
 
-        return roomEntityList.stream()
+        if ("ALL".equals(petType.toUpperCase())){
+            return roomEntityList.stream()
+                .map(r -> roomMap.map(r))
+                .collect(Collectors.toList());
+        }else{
+            return roomEntityList.stream()
                 .filter(r -> isProperRoomType(petType, r))
                 .map(r -> roomMap.map(r))
                 .collect(Collectors.toList());
+         }
     }
 
     @Override
@@ -174,10 +180,14 @@ public class RoomServiceImpl implements RoomService {
     }
 
     private boolean isProperRoomType(String petType, RoomEntity roomEntity) {
-        return roomEntity.getPetType().getShortType().equals(petType)
+        if (roomEntity.getPetType() == null){
+            return false;
+        }else{
+            return roomEntity.getPetType().getShortType().equals(petType)
                 || roomEntity.getPetType().name().equals(petType)
                 || (StringUtils.isNumeric(petType)
                     && roomEntity.getPetType().getNumberType() == Integer.valueOf(petType));
+        }
     }
 
     @Override
