@@ -98,16 +98,14 @@ public class RoomServiceImpl implements RoomService {
     public List<Room> getAllRooms(String type, Pageable pageable) {
         Page<RoomEntity> roomEntityList;
 
-//        if (RoomType.PLANT.getStringType().equals(type.toLowerCase())) {
-//            roomEntityList = roomRepository.findAllPlantRooms(pageable);
-//        } else if (RoomType.PET.getStringType().equals(type.toLowerCase())){
-//            roomEntityList = roomRepository.findAllPetRooms(pageable);
-//        } else {
-//            LOGGER.info("Wrong type");
-//            return Collections.EMPTY_LIST;
-//        }
-
-        roomEntityList = roomRepository.findAllPlantRooms(pageable);
+        if (RoomType.PLANT.getStringType().equals(type.toLowerCase())) {
+            roomEntityList = roomRepository.findAllPlantRooms(pageable);
+        } else if (RoomType.PET.getStringType().equals(type.toLowerCase())){
+            roomEntityList = roomRepository.findAllPetRooms(pageable);
+        } else {
+            LOGGER.info("Wrong type");
+            return Collections.EMPTY_LIST;
+        }
 
         return roomEntityList.getContent().stream()
                 .map(r -> roomMap.map(r))
