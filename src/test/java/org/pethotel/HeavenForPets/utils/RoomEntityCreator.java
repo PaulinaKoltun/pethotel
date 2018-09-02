@@ -28,4 +28,15 @@ public class RoomEntityCreator {
 
         return roomEntityList;
     }
+
+    public static List<RoomEntity> prepareRoomEntityListWithTemperature20() {
+        RoomEntity roomEntity = new RoomEntity();
+        roomEntity.setTemperature(TEMPERATURE_20);
+        roomEntity.setShelfEntities(Collections.singletonList(new ShelfEntity()));
+
+        List<RoomEntity> roomEntityList = new ArrayList<>();
+        roomEntityList.add(roomEntity);
+
+        return roomEntityList;
+    }
 }

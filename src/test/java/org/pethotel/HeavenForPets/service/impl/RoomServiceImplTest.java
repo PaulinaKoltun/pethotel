@@ -31,6 +31,7 @@ import java.util.*;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.pethotel.HeavenForPets.utils.RoomEntityCreator.prepareRoomEntityListWithTemperature15;
+import static org.pethotel.HeavenForPets.utils.RoomEntityCreator.prepareRoomEntityListWithTemperature20;
 
 @RunWith(MockitoJUnitRunner.class)
 
@@ -289,43 +290,41 @@ public class RoomServiceImplTest{
         return roomEntityList.get(0);
     }
 
-//    @Test
-//    public void checkIftemperatureWrongRangeExceptionIsThrown() throws Exception{
-//        expectedException.expect(TemperatureWrongRangeException.class);
-//
-//        RoomEntity roomEntity = new RoomEntity();
-//        List<RoomEntity> roomEntityList = new ArrayList<>();
-//        prepareRoomEntityList(roomEntity, roomEntityList, TEMPERATURE_15);
-//
-//        PlantRoom room = new PlantRoom();
-//
-//        PetEntity petEntity = preparePetEntity(TEMPERATURE_20, TEMPERATURE_10);
-//
-//        when(petService.getPetById((long) ONE)).thenReturn(petEntity);
-//        when(roomRepository.findAllPlantRooms()).thenReturn(roomEntityList);
-//        when(roomMap.map(roomEntity)).thenReturn(room);
-//
-//        roomService.getAllRoomsInTheRangeForPlant(ONE);
-//
-//    }
+    @Test
+    public void checkIftemperatureWrongRangeExceptionIsThrown() throws Exception{
+        expectedException.expect(TemperatureWrongRangeException.class);
 
-//    @Test
-//    public void checkIfOneRoomIsReturnForStableTemperature() throws Exception{
-//        RoomEntity roomEntity = new RoomEntity();
-//        List<RoomEntity> roomEntityList = new ArrayList<>();
-//        prepareRoomEntityList(roomEntity, roomEntityList, TEMPERATURE_20);
-//
-//        PlantRoom room = new PlantRoom();
-//
-//        PetEntity petEntity = preparePetEntity(TEMPERATURE_20, TEMPERATURE_20);
-//
-//        when(petService.getPetById((long) ONE)).thenReturn(petEntity);
-//        when(roomRepository.findAllPlantRooms()).thenReturn(roomEntityList);
-//        when(roomMap.map(roomEntity)).thenReturn(room);
-//
-//        List<Room> roomList = roomService.getAllRoomsInTheRangeForPlant(ONE);
-//        assertEquals(ONE, roomList.size());
-//    }
+        RoomEntity roomEntity = new RoomEntity();
+        List<RoomEntity> roomEntityList = prepareRoomEntityListWithTemperature15();
+
+        PlantRoom room = new PlantRoom();
+
+        PetEntity petEntity = preparePetEntity(TEMPERATURE_20, TEMPERATURE_10);
+
+        when(petService.getPetById((long) ONE)).thenReturn(petEntity);
+        when(roomRepository.findAllPlantRooms()).thenReturn(roomEntityList);
+        when(roomMap.map(roomEntity)).thenReturn(room);
+
+        roomService.getAllRoomsInTheRangeForPlant(ONE);
+
+    }
+
+    @Test
+    public void checkIfOneRoomIsReturnForStableTemperature() throws Exception{
+        RoomEntity roomEntity = new RoomEntity();
+        List<RoomEntity> roomEntityList = prepareRoomEntityListWithTemperature20();
+
+        PlantRoom room = new PlantRoom();
+
+        PetEntity petEntity = preparePetEntity(TEMPERATURE_20, TEMPERATURE_20);
+
+        when(petService.getPetById((long) ONE)).thenReturn(petEntity);
+        when(roomRepository.findAllPlantRooms()).thenReturn(roomEntityList);
+        when(roomMap.map(roomEntity)).thenReturn(room);
+
+        List<Room> roomList = roomService.getAllRoomsInTheRangeForPlant(ONE);
+        assertEquals(ONE, roomList.size());
+    }
 
     private PetEntity preparePetEntity(int min, int max) {
         PetEntity petEntity = new PetEntity();

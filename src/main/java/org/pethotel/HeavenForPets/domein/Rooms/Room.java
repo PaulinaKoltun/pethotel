@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 
         @JsonSubTypes.Type(value = PetRoom.class, name = "PetRoom") }
 )
-public abstract class Room implements Serializable {
+public class Room implements Serializable {
     private int roomNumber;
     private int numberOfPlaces;
     private int freePlaces;

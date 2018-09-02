@@ -1,5 +1,6 @@
 package org.pethotel.HeavenForPets.service.impl;
 
+import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -192,7 +193,9 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<Room> getAllRoomsInTheRangeForPlant(int id) throws TemperatureWrongRangeException {
+    public List<Room> getAllRoomsInTheRangeForPlant(int id)
+            throws TemperatureWrongRangeException {
+
         PetEntity petEntity = petService.getPetById((long) id);
 
         if (petEntity.getMaxTemperature() < petEntity.getMinTemperature()){
@@ -212,10 +215,15 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<Room> getAllRoomsWithProperShelves(int id){
+    public List<Room> getAllRoomsWithProperShelves(int id) {
         PetEntity petEntity = petService.getPetById((long) id);
 
-        List<RoomEntity> roomEntityList = roomRepository.getAllRoomsWithProperShelves(petEntity.getPlantInsolation(), petEntity.getMinTemperature(), petEntity.getMaxTemperature());
+        List<RoomEntity> roomEntityList =
+                roomRepository.getAllRoomsWithProperShelves(
+                        petEntity.getPlantInsolation(),
+                        petEntity.getMinTemperature(),
+                        petEntity.getMaxTemperature()
+                );
         List<Room> rooms = new ArrayList<>();
 
         for (RoomEntity roomEntity : roomEntityList) {

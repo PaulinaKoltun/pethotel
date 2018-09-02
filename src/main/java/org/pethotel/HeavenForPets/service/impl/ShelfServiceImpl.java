@@ -77,19 +77,6 @@ public class ShelfServiceImpl implements ShelfService {
                 }
             }
         }
-
-
-//        RoomEntity roomEntity = roomService.findById(id);
-//        List<ShelfEntity> shelfEntities = roomEntity.getShelfEntities();
-//        List<Shelf> shelves = new ArrayList<>();
-//
-//        for (ShelfEntity shelfEntity : shelfEntities) {
-//            if (shelfEntity.isFree() && plantInsolation.equals(shelfEntity.getPlantInsolation())){
-//                Shelf shelf = shelfMap.map(shelfEntity);
-//                shelves.add(shelf);
-//            }
-//        }
-
         return properShelves;
     }
 
