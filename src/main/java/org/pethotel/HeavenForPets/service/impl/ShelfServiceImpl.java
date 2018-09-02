@@ -1,10 +1,17 @@
 package org.pethotel.HeavenForPets.service.impl;
 
+import org.pethotel.HeavenForPets.domein.Pet.Plant;
+import org.pethotel.HeavenForPets.domein.Rooms.PlantRoom;
+import org.pethotel.HeavenForPets.domein.Rooms.Room;
 import org.pethotel.HeavenForPets.domein.Shelf;
+import org.pethotel.HeavenForPets.entity.PetEntity;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.pethotel.HeavenForPets.entity.ShelfEntity;
+import org.pethotel.HeavenForPets.enums.PlantInsolation;
+import org.pethotel.HeavenForPets.exceptions.TemperatureWrongRangeException;
 import org.pethotel.HeavenForPets.mappers.ShelfMap;
 import org.pethotel.HeavenForPets.repository.ShelfRepository;
+import org.pethotel.HeavenForPets.service.PetService;
 import org.pethotel.HeavenForPets.service.RoomService;
 import org.pethotel.HeavenForPets.service.ShelfService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +28,9 @@ public class ShelfServiceImpl implements ShelfService {
 
     @Autowired
     private RoomService roomService;
+
+    @Autowired
+    private PetService petService;
 
     @Autowired
     private ShelfRepository shelfRepository;
@@ -53,19 +63,21 @@ public class ShelfServiceImpl implements ShelfService {
     }
 
     @Override
-    public List<Shelf> getFreeShelves(int id) {
-        RoomEntity roomEntity = roomService.getRoomByNumber(id);
-        List<ShelfEntity> shelfEntities = roomEntity.getShelfEntities();
-        List<Shelf> shelves = new ArrayList<>();
+    public List<Shelf> getFreeShelvesForPlant(int id) throws TemperatureWrongRangeException {
+        PetEntity petEntity = petService.getPetById((long) id);
+        PlantInsolation plantInsolation = petEntity.getPlantInsolation();
+        List<Room> roomList = roomService.getAllRoomsWithProperShelves(id);
+        List<Shelf> properShelves = new ArrayList<>();
 
-        for (ShelfEntity shelfEntity : shelfEntities) {
-            if (shelfEntity.isFree()){
-                Shelf shelf = shelfMap.map(shelfEntity);
-                shelves.add(shelf);
+        for (Room room : roomList) {
+            List<Shelf> shelves = ((PlantRoom) room).getPlantShelves();
+            for (Shelf shelf : shelves) {
+                if (shelf.isFree() && plantInsolation.equals(shelf.getPlantInsolation())){
+                    properShelves.add(shelf);
+                }
             }
         }
-
-        return shelves;
+        return properShelves;
     }
 
     @Override

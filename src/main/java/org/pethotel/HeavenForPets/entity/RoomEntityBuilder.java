@@ -15,6 +15,7 @@ public final class RoomEntityBuilder {
     private PetType petType;
     private BigDecimal price;
     private List<ShelfEntity> shelfEntities;
+    private int temperature;
 
     private RoomEntityBuilder() {
     }
@@ -46,8 +47,14 @@ public final class RoomEntityBuilder {
                 .withFreePlaces(room.getFreePlaces())
                 .withNumberOfPlaces(room.getNumberOfPlaces())
                 .withPrice(room.getPrice())
+                .withTemperature(room.getTemperature())
                 .withShelfEntities(shelfEntities)
                 .build();
+    }
+
+    public RoomEntityBuilder withTemperature(int temperature) {
+        this.temperature = temperature;
+        return this;
     }
 
     public static RoomEntityBuilder aRoomEntity() {
@@ -91,6 +98,7 @@ public final class RoomEntityBuilder {
         roomEntity.setFreePlaces(freePlaces);
         roomEntity.setPetType(petType);
         roomEntity.setPrice(price);
+        roomEntity.setTemperature(temperature);
         roomEntity.setShelfEntities(shelfEntities);
         return roomEntity;
     }

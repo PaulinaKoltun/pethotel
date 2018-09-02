@@ -30,9 +30,9 @@ public class RoomController {
         roomService.saveRoom(room);
     }
 
-    @GetMapping("/getNumberOfRooms")
-    public int getNumberOfRooms(){
-        return roomService.getNumberOfRooms();
+    @GetMapping("/getNumberOfRooms/{type}")
+    public int getNumberOfRooms(@PathVariable String type){
+        return roomService.getNumberOfRooms(type);
     }
 
     @GetMapping("/getNumberOfRoomsFromQuery")
@@ -52,8 +52,9 @@ public class RoomController {
 
     @GetMapping("/findByRoomNumber/{roomNumber}")
     public RoomEntity findByRoomNumber(@PathVariable int roomNumber) {
-        return roomService.findByRoomNumber(roomNumber);
+        return roomService.getRoomByNumber(roomNumber);
     }
+
 
     @GetMapping("/freePlacesForPetType")
     public Map<PetType,Integer> freePlacesForPetType(){
@@ -70,8 +71,8 @@ public class RoomController {
         roomService.deleteRoom(roomNumber);
     }
 
-    @GetMapping("/getAllRoomsInTheTemperatureRange/{id}")
-    public List<Room> getAllRoomsInTheRangeForPlant(@PathVariable int id) throws TemperatureWrongRangeException {
-        return roomService.getAllRoomsInTheRangeForPlant(id);
+    @GetMapping("/getAllRoomsWithProperShelves/{id}")
+    public List<Room> getAllRoomsWithProperShelves(@PathVariable int id) throws TemperatureWrongRangeException {
+        return roomService.getAllRoomsWithProperShelves(id);
     }
 }

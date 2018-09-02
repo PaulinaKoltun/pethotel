@@ -3,6 +3,7 @@ package org.pethotel.HeavenForPets.controllers;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.pethotel.HeavenForPets.domein.Shelf;
+import org.pethotel.HeavenForPets.exceptions.TemperatureWrongRangeException;
 import org.pethotel.HeavenForPets.service.ShelfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,8 +32,8 @@ public class ShelfController {
         return shelfService.getShelvesFromRoom(id);
     }
 
-    @GetMapping("/getFreeShelvesInRoom/{id}")
-    public List<Shelf> getFreeShelves(@PathVariable int id){
-        return shelfService.getFreeShelves(id);
+    @GetMapping("/getFreeShelvesForPlant/{id}")
+    public List<Shelf> getFreeShelvesForPlant(@PathVariable int id) throws TemperatureWrongRangeException {
+        return shelfService.getFreeShelvesForPlant(id);
     }
 }

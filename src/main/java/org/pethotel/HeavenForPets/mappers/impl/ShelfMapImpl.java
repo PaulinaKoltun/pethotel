@@ -15,6 +15,7 @@ public class ShelfMapImpl implements ShelfMap {
         ShelfEntity shelfEntity = new ShelfEntity();
         shelfEntity.setNumber(shelf.getNumber());
         shelfEntity.setFree(shelf.isFree());
+        shelfEntity.setPlantInsolation(shelf.getPlantInsolation());
         return shelfEntity;
     }
 
@@ -23,6 +24,7 @@ public class ShelfMapImpl implements ShelfMap {
         Shelf shelf = new Shelf();
         shelf.setFree(shelfEntity.isFree());
         shelf.setNumber(shelfEntity.getNumber());
+        shelf.setPlantInsolation(shelfEntity.getPlantInsolation());
         return shelf;
     }
 
@@ -39,7 +41,7 @@ public class ShelfMapImpl implements ShelfMap {
     @Override
     public List<Shelf> mapToDto(List<ShelfEntity> shelfEntities) {
         List<Shelf> shelves = new ArrayList<>();
-        for (ShelfEntity shelfEntity : shelfEntities) {
+        for (ShelfEntity shelfEntity: shelfEntities) {
             Shelf shelf = map(shelfEntity);
             shelves.add(shelf);
         }

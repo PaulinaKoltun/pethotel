@@ -1,6 +1,7 @@
 package org.pethotel.HeavenForPets.repository;
 
 import org.pethotel.HeavenForPets.entity.RoomEntity;
+import org.pethotel.HeavenForPets.enums.PlantInsolation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -33,4 +34,22 @@ public interface RoomRepository extends PagingAndSortingRepository<RoomEntity, L
 
     @Query("SELECT e FROM RoomEntity e WHERE e.petType is null")
     List<RoomEntity> findAllPlantRooms();
+
+    @Query("SELECT e FROM RoomEntity e WHERE e.petType is not null")
+    List<RoomEntity> findAllPetRooms();
+
+    @Query("SELECT count(e) FROM RoomEntity e WHERE e.petType is not null")
+    int countNumbersOfPetRooms();
+
+    @Query("SELECT count(e) FROM RoomEntity e WHERE e.petType is null")
+    int countNumbersOfPlantRooms();
+
+    @Query("SELECT e FROM RoomEntity e JOIN e.shelfEntities se " +
+            "where se.plantInsolation = :plantInsolation " +
+            "and se.free = '1' " +
+            "and (e.temperature between :minTemp and :maxTemp)")
+    List<RoomEntity> getAllRoomsWithProperShelves(
+            @Param ("plantInsolation") PlantInsolation plantInsolation,
+            @Param ("minTemp") int minTemp,
+            @Param ("maxTemp") int maxTemp);
 }

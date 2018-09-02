@@ -14,6 +14,7 @@ import org.pethotel.HeavenForPets.entity.PetEntity;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.pethotel.HeavenForPets.entity.ShelfEntity;
 import org.pethotel.HeavenForPets.enums.PetType;
+import org.pethotel.HeavenForPets.enums.PlantInsolation;
 import org.pethotel.HeavenForPets.exceptions.TemperatureWrongRangeException;
 import org.pethotel.HeavenForPets.mappers.RoomMap;
 import org.pethotel.HeavenForPets.mappers.ShelfMap;
@@ -29,6 +30,8 @@ import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
+import static org.pethotel.HeavenForPets.utils.RoomEntityCreator.prepareRoomEntityListWithTemperature15;
+import static org.pethotel.HeavenForPets.utils.RoomEntityCreator.prepareRoomEntityListWithTemperature20;
 
 @RunWith(MockitoJUnitRunner.class)
 
@@ -155,7 +158,7 @@ public class RoomServiceImplTest{
 
         when(roomRepository.getRoomByNumber(roomNumber)).thenReturn(roomEntity);
 
-        roomService.findByRoomNumber(roomNumber);
+        roomService.getRoomByNumber(roomNumber);
 
         verify(roomRepository, times(1)).getRoomByNumber(roomNumber);
     }
@@ -220,15 +223,37 @@ public class RoomServiceImplTest{
     }
 
     @Test
-    public void checkNumberOfRooms() throws Exception{
+    public void checkNumberOfRoomsForPlantRooms() throws Exception{
         List<RoomEntity> roomEntityList = new ArrayList<>();
-
+        String type = "plant";
         when(roomRepository.findAll()).thenReturn(roomEntityList);
 
-        roomService.getNumberOfRooms();
+        roomService.getNumberOfRooms(type);
 
         verify(roomRepository, times(1)).findAll();
     }
+@Test
+    public void checkNumberOfRoomsForPetRooms() throws Exception{
+        List<RoomEntity> roomEntityList = new ArrayList<>();
+        String type = "pet";
+        when(roomRepository.findAll()).thenReturn(roomEntityList);
+
+        roomService.getNumberOfRooms(type);
+
+        verify(roomRepository, times(1)).findAll();
+    }
+
+    @Test
+    public void checkNumberOfRoomsForWrongType() throws Exception{
+        List<RoomEntity> roomEntityList = new ArrayList<>();
+        String type = "plant123";
+        when(roomRepository.findAll()).thenReturn(roomEntityList);
+
+        roomService.getNumberOfRooms(type);
+
+        verify(roomRepository, times(1)).findAll();
+    }
+
 
     @Test
     public void checkIfRepositoryShowsRoomByNumber() throws Exception{
@@ -245,9 +270,7 @@ public class RoomServiceImplTest{
 
     @Test
     public void checkIfListOfRoomsWithTemperatureIsViewed() throws Exception{
-        RoomEntity roomEntity = new RoomEntity();
-        List<RoomEntity> roomEntityList = new ArrayList<>();
-        prepareRoomEntityList(roomEntity, roomEntityList, TEMPERATURE_15);
+        List<RoomEntity> roomEntityList = prepareRoomEntityListWithTemperature15();
 
         PlantRoom room = new PlantRoom();
 
@@ -255,12 +278,16 @@ public class RoomServiceImplTest{
 
         when(petService.getPetById((long) ONE)).thenReturn(petEntity);
         when(roomRepository.findAllPlantRooms()).thenReturn(roomEntityList);
-        when(roomMap.map(roomEntity)).thenReturn(room);
+        when(roomMap.map(extractRoomEntity(roomEntityList))).thenReturn(room);
 
         List<Room> allRoomsInTheRangeForPlant = roomService.getAllRoomsInTheRangeForPlant(ONE);
 
         assertEquals(ONE, allRoomsInTheRangeForPlant.size());
-        verify(roomMap, times(ONE)).map(roomEntity);
+        verify(roomMap, times(ONE)).map(extractRoomEntity(roomEntityList));
+    }
+
+    private RoomEntity extractRoomEntity(List<RoomEntity> roomEntityList) {
+        return roomEntityList.get(0);
     }
 
     @Test
@@ -268,8 +295,7 @@ public class RoomServiceImplTest{
         expectedException.expect(TemperatureWrongRangeException.class);
 
         RoomEntity roomEntity = new RoomEntity();
-        List<RoomEntity> roomEntityList = new ArrayList<>();
-        prepareRoomEntityList(roomEntity, roomEntityList, TEMPERATURE_15);
+        List<RoomEntity> roomEntityList = prepareRoomEntityListWithTemperature15();
 
         PlantRoom room = new PlantRoom();
 
@@ -286,8 +312,7 @@ public class RoomServiceImplTest{
     @Test
     public void checkIfOneRoomIsReturnForStableTemperature() throws Exception{
         RoomEntity roomEntity = new RoomEntity();
-        List<RoomEntity> roomEntityList = new ArrayList<>();
-        prepareRoomEntityList(roomEntity, roomEntityList, TEMPERATURE_20);
+        List<RoomEntity> roomEntityList = prepareRoomEntityListWithTemperature20();
 
         PlantRoom room = new PlantRoom();
 
@@ -309,9 +334,6 @@ public class RoomServiceImplTest{
         return petEntity;
     }
 
-    private void prepareRoomEntityList(RoomEntity roomEntity, List<RoomEntity> roomEntityList, int temperature) {
-        roomEntity.setTemperature(temperature);
-        roomEntityList.add(roomEntity);
-    }
+
 
 }

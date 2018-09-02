@@ -84,7 +84,7 @@ public class ShelfServiceImplTest {
         when(roomService.getRoomByNumber(id)).thenReturn(roomEntity);
         when(shelfMap.map(shelfEntity)).thenReturn(shelf);
 
-        shelfService.getFreeShelves(id);
+        shelfService.getFreeShelvesForPlant(id);
 
         verify(shelfMap, times(1)).map(shelfEntity);
     }
