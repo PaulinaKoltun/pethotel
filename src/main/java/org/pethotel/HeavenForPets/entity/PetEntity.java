@@ -65,6 +65,7 @@ public class PetEntity {
     @Column(name = "max_temperature")
     private  int maxTemperature;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "plant_insolation")
     private PlantInsolation plantInsolation;
 
