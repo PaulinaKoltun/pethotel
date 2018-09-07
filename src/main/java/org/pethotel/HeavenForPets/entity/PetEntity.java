@@ -1,11 +1,11 @@
 package org.pethotel.HeavenForPets.entity;
 
-import org.hibernate.annotations.CollectionId;
 import org.pethotel.HeavenForPets.enums.PetType;
 import org.pethotel.HeavenForPets.enums.PlantInsolation;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Created by Paulina on 2017-09-30.
@@ -36,7 +36,7 @@ public class PetEntity {
     private ShelfEntity shelfEntity;
 
     @Column(name = "to_water")
-    private int toWater;
+    private Integer toWater;
 
     @Column(name = "date_in")
     private Date dateIn;
@@ -60,10 +60,10 @@ public class PetEntity {
     private Integer present = 1;
 
     @Column(name = "min_temperature")
-    private int minTemperature;
+    private Integer minTemperature;
 
     @Column(name = "max_temperature")
-    private  int maxTemperature;
+    private  Integer maxTemperature;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "plant_insolation")
@@ -153,7 +153,7 @@ public class PetEntity {
         this.present = present;
     }
 
-    public int getToWater() {
+    public Integer getToWater() {
         return toWater;
     }
 
@@ -169,7 +169,7 @@ public class PetEntity {
         this.shelfEntity = shelfEntity;
     }
 
-    public int getMinTemperature() {
+    public Integer getMinTemperature() {
         return minTemperature;
     }
 
@@ -177,7 +177,7 @@ public class PetEntity {
         this.minTemperature = minTemperature;
     }
 
-    public int getMaxTemperature() {
+    public Integer getMaxTemperature() {
         return maxTemperature;
     }
 
@@ -197,51 +197,34 @@ public class PetEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         PetEntity petEntity = (PetEntity) o;
-
-        if (toWater != petEntity.toWater) return false;
-        if (minTemperature != petEntity.minTemperature) return false;
-        if (maxTemperature != petEntity.maxTemperature) return false;
-        if (name != null ? !name.equals(petEntity.name) : petEntity.name != null) return false;
-        if (comment != null ? !comment.equals(petEntity.comment) : petEntity.comment != null) return false;
-        if (petType != petEntity.petType) return false;
-        if (roomEntity != null ? !roomEntity.equals(petEntity.roomEntity) : petEntity.roomEntity != null) return false;
-        if (shelfEntity != null ? !shelfEntity.equals(petEntity.shelfEntity) : petEntity.shelfEntity != null)
-            return false;
-        if (dateIn != null ? !dateIn.equals(petEntity.dateIn) : petEntity.dateIn != null) return false;
-        if (dateOut != null ? !dateOut.equals(petEntity.dateOut) : petEntity.dateOut != null) return false;
-        if (breakfast != null ? !breakfast.equals(petEntity.breakfast) : petEntity.breakfast != null) return false;
-        if (dinner != null ? !dinner.equals(petEntity.dinner) : petEntity.dinner != null) return false;
-        if (supper != null ? !supper.equals(petEntity.supper) : petEntity.supper != null) return false;
-        if (present != null ? !present.equals(petEntity.present) : petEntity.present != null) return false;
-        return plantInsolation == petEntity.plantInsolation;
+        return Objects.equals(name, petEntity.name) &&
+                Objects.equals(comment, petEntity.comment) &&
+                petType == petEntity.petType &&
+                Objects.equals(roomEntity, petEntity.roomEntity) &&
+                Objects.equals(shelfEntity, petEntity.shelfEntity) &&
+                Objects.equals(toWater, petEntity.toWater) &&
+                Objects.equals(dateIn, petEntity.dateIn) &&
+                Objects.equals(dateOut, petEntity.dateOut) &&
+                Objects.equals(breakfast, petEntity.breakfast) &&
+                Objects.equals(dinner, petEntity.dinner) &&
+                Objects.equals(supper, petEntity.supper) &&
+                Objects.equals(present, petEntity.present) &&
+                Objects.equals(minTemperature, petEntity.minTemperature) &&
+                Objects.equals(maxTemperature, petEntity.maxTemperature) &&
+                plantInsolation == petEntity.plantInsolation;
     }
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (comment != null ? comment.hashCode() : 0);
-        result = 31 * result + (petType != null ? petType.hashCode() : 0);
-        result = 31 * result + (roomEntity != null ? roomEntity.hashCode() : 0);
-        result = 31 * result + (shelfEntity != null ? shelfEntity.hashCode() : 0);
-        result = 31 * result + toWater;
-        result = 31 * result + (dateIn != null ? dateIn.hashCode() : 0);
-        result = 31 * result + (dateOut != null ? dateOut.hashCode() : 0);
-        result = 31 * result + (breakfast != null ? breakfast.hashCode() : 0);
-        result = 31 * result + (dinner != null ? dinner.hashCode() : 0);
-        result = 31 * result + (supper != null ? supper.hashCode() : 0);
-        result = 31 * result + (present != null ? present.hashCode() : 0);
-        result = 31 * result + minTemperature;
-        result = 31 * result + maxTemperature;
-        result = 31 * result + (plantInsolation != null ? plantInsolation.hashCode() : 0);
-        return result;
+        return Objects.hash(name, comment, petType, roomEntity, shelfEntity, toWater, dateIn, dateOut, breakfast, dinner, supper, present, minTemperature, maxTemperature, plantInsolation);
     }
 
     @Override
     public String toString() {
         return "PetEntity{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", comment='" + comment + '\'' +
                 ", petType=" + petType +
                 ", roomEntity=" + roomEntity +
