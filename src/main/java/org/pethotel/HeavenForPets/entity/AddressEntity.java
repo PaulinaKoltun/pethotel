@@ -1,5 +1,7 @@
 package org.pethotel.HeavenForPets.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 /**
@@ -7,7 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "ADDRESS")
-public class AddressEntity {
+public @Data class AddressEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id;

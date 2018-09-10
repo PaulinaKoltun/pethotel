@@ -1,6 +1,5 @@
 package org.pethotel.HeavenForPets.service.impl;
 
-import org.pethotel.HeavenForPets.domein.Pet.Plant;
 import org.pethotel.HeavenForPets.domein.Rooms.PlantRoom;
 import org.pethotel.HeavenForPets.domein.Rooms.Room;
 import org.pethotel.HeavenForPets.domein.Shelf;
@@ -19,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ShelfServiceImpl implements ShelfService {
@@ -38,12 +38,12 @@ public class ShelfServiceImpl implements ShelfService {
     @Override
     public void saveShelves(List<Shelf> shelves, int id) {
         RoomEntity roomEntity = roomService.getRoomByNumber(id);
-        List<ShelfEntity> shelfEntities = roomEntity.getShelfEntities();
+        List<ShelfEntity> shelfEntities;
 
-        for (Shelf shelf : shelves) {
-            ShelfEntity shelfEntity = shelfMap.map(shelf);
-            shelfEntities.add(shelfEntity);
-        }
+        shelfEntities = shelves.stream()
+                .map(e -> shelfMap.map(e))
+                .collect(Collectors.toList());
+
 
         roomEntity.setShelfEntities(shelfEntities);
     }
@@ -52,12 +52,11 @@ public class ShelfServiceImpl implements ShelfService {
     public List<Shelf> getShelvesFromRoom(int id) {
         RoomEntity roomEntity = roomService.getRoomByNumber(id);
         List<ShelfEntity> shelfEntities = roomEntity.getShelfEntities();
-        List<Shelf> shelves = new ArrayList<>();
+        List<Shelf> shelves;
 
-        for (ShelfEntity shelfEntity : shelfEntities) {
-            Shelf shelf = shelfMap.map(shelfEntity);
-            shelves.add(shelf);
-        }
+        shelves  = shelfEntities.stream()
+                .map(e -> shelfMap.map(e))
+                .collect(Collectors.toList());
 
         return shelves;
     }
@@ -70,7 +69,7 @@ public class ShelfServiceImpl implements ShelfService {
         List<Shelf> properShelves = new ArrayList<>();
 
         for (Room room : roomList) {
-            List<Shelf> shelves = ((PlantRoom) room).getPlantShelves();
+            List<Shelf> shelves = ((PlantRoom) room).getShelves();
             for (Shelf shelf : shelves) {
                 if (shelf.isFree() && plantInsolation.equals(shelf.getPlantInsolation())){
                     properShelves.add(shelf);

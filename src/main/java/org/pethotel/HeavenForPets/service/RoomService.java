@@ -45,4 +45,6 @@ public interface RoomService {
     List<RoomEntity> getAllPlantRooms();
 
     List<Room> getRoomsForTemperatureRange(String plantInsolation, int minTemp, int maxTemp);
+
+    List<RoomEntity> getAllPlantRoomsForTemperature(int minTemerature, int maxTemperature);
 }

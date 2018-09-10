@@ -52,4 +52,9 @@ public interface RoomRepository extends PagingAndSortingRepository<RoomEntity, L
             @Param ("plantInsolation") PlantInsolation plantInsolation,
             @Param ("minTemp") int minTemp,
             @Param ("maxTemp") int maxTemp);
+
+    @Query("SELECT e FROM RoomEntity e WHERE (e.temperature between :minTemperature and maxTemperature)")
+    List<RoomEntity> getAllPlantRoomsForTemperature(
+            @Param ("minTemperature") int minTemperature,
+            @Param ("maxTemperature") int maxTemperature);
 }

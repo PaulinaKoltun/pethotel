@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.pethotel.HeavenForPets.utils.Calculator.getDaysOfVisit;
 
@@ -43,6 +44,7 @@ public class PetServiceImpl implements PetService {
     public List<Animal> getAnimals() {
         List<PetEntity> petEntityList = petRepository.findAllAnimals(); //query dla animals
         List<Animal> pets = new ArrayList<>();
+
         for (PetEntity petEntity : petEntityList) {
             Pet pet = new Animal();
             pet.setName(petEntity.getName());
@@ -56,6 +58,7 @@ public class PetServiceImpl implements PetService {
     public void bringPetAgain(Pet pet) {
         PetEntity petEntity = petRepository.findOne(pet.getId());
         petEntity.setPresent(1);
+
         RoomEntity roomEntity = roomService.getRoomByNumber(pet.getRoomNumber());
         petMap.map(pet, petEntity, roomEntity);
         petRepository.save(petEntity);
@@ -98,9 +101,14 @@ public class PetServiceImpl implements PetService {
 
     private void validateTheOwnersForPets(List<Integer> idList) throws DifferentOwnerException {
         List<Integer> ownerList = petRepository.ownerEntityList(idList);
-        if (ownerList.size()!=1){
+
+        if (!petContainsOneOwner(ownerList)){
             throw new DifferentOwnerException();
         }
+    }
+
+    private boolean petContainsOneOwner(List<Integer> ownerList) {
+        return ownerList.size() == 1;
     }
 
     @Override
@@ -108,13 +116,19 @@ public class PetServiceImpl implements PetService {
         OwnerEntity ownerEntity = ownerService.getOwnerById(id);
         List<PetEntity> ownerEntities = ownerEntity.getPetList();
 
-        for (Pet pet : pets) {
-            PetEntity petEntity =
-                    petMap.map(pet,
-                            roomService.getRoomByNumber(pet.getRoomNumber()));
-            petRepository.save(petEntity);
-            ownerEntities.add(petEntity);
-        }
+        ownerEntities = pets.stream()
+                .map(e -> petMap.map(e,
+                        roomService.getRoomByNumber(e.getRoomNumber())))
+                .collect(Collectors.toList());
+
+//        for (Pet pet : pets) {
+//            PetEntity petEntity =
+//                    petMap.map(pet,
+//                            roomService.getRoomByNumber(
+//                                    pet.getRoomNumber()));
+//            petRepository.save(petEntity);
+//            ownerEntities.add(petEntity);
+//        }
 
         ownerEntity.setPetList(ownerEntities);
     }
