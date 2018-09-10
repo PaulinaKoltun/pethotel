@@ -1,6 +1,5 @@
 package org.pethotel.HeavenForPets.service.impl;
 
-import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -61,11 +60,10 @@ public class RoomServiceImpl implements RoomService {
             RoomEntity roomEntity;
             if (room instanceof PetRoom) {
                 LOGGER.info("PetRoom");
-                roomEntity = RoomEntityBuilder.fromRoom((PetRoom)room);
-            }
-            else {
+                roomEntity = RoomEntityBuilder.fromRoom((PetRoom) room);
+            } else {
                 LOGGER.info("PlantRoom");
-                PlantRoom plantRoom = (PlantRoom)room;
+                PlantRoom plantRoom = (PlantRoom) room;
                 List<ShelfEntity> shelfEntities = shelfMap.mapToEntity(plantRoom.getPlantShelves());
                 for (ShelfEntity shelfEntity : shelfEntities) {
                     shelfRepository.save(shelfEntity);
@@ -75,8 +73,7 @@ public class RoomServiceImpl implements RoomService {
                 LOGGER.info("room entity" + roomEntity);
             }
             roomRepository.save(roomEntity);
-        }
-        else {
+        } else {
             LOGGER.info("Room already exists");
         }
     }
@@ -101,7 +98,7 @@ public class RoomServiceImpl implements RoomService {
 
         if (RoomType.PLANT.getStringType().equals(type.toLowerCase())) {
             roomEntityList = roomRepository.findAllPlantRooms(pageable);
-        } else if (RoomType.PET.getStringType().equals(type.toLowerCase())){
+        } else if (RoomType.PET.getStringType().equals(type.toLowerCase())) {
             roomEntityList = roomRepository.findAllPetRooms(pageable);
         } else {
             LOGGER.info("Wrong type");
@@ -126,7 +123,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public void updateRoom(PetRoom room){
+    public void updateRoom(PetRoom room) {
         RoomEntity entity = roomRepository.getRoomByNumber(room.getRoomNumber());
 
         entity = roomMap.map(entity, room);
@@ -138,16 +135,16 @@ public class RoomServiceImpl implements RoomService {
     public List<Room> getAllRoomsByType(String petType) {
         List<RoomEntity> roomEntityList = roomRepository.findAllPetRooms();
 
-        if ("ALL".equals(petType.toUpperCase())){
+        if ("ALL".equals(petType.toUpperCase())) {
             return roomEntityList.stream()
-                .map(r -> roomMap.map(r))
-                .collect(Collectors.toList());
-        }else{
+                    .map(r -> roomMap.map(r))
+                    .collect(Collectors.toList());
+        } else {
             return roomEntityList.stream()
-                .filter(r -> isProperRoomType(petType, r))
-                .map(r -> roomMap.map(r))
-                .collect(Collectors.toList());
-         }
+                    .filter(r -> isProperRoomType(petType, r))
+                    .map(r -> roomMap.map(r))
+                    .collect(Collectors.toList());
+        }
     }
 
     @Override
@@ -156,12 +153,11 @@ public class RoomServiceImpl implements RoomService {
         Map<PetType, Integer> freePlacesMap = new HashMap<>();
 
         for (RoomEntity roomEntity : roomEntityList) {
-            if (freePlacesMap.containsKey(roomEntity.getPetType())){
+            if (freePlacesMap.containsKey(roomEntity.getPetType())) {
                 int previousFreePlaces = freePlacesMap.get(roomEntity.getPetType());
                 int freePlaces = previousFreePlaces + roomEntity.getFreePlaces();
                 freePlacesMap.put(roomEntity.getPetType(), freePlaces);
-            }
-            else{
+            } else {
                 freePlacesMap.put(roomEntity.getPetType(), roomEntity.getFreePlaces());
             }
         }
@@ -172,7 +168,7 @@ public class RoomServiceImpl implements RoomService {
     public int getNumberOfRooms(String type) {
         if (RoomType.PLANT.getStringType().equals(type.toLowerCase())) {
             return roomRepository.countNumbersOfPlantRooms();
-        } else if (RoomType.PET.getStringType().equals(type.toLowerCase())){
+        } else if (RoomType.PET.getStringType().equals(type.toLowerCase())) {
             return roomRepository.countNumbersOfPetRooms();
         } else {
             LOGGER.info("Wrong type");
@@ -181,18 +177,18 @@ public class RoomServiceImpl implements RoomService {
     }
 
     private boolean isProperRoomType(String petType, RoomEntity roomEntity) {
-        if (roomEntity.getPetType() == null){
+        if (roomEntity.getPetType() == null) {
             return false;
-        }else{
+        } else {
             return roomEntity.getPetType().getShortType().equals(petType)
-                || roomEntity.getPetType().name().equals(petType)
-                || (StringUtils.isNumeric(petType)
+                    || roomEntity.getPetType().name().equals(petType)
+                    || (StringUtils.isNumeric(petType)
                     && roomEntity.getPetType().getNumberType() == Integer.valueOf(petType));
         }
     }
 
     @Override
-    public RoomEntity getRoomByNumber(long number){
+    public RoomEntity getRoomByNumber(long number) {
         return roomRepository.getRoomByNumber(number);
 
     }
@@ -208,7 +204,7 @@ public class RoomServiceImpl implements RoomService {
 
         PetEntity petEntity = petService.getPetById((long) id);
 
-        if (petEntity.getMaxTemperature() < petEntity.getMinTemperature()){
+        if (petEntity.getMaxTemperature() < petEntity.getMinTemperature()) {
             throw new TemperatureWrongRangeException();
         }
 
@@ -217,7 +213,7 @@ public class RoomServiceImpl implements RoomService {
 
         for (RoomEntity roomEntity : roomEntityList) {
             if (petEntity.getMinTemperature() <= roomEntity.getTemperature()
-                    && petEntity.getMaxTemperature() >= roomEntity.getTemperature()){
+                    && petEntity.getMaxTemperature() >= roomEntity.getTemperature()) {
                 rooms.add(roomMap.map(roomEntity));
             }
         }
@@ -244,7 +240,25 @@ public class RoomServiceImpl implements RoomService {
 
 
     @Override
-    public List<RoomEntity> getAllPlantRooms(){
+    public List<RoomEntity> getAllPlantRooms() {
         return roomRepository.findAllPlantRooms();
+    }
+
+    @Override
+    public List<Room> getRoomsForTemperatureRange(String plantInsolation, int minTemp, int maxTemp) {
+        Optional<PlantInsolation> optional = Arrays.stream(PlantInsolation.values())
+                .filter(pi -> pi.getShortType().equals(
+                        plantInsolation.toLowerCase()))
+                .findFirst();
+
+        if (optional.isPresent()) {
+            LOGGER.info("isolation " + optional.get());
+            return roomRepository.getAllRoomsWithProperShelves(optional.get(), minTemp, maxTemp)
+                    .stream()
+                    .map(e -> roomMap.map(e))
+                    .collect(Collectors.toList());
+
+        }
+        return Collections.emptyList();
     }
 }

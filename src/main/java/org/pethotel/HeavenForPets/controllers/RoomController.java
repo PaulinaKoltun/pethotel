@@ -5,7 +5,6 @@ import org.pethotel.HeavenForPets.domein.Rooms.Room;
 import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.pethotel.HeavenForPets.enums.PetType;
 import org.pethotel.HeavenForPets.exceptions.TemperatureWrongRangeException;
-import org.pethotel.HeavenForPets.repository.RoomRepository;
 import org.pethotel.HeavenForPets.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -57,7 +56,7 @@ public class RoomController {
 
 
     @GetMapping("/freePlacesForPetType")
-    public Map<PetType,Integer> freePlacesForPetType(){
+    public Map<PetType, Integer> freePlacesForPetType(){
         return roomService.freePlacesForPetType();
     }
 

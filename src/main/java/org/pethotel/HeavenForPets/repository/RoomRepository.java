@@ -44,7 +44,7 @@ public interface RoomRepository extends PagingAndSortingRepository<RoomEntity, L
     @Query("SELECT count(e) FROM RoomEntity e WHERE e.petType is null")
     int countNumbersOfPlantRooms();
 
-    @Query("SELECT e FROM RoomEntity e JOIN e.shelfEntities se " +
+    @Query("SELECT DISTINCT e FROM RoomEntity e JOIN e.shelfEntities se " +
             "where se.plantInsolation = :plantInsolation " +
             "and se.free = '1' " +
             "and (e.temperature between :minTemp and :maxTemp)")
