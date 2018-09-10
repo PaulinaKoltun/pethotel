@@ -11,8 +11,11 @@ import java.util.List;
 
 public interface FoodService {
     void saveFood(List<Food> foodlist);
+
     List<Food> getFoodByPet(String petType);
+
     FoodDetails getFoodDetailsById(Integer id);
+
     void getFile(HttpServletRequest request,
                  HttpServletResponse response,
                  Integer id,
