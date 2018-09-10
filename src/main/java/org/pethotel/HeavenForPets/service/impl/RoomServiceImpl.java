@@ -1,6 +1,5 @@
 package org.pethotel.HeavenForPets.service.impl;
 
-import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -12,7 +11,6 @@ import org.pethotel.HeavenForPets.entity.RoomEntity;
 import org.pethotel.HeavenForPets.entity.RoomEntityBuilder;
 import org.pethotel.HeavenForPets.entity.ShelfEntity;
 import org.pethotel.HeavenForPets.enums.PetType;
-import org.pethotel.HeavenForPets.enums.PlantInsolation;
 import org.pethotel.HeavenForPets.enums.RoomType;
 import org.pethotel.HeavenForPets.exceptions.TemperatureWrongRangeException;
 import org.pethotel.HeavenForPets.mappers.RoomMap;
@@ -28,9 +26,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static junit.framework.TestCase.assertNull;
-import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 
 /**
  * Created by Paulina on 2017-10-07.
@@ -66,7 +61,7 @@ public class RoomServiceImpl implements RoomService {
             else {
                 LOGGER.info("PlantRoom");
                 PlantRoom plantRoom = (PlantRoom)room;
-                List<ShelfEntity> shelfEntities = shelfMap.mapToEntity(plantRoom.getPlantShelves());
+                List<ShelfEntity> shelfEntities = shelfMap.mapToEntity(plantRoom.getShelves());
                 for (ShelfEntity shelfEntity : shelfEntities) {
                     shelfRepository.save(shelfEntity);
                 }
@@ -212,15 +207,15 @@ public class RoomServiceImpl implements RoomService {
             throw new TemperatureWrongRangeException();
         }
 
-        List<RoomEntity> roomEntityList = getAllPlantRooms();
+        List<RoomEntity> roomEntityList = getAllPlantRoomsForTemperature(
+                petEntity.getMinTemperature(),
+                petEntity.getMaxTemperature());
+
         List<Room> rooms = new ArrayList<>();
 
         for (RoomEntity roomEntity : roomEntityList) {
-            if (petEntity.getMinTemperature() <= roomEntity.getTemperature()
-                    && petEntity.getMaxTemperature() >= roomEntity.getTemperature()){
                 rooms.add(roomMap.map(roomEntity));
             }
-        }
         return rooms;
     }
 
@@ -246,5 +241,10 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public List<RoomEntity> getAllPlantRooms(){
         return roomRepository.findAllPlantRooms();
+    }
+
+    @Override
+    public List<RoomEntity> getAllPlantRoomsForTemperature(int minTemerature, int maxTemperature){
+        return roomRepository.getAllPlantRoomsForTemperature(minTemerature, maxTemperature);
     }
 }

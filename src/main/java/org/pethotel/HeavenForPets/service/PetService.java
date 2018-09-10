@@ -13,9 +13,14 @@ import java.util.List;
  */
 public interface PetService {
     List<Animal> getAnimals();
+
     void bringPetAgain(Pet pet);
+
     BigDecimal pickupPets(List<Integer> idList);
+
     void addPetsToOwner(Long id, List<Pet> pet);
+
     List<Plant> getPlants();
+
     PetEntity getPetById(Long id);
 }

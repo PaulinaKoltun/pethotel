@@ -1,6 +1,7 @@
 package org.pethotel.HeavenForPets.service.impl;
 
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.pethotel.HeavenForPets.domein.Client;
 import org.pethotel.HeavenForPets.domein.Owner;
 import org.pethotel.HeavenForPets.domein.Pet.Pet;
@@ -27,7 +28,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class OwnerServiceImpl implements OwnerService {
-    private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger(OwnerServiceImpl.class);
+
+    private static final Logger LOGGER = LogManager.getLogger(OwnerServiceImpl.class);
 
     @Autowired
     private OwnerRepository ownerRepository;

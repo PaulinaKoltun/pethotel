@@ -12,9 +12,13 @@ import java.util.List;
  */
 public interface OwnerService {
     void saveOwner(Owner owner);
+
     List<Client> getAllClients();
+
     List<Pet> showAllPets(int id);
+
     void pickupAllPets(int id);
+
     void updateDiscountAtOwner(String lastName, int newDiscount);
 
     OwnerEntity getOwnerById(Long id);
