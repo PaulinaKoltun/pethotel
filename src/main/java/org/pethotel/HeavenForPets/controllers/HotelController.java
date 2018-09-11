@@ -62,6 +62,13 @@ public class HotelController implements ErrorController{
         return petService.getPlants();
     }
 
+    @GetMapping("/tempRange/{plantInsolation}/{minTemp}/{maxTemp}")
+    public List<Room> getRoomsForTemperatureRange(@PathVariable String plantInsolation, @PathVariable int minTemp,
+                                                  @PathVariable int maxTemp) {
+        LOGGER.info("getRoomsForTemperatureRange " + plantInsolation + " " + minTemp + " " + maxTemp);
+        return roomService.getRoomsForTemperatureRange(plantInsolation, minTemp, maxTemp);
+    }
+
     @RequestMapping(value = PATH)
     public String error() {
         return "Error handling";
